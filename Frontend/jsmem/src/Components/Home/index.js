@@ -16,7 +16,7 @@ const Home = () => (
                 </Link>
                 <Link to="/ytmc">
                 <div className="YTMC">
-                    <h1>YTMC</h1>
+                    <h1>YTCM</h1>
                 </div>
                 </Link>
             </div>
