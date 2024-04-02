@@ -1,0 +1,44 @@
+.outer-cont1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height:100vh;
+    background-image:url("https://img.freepik.com/free-vector/vector-technology-abstract-background-with-particle-lines_53876-111549.jpg?t=st=1711981504~exp=1711985104~hmac=cd2248c209d751c35f46559edae806efeed11ef7254a0eae2198c91a2f02ab91&w=826");
+    background-size:cover;
+}
+.inner-cont1{
+    border-radius:8px;
+    width:50%;
+    background-color: lightblue;
+    padding:10px;
+    text-align: center;
+    color:white;
+}
+.home-img{
+    height:150px;
+    width:150px;
+    border-radius:50%;
+}
+.main-heading1{
+    color:black;
+}
+@media (max-width:767px){
+    .inner-cont1{
+        width:70%;
+    }
+}
+.Camps{
+    padding:10px;
+    background-color: #0d6efd;
+    border-radius:8px;
+    border-width:0;
+    cursor:pointer;
+    margin-bottom:10px;
+}
+.YTMC{
+    padding:10px;
+    border-radius:8px;
+    background-color: #0d6efd;
+    border-width:0;
+    cursor:pointer;
+}

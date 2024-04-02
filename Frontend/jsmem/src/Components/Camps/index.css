@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap');
+body{
+    margin:0;
+    padding:0;
+    font-family:"Roboto";
+}
+button{
+    cursor:pointer;
+}
+.logo-img2{
+    height:70px;
+    width:70px;
+    border-radius:50%;
+}
+.link-item{
+    text-decoration: none;
+}
+.flexi3{
+    text-align: center;
+    margin:10px;
+}
+.main-container{
+    /* background-image:url("https://img.freepik.com/free-vector/gradient-particle-wave-background_23-2150512689.jpg?t=st=1711018531~exp=1711022131~hmac=75e6483990520c0a43bb6c1fe93c3423a88d5ddc47bf4a096a3276f4901c14bd&w=826"); */
+    min-height:100vh;
+    background-size:cover;
+    font-family:"Roboto";
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user-input2{
+    width:420px;
+    padding:10px;
+    background-color: white;
+    border-radius:8px;
+    border-width:0;
+    margin-top:10px;
+}
+.select-input{
+    width:420px;
+    border-radius:8px;
+    padding:10px;
+    background-color: white;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:20px;
+}
+.footer-date{
+    width:100%;
+    text-align:end;
+}
+/* @media (min-width:768px){
+form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+} */
+/* } */
+.fetchBtn{
+    margin:10px;
+    height:40px;
+    background-color:#28a745;
+    border-width:0;
+    border-radius:8px;
+    color:white;
+    text-align:right;
+    padding:10px;
+}
+ul{
+    list-style-type:none;
+    padding-left:0;
+}
+
+.last24Btn{
+    margin:10px;
+    background-color:#2379F7;
+    color:white;
+    padding:10px;
+    border-width:0;
+    border-radius:8px;
+}
+
+/* top-container */
+.top-container{
+    display:flex;
+    justify-content: space-between;
+    background-color: #ECCA3D;
+    width:100%;
+    height:10vw;
+    position: sticky;
+}
+.left-container-elements{
+    margin-left:10px;
+}
+.inner-top-container{
+    display: flex;
+    width:80%;
+    justify-content: space-between;
+    align-items: center;
+}
+.addBtn{
+    background-color: white;
+    color:black;
+    font-weight:bold;
+    border-radius:5px;
+    border-width:0;
+    padding:10px;
+    text-align:center;
+}
+.left-container{
+    width:20%;
+    min-height:80vh;
+    background-color:#ECCA3D;
+    text-align: left;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: sticky;
+}
+.main-inner-container{
+    /* width:80vw; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80vh;
+    background-color:white;
+    padding:10px;
+    position:relative;
+}
+.flex-cont1{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+}
+.main-heading1{
+    justify-content: center;
+    margin:auto;
+    align-self: center;
+}
+.custom-popup{
+    background-color: #ECCA3D;
+    border:1px solid black;
+    width:500px;
+    border-radius:8px;
+}
+.closeBtn{
+    margin:10px;
+    height:40px;
+    background-color:red;
+    border-width:0;
+    border-radius:8px;
+    color:white;
+    text-align:right;
+    padding:10px;
+}
+.popup-cont2{
+    max-height:400px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    padding:10px;
+}
+th{
+    font-weight:bold;
+}
+.website-logo{
+    height:50px;
+    width:50px;
+    border-radius:25px;
+}
+
+.preview-img{
+    height:350px;
+    width:350px;
+}
+button{
+    margin-top: 10px;
+    margin-right:10px;
+}
+.nav-button{
+    padding:10px;
+    border-width:0;
+    border-radius:8px;
+    width:150px;
+    margin-left:20px;
+    background-color:#3D7FE5;
+    color:white;
+}
+.nav-button:hover{
+    background-color: white;
+    color:#3D7FE5;
+}
+.nav-button:visit{
+    background-color: white;
+    color:#3D7FE5;
+}
+.date-cont{
+    background-color: #ECCA3D;
+    color:black;
+    align-self:flex-start;
+    text-align:right;
+    padding:10px;
+    margin-right:5px;
+}
