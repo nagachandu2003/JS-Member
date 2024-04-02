@@ -445,7 +445,7 @@ const options = [
       ]
 
 
-class Stats extends Component{
+class CampDetails extends Component{
     state = {statsList:[], date : '',CampNo:'',CampName:'',THV:'',TPO:'',TWC:'',TSS:'',TYCS:'',TNRB:'',TNS:'',TCD:'',TV:''}
 
     componentDidMount = () => {
@@ -570,7 +570,8 @@ class Stats extends Component{
                             </div>
 
                             </form>
-                            </div>                        </div> */}
+                            </div>                        
+                            </div> */}
                         {/* )}
                     </Popup> */}
                     <div className="date-cont">
@@ -638,9 +639,6 @@ class Stats extends Component{
                         Team Name
                     </th>
                     <th>
-                      Team Lead Name
-                    </th>
-                    <th>
                       District
                     </th>
                     <th>
@@ -704,4 +702,4 @@ class Stats extends Component{
         );
 }
 }
-export default Stats
+export default CampDetails

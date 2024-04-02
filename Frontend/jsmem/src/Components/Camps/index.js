@@ -655,7 +655,7 @@ class Camps extends Component {
                     <button className="nav-button">Attendance</button>
                     </Link>
                     <br/>
-                    <Link className="nav-link" to="/comingsoon">
+                    <Link className="nav-link" to="/d2dreport">
                     <button className="nav-button">D2D Report</button>
                     </Link>
                     <br/>
@@ -665,6 +665,18 @@ class Camps extends Component {
                     <br/>
                     <Link className="nav-link" to="/comingsoon">
                     <button className="nav-button">Member</button>
+                    </Link>
+                    <br/>
+                    <Link className="nav-link" to="/comingsoon">
+                    <button className="nav-button">Support</button>
+                    </Link>
+                    <br/>
+                    <Link className="nav-link" to="/support">
+                    <button className="nav-button">Help</button>
+                    </Link>
+                    <br/>
+                    <Link className="nav-link" to="/comingsoon">
+                    <button className="nav-button">Camp Details</button>
                     </Link>
                     <br/>
                     <Link className="nav-link" to="/settings">

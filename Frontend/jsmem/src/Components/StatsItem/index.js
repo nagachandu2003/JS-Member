@@ -32,7 +32,7 @@ class StatsItem extends Component{
         const {newDate,newCampNo} = this.state
         const {statDetails} = this.props
         const {
-            id,date,CampNo,CampName,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD
+            id,date,CampNo,CampName,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD,TV
         } = statDetails
     return (
         <tbody className="table-body">
@@ -48,6 +48,7 @@ class StatsItem extends Component{
                     <td>{TNRB}</td>
                     <td>{TNS}</td>
                     <td>{TCD}</td>
+                    <td>{TV}</td>
                     <td>
                     <Popup
     trigger={<button className="edit-Btn" type="button"> Edit </button>}

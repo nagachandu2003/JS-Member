@@ -1,4 +1,4 @@
-import "./index.css"
+import "./indexd2d.css"
 import {Link} from 'react-router-dom'
 import Popup from 'reactjs-popup'
 import {Component} from 'react'
@@ -445,7 +445,7 @@ const options = [
       ]
 
 
-class Stats extends Component{
+class D2DReport extends Component{
     state = {statsList:[], date : '',CampNo:'',CampName:'',THV:'',TPO:'',TWC:'',TSS:'',TYCS:'',TNRB:'',TNS:'',TCD:'',TV:''}
 
     componentDidMount = () => {
@@ -477,12 +477,13 @@ class Stats extends Component{
             <Link to="/" className="link-item">
                     <div className="flexi3">
                     <img src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" className="logo-img2" alt="logo"/>
-                    <h2 className="main-heading1">JS MEMBER</h2>
+                    <h2 className="main-heading1">JS Member</h2>
+                    <h3>Camp Number : 1</h3>
                     </div>
                     </Link>
                     <div className="inner-top-container">
-                    <h1>Statistics</h1>
-             {/*       <Popup
+                    <h1>D2D Report</h1>
+                    <Popup
                         trigger={<button className="addBtn" type="button"> Add </button>}
                         modal
                         nested
@@ -493,9 +494,9 @@ class Stats extends Component{
                             &times;
                             </button> */}
                             {/* <div className="header popup-cont"> Add Link </div> */}
-                            {/* <div className="content popup-cont2">
+                            <div className="content popup-cont2">
                             <form className="stats-form" onSubmit={this.onSubmitStatsForm}>
-                                <h1>Enter Stats</h1>
+                                <h1>Enter D2D</h1>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="date">Date</label>
                                 <br/>
@@ -570,12 +571,11 @@ class Stats extends Component{
                             </div>
 
                             </form>
-                            </div>                        </div> */}
-                        {/* )}
-                    </Popup> */}
+                            </div>                        </div>
+                        )}
+                    </Popup>
                     <div className="date-cont">
                     <p>{(new Date()).toDateString()}</p>
-                    <p>Beta</p>
                     </div>
                     </div>
             </div>
@@ -590,7 +590,7 @@ class Stats extends Component{
                     <button className="nav-button">Attendance</button>
                     </Link>
                     <br/>
-                    <Link className="nav-link" to="/d2dreport">
+                    <Link className="nav-link" to="/comingsoon">
                     <button className="nav-button">D2D Report</button>
                     </Link>
                     <br/>
@@ -704,4 +704,4 @@ class Stats extends Component{
         );
 }
 }
-export default Stats
+export default D2DReport

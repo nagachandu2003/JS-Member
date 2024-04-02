@@ -8,7 +8,9 @@ import ReactContext from './ReactContext';
 import Cookies from 'js-cookie'
 import Camps from './Components/Camps'
 import Stats from './Components/Stats'
+import Support from './Components/Support'
 import ComingSoon from './Components/ComingSoon';
+import D2DReport from './Components/D2DReport';
 
 class App extends Component {
   state = {isLogin:'false'}
@@ -29,6 +31,8 @@ class App extends Component {
         <Route exact path="/stats" element={<Stats/>}/>
         <Route exact path="/comingsoon" element={<ComingSoon/>}/>
         {/* <Route exact path="/ytmc" element={<Ytmc/>}/> */}
+        <Route exact path="/support" element={<Support/>}/>
+        <Route exact path="/d2dreport" element={<D2DReport/>}/>
       </Routes>
       </BrowserRouter>
     )
