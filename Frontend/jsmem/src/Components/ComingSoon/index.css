@@ -1,0 +1,13 @@
+.comingsoon-img{
+    /* background-size: cover; */
+    height:400px;
+    width:400px;
+
+}
+.comingsoon-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    min-height:100vh;
+}

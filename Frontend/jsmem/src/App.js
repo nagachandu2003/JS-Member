@@ -8,6 +8,7 @@ import ReactContext from './ReactContext';
 import Cookies from 'js-cookie'
 import Camps from './Components/Camps'
 import Stats from './Components/Stats'
+import ComingSoon from './Components/ComingSoon';
 
 class App extends Component {
   state = {isLogin:'false'}
@@ -26,6 +27,7 @@ class App extends Component {
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/camps" element={<Camps/>}/>
         <Route exact path="/stats" element={<Stats/>}/>
+        <Route exact path="/comingsoon" element={<ComingSoon/>}/>
         {/* <Route exact path="/ytmc" element={<Ytmc/>}/> */}
       </Routes>
       </BrowserRouter>
