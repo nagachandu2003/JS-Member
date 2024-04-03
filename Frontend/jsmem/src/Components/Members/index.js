@@ -501,7 +501,7 @@ class Members extends Component{
                     <div className="flexi3">
                     <img src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" className="logo-img2" alt="logo"/>
                     <h2 className="main-heading1">JS Member</h2>
-                    <h3>Camp Number : 1</h3>
+                    <h3>Camp No : 1</h3>
                     </div>
                     </Link>
                     <div className="inner-top-container">
