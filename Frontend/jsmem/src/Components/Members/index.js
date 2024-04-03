@@ -522,7 +522,7 @@ class Members extends Component{
                                 <div className="stats-inp-cont">
                                 <label htmlFor="memberNo">Mobile Number</label>
                                 <br/>
-                                <input className="stats-inp-ele" name="Number" onChange={this.handleChange} id="memberNo" type="number" placeholder="Enter the Member Number " alt="Member No" required/>
+                                <input className="stats-inp-ele" name="Number" onChange={this.handleChange} id="memberNo" type="tel" placeholder="Enter the Member Number " alt="Member No" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                   <label htmlFor="district">District</label>
