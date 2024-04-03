@@ -480,6 +480,18 @@ class Members extends Component{
         this.setState({statsListm:newStatList,MemberSno:MemberSno+1})
     }
 
+    onChangeTeam = (event) => {
+      this.setState({Team:event.target.value})
+    }
+
+    onDeleteMember = (arg) => {
+      console.log(arg)
+      const {statsListm} = this.state 
+      const filteredDetails = statsListm.filter((ele) => ele.id!==arg);
+      localStorage.setItem("statsListm",JSON.stringify(filteredDetails))
+      this.setState({statsListm:filteredDetails});
+    }
+
     render(){
         const {statsListm,district} = this.state
     return (
@@ -557,7 +569,7 @@ class Members extends Component{
                                 <div className="stats-inp-cont">
                                 <label htmlFor="Team">Team</label>
                                 <br/>
-                                <select className="stats-inp-ele">
+                                <select onChange={this.onChangeTeam} name="Team" className="stats-inp-ele">
                                   <option value="Team1">Team1</option>
                                   <option value="Team2">Team2</option>
                                   <option value="Team3">Team3</option>
@@ -642,7 +654,7 @@ class Members extends Component{
                     <div className="table-container">
                     <table> 
                     {(statsListm.length!==0) && (
-                        statsListm.map((ele) => <MemberItem key={ele.id} statDetails={ele} />
+                        statsListm.map((ele) => <MemberItem onDeleteMember={this.onDeleteMember} key={ele.id} statDetails={ele} />
                         ))}
                     <thead>
                 <tr>
