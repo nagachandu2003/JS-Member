@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import Popup from 'reactjs-popup'
+import DistrictItem from "../DistrictItem"
 // 1. Add Link 
 // 2. Create a table view with views , likes , comment count 
 // 3. Add a date range filter to fetch the values got in these date , a quickly last 24 hours And last 48 hours button in the filter
@@ -578,17 +579,17 @@ class Camps extends Component {
                             {/* <div className="header popup-cont"> Add Link </div> */}
                             <div className="content popup-cont2">
                             <form onSubmit={this.onSubmitUrl}>
-                                <div>
+                                <div className="stats-inp-cont">
                                 <label htmlFor="username">Username</label>
                                 <br/>
                                 <input placeholder="Enter the Name" onChange={this.onChangeName} className="user-input2" type="text" id="username" required/>
                                 </div>
-                                <div>
+                                <div className="stats-inp-cont">
                                 <label htmlFor="channelurl">Channel URL</label>
                                 <br/>
                                 <input placeholder="Enter the Channel Url" onChange={this.onChangeChannelUrl} className="user-input2" type="url" id="channelurl" required/>
                                 </div>
-                                <div>
+                                <div className="stats-inp-cont">
                                     <label htmlFor="state">State</label>
                                     <br/>
                                     <select className="select-input" id="state" onChange={this.onChangeState} value={state}>
@@ -596,7 +597,7 @@ class Camps extends Component {
                                     </select>
                                     {/* <input placeholder="Enter the State : E.g: Bihar" onChange={this.onChangeState} type="text" className="user-input2" required/> */}
                                 </div>
-                                {/* <div>
+                                <div className="stats-inp-cont">
                                     <label htmlFor="district">District</label>
                                     <br/>
                                     <select onChange={this.onChangeDistrict} id="district" className="select-input">
@@ -604,19 +605,19 @@ class Camps extends Component {
                                         {options.map((ele) => <DistrictItem key={ele.OptionId} optionDetails={ele} checked/>)}
                                     </select>
                                     </div>
-                                    <div>
+                                    <div className="stats-inp-cont">
                                     <label htmlFor="constituency">Constituency</label>
                                     <br/>
                                     <select onChange={this.onChangeConstituency} id="constituency" className="select-input" >
                                         {constituencies[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
                                     </select>
-                                </div> */}
-                                <div>
+                                </div>
+                                <div className="stats-inp-cont">
                                     <label htmlFor="photo">Photo</label>
                                     <br/>
                                     <input className="user-input2" onChange={this.onChangePhoto} type="file" accept="images/*" id="photo" required/>
                                 </div>
-                                <div>
+                                <div className="stats-inp-cont">
                                     <label htmlFor="whatsappno">Whatsapp Number</label>
                                     <br/>
                                     <input onChange={this.onChangeWhatsApp} placeholder="Enter the whatsapp number E.g : +91 987654321" pattern="^\+91(?:[0-9] ?){6,14}[0-9]$" className="user-input2" type="tel" id="whatsappno" required/>
@@ -663,7 +664,7 @@ class Camps extends Component {
                     <button className="nav-button">Team</button>
                     </Link>
                     <br/>
-                    <Link className="nav-link" to="/comingsoon">
+                    <Link className="nav-link" to="/members">
                     <button className="nav-button">Member</button>
                     </Link>
                     <br/>

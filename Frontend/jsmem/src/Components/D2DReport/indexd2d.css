@@ -16,6 +16,6 @@ table,th,td{
     border-collapse: collapse;
 }
 .table-container{
-    max-width:800px;
+    width:80vw;
     overflow-x:auto;
 }

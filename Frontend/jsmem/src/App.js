@@ -11,6 +11,7 @@ import Stats from './Components/Stats'
 import Support from './Components/Support'
 import ComingSoon from './Components/ComingSoon';
 import D2DReport from './Components/D2DReport';
+import Members from './Components/Members'
 
 class App extends Component {
   state = {isLogin:'false'}
@@ -33,6 +34,7 @@ class App extends Component {
         {/* <Route exact path="/ytmc" element={<Ytmc/>}/> */}
         <Route exact path="/support" element={<Support/>}/>
         <Route exact path="/d2dreport" element={<D2DReport/>}/>
+        <Route exact path="/members" element={<Members/>}/>
       </Routes>
       </BrowserRouter>
     )

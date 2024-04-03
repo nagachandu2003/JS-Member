@@ -596,7 +596,7 @@ class D2DReport extends Component{
                     <button className="nav-button">Team</button>
                     </Link>
                     <br/>
-                    <Link className="nav-link" to="/comingsoon">
+                    <Link className="nav-link" to="/members">
                     <button className="nav-button">Member</button>
                     </Link>
                     <br/>

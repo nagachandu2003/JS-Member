@@ -130,12 +130,11 @@ ul{
     min-height: 80vh;
     background-color:white;
     padding:10px;
-    position:relative;
 }
 .flex-cont1{
     width:100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 .main-heading1{
     justify-content: center;
