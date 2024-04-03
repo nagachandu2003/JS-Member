@@ -623,7 +623,9 @@ class Members extends Component{
                     <button className="nav-button">Attendance</button>
                     </Link>
                     <br/>
+                    <Link className="nav-link" to="/d2dreport">
                     <button className="nav-button">D2D Report</button>
+                    </Link>
                     <br/>
                     <Link className="nav-link" to="/comingsoon">
                     <button className="nav-button">Team</button>
