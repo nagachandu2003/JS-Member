@@ -558,20 +558,19 @@ class Members extends Component{
                                 <label htmlFor="Team">Team</label>
                                 <br/>
                                 <select className="stats-inp-ele">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                  <option value="5">5</option>
-                                  <option value="6">6</option>
-                                  <option value="7">7</option>
-                                  <option value="8">8</option>
-                                  <option value="9">9</option>
-                                  <option value="10">10</option>
-                                  <option value="11">11</option>
-                                  <option value="12">12</option>
+                                  <option value="Team1">Team1</option>
+                                  <option value="Team2">Team2</option>
+                                  <option value="Team3">Team3</option>
+                                  <option value="Team4">Team4</option>
+                                  <option value="Team5">Team5</option>
+                                  <option value="Team6">Team6</option>
+                                  <option value="Team7">Team7</option>
+                                  <option value="Team8">Team8</option>
+                                  <option value="Team9">Team9</option>
+                                  <option value="Team10">Team10</option>
+                                  <option value="Team11">Team11</option>
+                                  <option value="Team12">Team12</option>
                                 </select>
-                                <input name="Team" onChange={this.handleChange} className="stats-inp-ele" id="Team" type="text" placeholder="Enter the Team" alt="Team" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="dob">DOB (Date Of Birth)</label>
