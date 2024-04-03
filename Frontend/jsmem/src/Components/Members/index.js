@@ -477,7 +477,7 @@ class Members extends Component{
         const newStatList = [...statsListm,newObj]
         console.log(newObj);
         localStorage.setItem("statsListm",JSON.stringify(newStatList))
-        this.setState({statsListm:newStatList,MemberSno})
+        this.setState({statsListm:newStatList,MemberSno:MemberSno+1})
     }
 
     render(){
