@@ -560,7 +560,8 @@ class Camps extends Component {
                     <Link to="/" className="link-item">
                     <div className="flexi3">
                     <img className="logo-img2" src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" alt="logo"/>
-                    <h2 className="main-heading1">JS Dashboard</h2>
+                    <h2 className="main-heading1">JS MEMBER</h2>
+                    <h3>Camp No</h3>
                     </div>
                     </Link>
                     <div className="inner-top-container">

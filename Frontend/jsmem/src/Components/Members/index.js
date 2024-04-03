@@ -508,25 +508,25 @@ class Members extends Component{
                             {/* <div className="header popup-cont"> Add Link </div> */}
                             <div className="content popup-cont2">
                             <form className="stats-form" onSubmit={this.onSubmitStatsForm}>
-                                <h1>Enter Member</h1>
+                                <h1>Enter Member Details</h1>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="jsid">JSID</label>
                                 <br/>
-                                <input name="JSID" onChange={this.handleChange} className="stats-inp-ele" id="jsid" type="text" alt="JSID"/>
+                                <input name="JSID" onChange={this.handleChange} className="stats-inp-ele" id="jsid" type="text" alt="JSID" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label  htmlFor="membername">Name</label>
                                 <br/>
-                                <input id="membername" name="Name" onChange={this.handleChange} className="stats-inp-ele" type="text" placeholder="Enter the Member Name " alt="Member Name"/>
+                                <input id="membername" name="Name" onChange={this.handleChange} className="stats-inp-ele" type="text" placeholder="Enter the Member Name " alt="Member Name" required/>
                                 </div>
                                 <div className="stats-inp-cont">
-                                <label htmlFor="memberNo">Number</label>
+                                <label htmlFor="memberNo">Mobile Number</label>
                                 <br/>
-                                <input className="stats-inp-ele" name="Number" onChange={this.handleChange} id="memberNo" type="number" placeholder="Enter the Member Number " alt="Member No"/>
+                                <input className="stats-inp-ele" name="Number" onChange={this.handleChange} id="memberNo" type="number" placeholder="Enter the Member Number " alt="Member No" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                   <label htmlFor="district">District</label>
-                                <select onChange={this.onChangeDistrict} id="district" className="stats-inp-ele">
+                                <select onChange={this.onChangeDistrict} id="district" className="stats-inp-ele" required>
                                         <option>SELECT</option>
                                         {options.map((ele) => <DistrictItem key={ele.OptionId} optionDetails={ele} checked/>)}
                                  </select>
@@ -534,7 +534,7 @@ class Members extends Component{
                                 <div className="stats-inp-cont">
                                     <label htmlFor="constituency">Constituency</label>
                                     <br/>
-                                    <select onChange={this.onChangeConstituency} id="constituency" className="stats-inp-ele" >
+                                    <select onChange={this.onChangeConstituency} id="constituency" className="stats-inp-ele" required>
                                         {constituencies[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
                                     </select>
                                 </div>
@@ -542,27 +542,41 @@ class Members extends Component{
                                 <div className="stats-inp-cont">
                                 <label htmlFor="block">Block</label>
                                 <br/>
-                                <input name="Block" onChange={this.handleChange} className="stats-inp-ele" id="block" type="text" placeholder="Enter the Block" alt="Block"/>
+                                <input name="Block" onChange={this.handleChange} className="stats-inp-ele" id="block" type="text" placeholder="Enter the Block" alt="Block" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="panchayat">Panchayat</label>
                                 <br/>
-                                <input name="Panchayat" onChange={this.handleChange} className="stats-inp-ele" id="panchayat" type="text" placeholder="Enter the Panchayat" alt="panchayat"/>
+                                <input name="Panchayat" onChange={this.handleChange} className="stats-inp-ele" id="panchayat" type="text" placeholder="Enter the Panchayat" alt="panchayat" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="village">Village</label>
                                 <br/>
-                                <input name="Village" onChange={this.handleChange} className="stats-inp-ele" id="village" type="text" placeholder="Enter the Village" alt="Village"/>
+                                <input name="Village" onChange={this.handleChange} className="stats-inp-ele" id="village" type="text" placeholder="Enter the Village" alt="Village" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="Team">Team</label>
                                 <br/>
-                                <input name="Team" onChange={this.handleChange} className="stats-inp-ele" id="Team" type="text" placeholder="Enter the Team" alt="Team"/>
+                                <select className="stats-inp-ele">
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                  <option value="11">11</option>
+                                  <option value="12">12</option>
+                                </select>
+                                <input name="Team" onChange={this.handleChange} className="stats-inp-ele" id="Team" type="text" placeholder="Enter the Team" alt="Team" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="dob">DOB (Date Of Birth)</label>
                                 <br/>
-                                <input name="DOB" onChange={this.handleChange} className="stats-inp-ele" id="dob" type="date" placeholder="Enter the DOB" alt="DOB"/>
+                                <input name="DOB" onChange={this.handleChange} className="stats-inp-ele" id="dob" type="date" placeholder="Enter the DOB" alt="DOB" required/>
                                 </div>
                                 <div className="actions">
                             <button

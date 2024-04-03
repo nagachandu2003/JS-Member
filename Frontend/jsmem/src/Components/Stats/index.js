@@ -478,10 +478,11 @@ class Stats extends Component{
                     <div className="flexi3">
                     <img src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" className="logo-img2" alt="logo"/>
                     <h2 className="main-heading1">JS MEMBER</h2>
+                    <h3>Camp No : 1</h3>
                     </div>
                     </Link>
                     <div className="inner-top-container">
-                    <h1>Statistics</h1>
+                    <h1>Stats</h1>
              {/*       <Popup
                         trigger={<button className="addBtn" type="button"> Add </button>}
                         modal
