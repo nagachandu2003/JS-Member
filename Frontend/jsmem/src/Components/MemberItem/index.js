@@ -27,7 +27,7 @@ const MemberItem = (props) => {
                     <td>{DOB}</td>
                     <td>
                     <Popup
-    trigger={<button className="edit-Btn" type="button"> Edit </button>}
+    trigger={<button className="edit-Btn" type="button"> Delete </button>}
     modal
     nested
   >
