@@ -524,7 +524,7 @@ class Members extends Component{
                                 <div className="stats-inp-cont">
                                 <label htmlFor="jsid">JSID</label>
                                 <br/>
-                                <input name="JSID" onChange={this.handleChange} className="stats-inp-ele" id="jsid" type="text" alt="JSID" required/>
+                                <input name="JSID" onChange={this.handleChange} className="stats-inp-ele" id="jsid" type="text" alt="JSID" placeholder="Enter the JSID" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label  htmlFor="membername">Name</label>
@@ -570,6 +570,7 @@ class Members extends Component{
                                 <label htmlFor="Team">Team</label>
                                 <br/>
                                 <select onChange={this.onChangeTeam} name="Team" className="stats-inp-ele">
+                                  <option value="SELECT">SELECT</option>
                                   <option value="Team1">Team1</option>
                                   <option value="Team2">Team2</option>
                                   <option value="Team3">Team3</option>
