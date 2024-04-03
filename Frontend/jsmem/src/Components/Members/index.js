@@ -659,7 +659,7 @@ class Members extends Component{
                     <thead>
                 <tr>
                     <th>
-                        Sno
+                        S.No.
                     </th>
                     <th>
                         JSID
@@ -688,6 +688,9 @@ class Members extends Component{
                     <th>Team</th>
                     <th>
                         DOB
+                    </th>
+                    <th>
+                      Modify
                     </th>
                 </tr>
                 </thead>

@@ -36,24 +36,24 @@ const MemberItem = (props) => {
         {/* <button className="close " onClick={close}>
           &times;
         </button> */}
-        <div className="content popup-cont">
-            <h1>Delete</h1>
+        <div className="content popup-cont delete-cont">
+            <h1>Are you sure want to Delete?</h1>
             {/* <form onSubmit={this.onSubmitEditStatForm}>
             <input onChange={this.handleChange} name="date" type="date" value={newDate} className="stats-inp-ele"/>
             <input onChange={this.handleChange} name="CampNo" type="number" value={newCampNo} className="stats-inp-ele"/> */}
-            <button className="deleteBtn" type="button" onClick={onDelete} >Delete</button>
             {/* </form> */}
-        </div>
         <div className="actions">
           <button
-            className="button closeBtn"
+            className="button closeBtn cancel-Btn"
             onClick={() => {
               console.log('modal closed ');
               close();
             }}
           >
-            Close
+            Cancel
           </button>
+          <button className="closeBtn" type="button" onClick={onDelete} >Delete</button>
+          </div>
         </div>
       </div>
     )}

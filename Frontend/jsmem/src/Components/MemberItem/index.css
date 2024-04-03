@@ -1,0 +1,12 @@
+.delete-cont{
+    text-align: center;
+}
+.delete-Btn{
+    padding:10px;
+    background-color: red;
+    color:white;
+    border-width:0;
+}
+.cancel-Btn{
+    background-color:#2379F7;
+}
