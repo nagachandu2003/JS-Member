@@ -1,10 +1,10 @@
-import "./indexd2d.css"
+import "../D2DReport/indexd2d.css"
 import {Link} from 'react-router-dom'
 import Popup from 'reactjs-popup'
 import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import StatsItem from '../StatsItem'
-
+import DistrictItem from "../DistrictItem"
 
 const constituencies = {
     "SELECT" : ['SELECT'],
@@ -446,10 +446,10 @@ const options = [
 
 
 class D2DReport extends Component{
-    state = {statsList:[], date : '',CampNo:'',CampName:'',THV:'',TPO:'',TWC:'',TSS:'',TYCS:'',TNRB:'',TNS:'',TCD:'',TV:''}
+    state = {statsList:[], TeamNo:'',TeamLeadName:'', date : '',district:'SELECT',constituency:'',selectedConstituency:'',	Block:'',	Panchayat:'',	Village:'',THV:'',TPO:'',TWC:'',TSS:'',TYCS:'',TNRB:'',TNS:'',TCD:'',TV:''}
 
     componentDidMount = () => {
-        const stat = localStorage.getItem("statsList2")
+        const stat = localStorage.getItem("statsListd")
         if(stat)
         this.setState({statsList:JSON.parse(stat)})
     }
@@ -459,18 +459,34 @@ class D2DReport extends Component{
         this.setState({ [name]: value });
       }
 
+      onChangeDistrict = (event) => {
+        this.setState({district:event.target.value})
+    }
+
+    onChangeConstituency = (event) => {
+        this.setState({selectedConstituency:event.target.value})
+    }
+
+    onDeleteReport = (value) => {
+      const {statsList} = this.state
+      const filteredDetails = statsList.filter((ele) => ele.id!==value)
+      localStorage.setItem("statsListd",JSON.stringify(filteredDetails))
+      this.setState({statsList:filteredDetails})
+    }
+
     onSubmitStatsForm = (event) => {
         event.preventDefault()
-        const {statsList,date,CampNo,CampName,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD} = this.state
+        const {statsList,TeamNo,TeamLeadName,date ,district,constituency,selectedConstituency,	Block,	Panchayat,	Village,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD} = this.state
         const newObj = 
-        {id:uuidv4(),date,CampNo,CampName,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD}
+        {id:uuidv4(),TeamNo,TeamLeadName,date,district,constituency,selectedConstituency,	Block,	Panchayat,	Village,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD}
         const newStatList = [...statsList,newObj]
+        console.log(newObj)
         localStorage.setItem("statsList2",JSON.stringify(newStatList))
         this.setState({statsList:newStatList})
     }
 
     render(){
-        const {statsList,date,CampNo} = this.state
+        const {statsList,date,TeamNo,district} = this.state
     return (
         <div className="main-container">
             <div className="top-container">
@@ -478,7 +494,7 @@ class D2DReport extends Component{
                     <div className="flexi3">
                     <img src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" className="logo-img2" alt="logo"/>
                     <h2 className="main-heading1">JS Member</h2>
-                    <h3>Camp Number : 1</h3>
+                    <h3>Camp No : 1</h3>
                     </div>
                     </Link>
                     <div className="inner-top-container">
@@ -503,59 +519,89 @@ class D2DReport extends Component{
                                 <input name="date" onChange={this.handleChange} className="stats-inp-ele" id="date" type="date" alt="date"/>
                                 </div>
                                 <div className="stats-inp-cont">
-                                <label  htmlFor="campNo">Camp Number</label>
+                                <label  htmlFor="teamNo">Team Number</label>
                                 <br/>
-                                <input id="campNo" name="CampNo" onChange={this.handleChange} className="stats-inp-ele" type="number" placeholder="Enter the Camp Number " alt="campNo"/>
+                                <input id="teamNo" name="TeamNo" onChange={this.handleChange} className="stats-inp-ele" type="number" placeholder="Enter the Camp Number " alt="campNo"/>
                                 </div>
                                 <div className="stats-inp-cont">
-                                <label htmlFor="campName">Camp Name</label>
+                                <label htmlFor="teamleadname">Team Lead Name</label>
                                 <br/>
-                                <input className="stats-inp-ele" name="CampName" onChange={this.handleChange} id="campName" type="text" placeholder="Enter the Camp Name" alt="campName"/>
+                                <input className="stats-inp-ele" name="TeamLeadName" onChange={this.handleChange} id="teamLeadName" type="text" placeholder="Enter the Camp Name" alt="campName"/>
+                                </div>
+                                <div className="stats-inp-cont">
+                                  <label htmlFor="district">District</label>
+                                <select onChange={this.onChangeDistrict} id="district" className="stats-inp-ele" required>
+                                        <option>SELECT</option>
+                                        {options.map((ele) => <DistrictItem key={ele.OptionId} optionDetails={ele} checked/>)}
+                                 </select>
+                                </div>
+                                <div className="stats-inp-cont">
+                                    <label htmlFor="constituency">Constituency</label>
+                                    <br/>
+                                    <select onChange={this.onChangeConstituency} id="constituency" className="stats-inp-ele" required>
+                                        {constituencies[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
+                                    </select>
+                                </div>
+
+                                <div className="stats-inp-cont">
+                                <label htmlFor="block">Block</label>
+                                <br/>
+                                <input name="Block" onChange={this.handleChange} className="stats-inp-ele" id="block" type="text" placeholder="Enter the Block" alt="Block" required/>
+                                </div>
+                                <div className="stats-inp-cont">
+                                <label htmlFor="panchayat">Panchayat</label>
+                                <br/>
+                                <input name="Panchayat" onChange={this.handleChange} className="stats-inp-ele" id="panchayat" type="text" placeholder="Enter the Panchayat" alt="panchayat" required/>
+                                </div>
+                                <div className="stats-inp-cont">
+                                <label htmlFor="village">Village</label>
+                                <br/>
+                                <input name="Village" onChange={this.handleChange} className="stats-inp-ele" id="village" type="text" placeholder="Enter the Village" alt="Village" required/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="THV">THV (Total Household Visit)</label>
                                 <br/>
-                                <input name="THV" onChange={this.handleChange} className="stats-inp-ele" id="THV" type="text" placeholder="Enter the THV" alt="THV"/>
+                                <input name="THV" onChange={this.handleChange} className="stats-inp-ele" id="THV" type="number" placeholder="Enter the THV" alt="THV"/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="TPO">TPO (Total People Outreach)</label>
                                 <br/>
-                                <input name="TPO" onChange={this.handleChange} className="stats-inp-ele" id="TPO" type="text" placeholder="Enter the TPO" alt="TPO"/>
+                                <input name="TPO" onChange={this.handleChange} className="stats-inp-ele" id="TPO" type="number" placeholder="Enter the TPO" alt="TPO"/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="TWC">TWC (Total Whatsapp Count)</label>
                                 <br/>
-                                <input name="TWC" onChange={this.handleChange} className="stats-inp-ele" id="TWC" type="text" placeholder="Enter the TWC" alt="TWC"/>
+                                <input name="TWC" onChange={this.handleChange} className="stats-inp-ele" id="TWC" type="number" placeholder="Enter the TWC" alt="TWC"/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="TWC">TSS (Total Sansthapak Sadasya)</label>
                                 <br/>
-                                <input name="TSS" onChange={this.handleChange} className="stats-inp-ele" id="TSS" type="text" placeholder="Enter the TSS" alt="TSS"/>
+                                <input name="TSS" onChange={this.handleChange} className="stats-inp-ele" id="TSS" type="number" placeholder="Enter the TSS" alt="TSS"/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="TYCS">TYCS (Total Youtube Channel Subscribers)</label>
                                 <br/>
-                                <input name="TYCS" onChange={this.handleChange} className="stats-inp-ele" id="TYCS" type="text" placeholder="Enter the TYCS" alt="TYCS"/>
+                                <input name="TYCS" onChange={this.handleChange} className="stats-inp-ele" id="TYCS" type="number" placeholder="Enter the TYCS" alt="TYCS"/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="TNRB">TNRB (Total Non Resident Bihari)</label>
                                 <br/>
-                                <input name="TNRB" onChange={this.handleChange} className="stats-inp-ele" id="TNRB" type="text" placeholder="Enter the TNRB" alt="TNRB"/>
+                                <input name="TNRB" onChange={this.handleChange} className="stats-inp-ele" id="TNRB" type="number" placeholder="Enter the TNRB" alt="TNRB"/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="TNS">TNS (Total Nukkad Sabha)</label>
                                 <br/>
-                                <input name="TNS" onChange={this.handleChange} className="stats-inp-ele" id="TNS" type="text" placeholder="Enter the TNS" alt="TNS"/>
+                                <input name="TNS" onChange={this.handleChange} className="stats-inp-ele" id="TNS" type="number" placeholder="Enter the TNS" alt="TNS"/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="TCD">TCD (Total Collateral Distributed)</label>
                                 <br/>
-                                <input name="TCD" onChange={this.handleChange} className="stats-inp-ele" id="TCD" type="text" placeholder="Enter the TCD" alt="TCD"/>
+                                <input name="TCD" onChange={this.handleChange} className="stats-inp-ele" id="TCD" type="number" placeholder="Enter the TCD" alt="TCD"/>
                                 </div>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="TV">TV (Total Villages)</label>
                                 <br/>
-                                <input name="TV" onChange={this.handleChange} className="stats-inp-ele" id="TV" type="text" placeholder="Enter the TV" alt="TCD"/>
+                                <input name="TV" onChange={this.handleChange} className="stats-inp-ele" id="TV" type="number" placeholder="Enter the TV" alt="TCD"/>
                                 </div>
                                 <div className="actions">
                             <button
@@ -622,7 +668,7 @@ class D2DReport extends Component{
                     <div className="table-container">
                     <table> 
                     {(statsList.length!==0) && (
-                        statsList.map((ele) => <StatsItem key={ele.id} statDetails={ele} />
+                        statsList.map((ele) => <StatsItem key={ele.id} statDetails={ele} onDeleteReport={this.onDeleteReport} />
                         ))}
                     <thead>
                 <tr>
@@ -631,9 +677,6 @@ class D2DReport extends Component{
                     </th>
                     <th>
                         Team Number
-                    </th>
-                    <th>
-                        Team Name
                     </th>
                     <th>
                       Team Lead Name
@@ -680,9 +723,9 @@ class D2DReport extends Component{
                     <th>
                       TV
                     </th>
-                    <th>
+                    {/* <th>
                         Edit
-                    </th>
+                    </th> */}
                 </tr>
                 </thead>
                 {/* <tfoot>

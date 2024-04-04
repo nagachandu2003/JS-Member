@@ -8,7 +8,7 @@ const MemberItem = (props) => {
           id,MemberSno,JSID,Name,Number,district,constituency,selectedConstituency,Block,Panchayat,Village,Team,DOB
         } = statDetails
         const onDelete = () => {
-          console.log("I am called")
+          // console.log("I am called")
           onDeleteMember(id);
         }
     return (

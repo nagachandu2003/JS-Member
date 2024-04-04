@@ -1,45 +1,25 @@
 import "./index.css"
 import Popup from 'reactjs-popup'
-import { Component } from "react"
-
-class StatsItem extends Component{
-
-    state = {newdate:'',newCampNo:0,newCampName:'',newTHV:'',newTPO:'',newTWC:'',newTSS:'',newTYCS:'',newTNRB:'',newTNS:'',newTCD:''}
-
-    handleChange = (e) => {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-      }
-
-    onSubmitEditStatForm = () => {
-        const {newdate,newCampNo,newCampName,newTHV,newTPO,newTWC,newTSS,newTYCS,newTNRB,newTNS,newTCD} = this.state
-        const editedObj = {
-          newdate,
-          newCampNo,
-          newCampName,
-          newTHV,
-          newTPO,
-          newTWC,
-          newTSS,
-          newTYCS,
-          newTNRB,
-          newTNS,
-          newTCD
-        }
-    }
-
-    render(){
-        const {newDate,newCampNo} = this.state
-        const {statDetails} = this.props
+const MemberItem = (props) => {
+        const {statDetails,onDeleteReport} = props
         const {
-            id,date,CampNo,CampName,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD,TV
+          id,TeamNo,TeamLeadName,date ,district,constituency,selectedConstituency,	Block,	Panchayat,	Village,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD
         } = statDetails
+        const onDelete = () => {
+          // console.log("I am called")
+          onDeleteReport(id);
+        }
     return (
         <tbody className="table-body">
                 <tr>
-                    <td>{date}</td>
-                    <td>{CampNo}</td>
-                    <td>{CampName}</td>
+                <td>{date}</td>
+                    <td>{TeamNo}</td>
+                    <td>{TeamLeadName}</td>
+                    <td>{district}</td>
+                    <td>{selectedConstituency}</td>
+                    <td>{Block}</td>
+                    <td>{Panchayat}</td>
+                    <td>{Village}</td>
                     <td>{THV}</td>
                     <td>{TPO}</td>
                     <td>{TWC}</td>
@@ -48,10 +28,9 @@ class StatsItem extends Component{
                     <td>{TNRB}</td>
                     <td>{TNS}</td>
                     <td>{TCD}</td>
-                    <td>{TV}</td>
                     <td>
                     <Popup
-    trigger={<button className="edit-Btn" type="button"> Edit </button>}
+    trigger={<button className="edit-Btn" type="button"> Delete </button>}
     modal
     nested
   >
@@ -60,24 +39,24 @@ class StatsItem extends Component{
         {/* <button className="close " onClick={close}>
           &times;
         </button> */}
-        <div className="content popup-cont">
-            <h1>Edit Details</h1>
-            <form onSubmit={this.onSubmitEditStatForm}>
+        <div className="content popup-cont delete-cont">
+            <h1>Are you sure want to Delete?</h1>
+            {/* <form onSubmit={this.onSubmitEditStatForm}>
             <input onChange={this.handleChange} name="date" type="date" value={newDate} className="stats-inp-ele"/>
-            <input onChange={this.handleChange} name="CampNo" type="number" value={newCampNo} className="stats-inp-ele"/>
-            <button className="deleteBtn" type="submit" >Edit</button>
-            </form>
-        </div>
+            <input onChange={this.handleChange} name="CampNo" type="number" value={newCampNo} className="stats-inp-ele"/> */}
+            {/* </form> */}
         <div className="actions">
           <button
-            className="button closeBtn"
+            className="button closeBtn cancel-Btn"
             onClick={() => {
               console.log('modal closed ');
               close();
             }}
           >
-            Close
+            Cancel
           </button>
+          <button className="closeBtn" type="button" onClick={onDelete} >Delete</button>
+          </div>
         </div>
       </div>
     )}
@@ -86,6 +65,5 @@ class StatsItem extends Component{
                 </tr>
         </tbody>
     )
-        }
 }
-export default StatsItem
+export default MemberItem

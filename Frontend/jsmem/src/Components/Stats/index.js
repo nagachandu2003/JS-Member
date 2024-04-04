@@ -449,7 +449,7 @@ class Stats extends Component{
     state = {statsList:[], date : '',CampNo:'',CampName:'',THV:'',TPO:'',TWC:'',TSS:'',TYCS:'',TNRB:'',TNS:'',TCD:'',TV:''}
 
     componentDidMount = () => {
-        const stat = localStorage.getItem("statsList2")
+        const stat = localStorage.getItem("statsListd")
         if(stat)
         this.setState({statsList:JSON.parse(stat)})
     }
@@ -636,9 +636,6 @@ class Stats extends Component{
                         Team Number
                     </th>
                     <th>
-                        Team Name
-                    </th>
-                    <th>
                       Team Lead Name
                     </th>
                     <th>
@@ -683,9 +680,9 @@ class Stats extends Component{
                     <th>
                       TV
                     </th>
-                    <th>
+                    {/* <th>
                         Edit
-                    </th>
+                    </th> */}
                 </tr>
                 </thead>
                 {/* <tfoot>
