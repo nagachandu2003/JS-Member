@@ -487,6 +487,35 @@ class D2DReport extends Component{
 
     render(){
         const {statsList,date,TeamNo,district} = this.state
+        let THV = 0;
+        let TPO = 0;
+        let TWC = 0;
+        let TSS = 0;
+        let TYCS = 0;
+        let TNRB = 0;
+        let TNS = 0;
+        let TCD = 0;
+       let TV = 0;
+       statsList.forEach((ele) => {
+        if(ele.THV)
+        THV += parseInt(ele.THV)
+        if(ele.TPO)
+        TPO += parseInt(ele.TPO)
+        if(ele.TWC)
+        TWC += parseInt(ele.TWC)
+        if(ele.TSS)
+        TSS += parseInt(ele.TSS)
+        if(ele.TYCS)
+        TYCS += parseInt(ele.TYCS)
+        if(ele.TNRB)
+        TNRB += parseInt(ele.TNRB) 
+        if(ele.TNS)
+        TNS += parseInt(ele.TNS)
+        if(ele.TCD)
+        TCD += parseInt(ele.TCD)
+        if(ele.TV)
+        TV += parseInt(ele.TV)
+       })
     return (
         <div className="main-container">
             <div className="top-container">
@@ -764,15 +793,20 @@ class D2DReport extends Component{
                     </th>
                 </tr>
                 </thead>
-                {/* <tfoot>
+                <tfoot>
                     <tr>
-                        <th colSpan="3">Total</th>
-                        <th>{views}</th>
-                        <th>{likes}</th>
-                        <th>{comments}</th>
-                        <th>{rewards}</th>
+                        <th colSpan="9">Total</th>
+                        <th>{THV}</th>
+                        <th>{TPO}</th>
+                        <th>{TWC}</th>
+                        <th>{TSS}</th>
+                        <th>{TYCS}</th>
+                        <th>{TNRB}</th>
+                        <th>{TNS}</th>
+                        <th>{TCD}</th>
+                        <th>{TV}</th>
                     </tr>
-                </tfoot> */}
+                </tfoot>
                 </table>
             </div>
             </div>
