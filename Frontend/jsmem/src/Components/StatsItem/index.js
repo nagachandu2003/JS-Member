@@ -3,16 +3,16 @@ import Popup from 'reactjs-popup'
 const MemberItem = (props) => {
         const {statDetails,onDeleteReport} = props
         const {
-          id,TeamNo,TeamLeadName,date ,district,constituency,selectedConstituency,	Block,	Panchayat,	Village,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD
+          id,TeamName,TeamNo,TeamLeadName,date ,district,constituency,selectedConstituency,	Block,	Panchayat,	Village,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD,TV
         } = statDetails
         const onDelete = () => {
-          // console.log("I am called")
           onDeleteReport(id);
         }
     return (
         <tbody className="table-body">
                 <tr>
                 <td>{date}</td>
+                  <td>{TeamName}</td>
                     <td>{TeamNo}</td>
                     <td>{TeamLeadName}</td>
                     <td>{district}</td>
@@ -28,6 +28,7 @@ const MemberItem = (props) => {
                     <td>{TNRB}</td>
                     <td>{TNS}</td>
                     <td>{TCD}</td>
+                    <td>{TV}</td>
                     <td>
                     <Popup
     trigger={<button className="edit-Btn" type="button"> Delete </button>}
