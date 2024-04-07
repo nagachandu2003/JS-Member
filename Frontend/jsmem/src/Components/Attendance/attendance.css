@@ -1,0 +1,20 @@
+.stats-inp-ele{
+    padding:10px;
+    background-color: white;
+    border-width:0;
+    border-radius:8px;
+    width:100%;
+}
+.stats-inp-cont{
+    min-width:420px;
+    margin:10px;
+}
+table,th,td{
+    padding-left:0;
+    border:1px solid black;
+    padding:10px;
+    border-collapse: collapse;
+}
+.table-container{
+    overflow-x:auto;
+}

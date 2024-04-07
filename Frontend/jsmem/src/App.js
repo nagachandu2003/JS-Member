@@ -12,6 +12,7 @@ import Support from './Components/Support'
 import ComingSoon from './Components/ComingSoon';
 import D2DReport from './Components/D2DReport';
 import Members from './Components/Members'
+import Attendance from './Components/Attendance'
 
 class App extends Component {
   state = {isLogin:'false'}
@@ -32,6 +33,7 @@ class App extends Component {
         <Route exact path="/stats" element={<Stats/>}/>
         <Route exact path="/comingsoon" element={<ComingSoon/>}/>
         {/* <Route exact path="/ytmc" element={<Ytmc/>}/> */}
+        <Route exact path="/attendance" element={<Attendance/>}/>
         <Route exact path="/support" element={<Support/>}/>
         <Route exact path="/d2dreport" element={<D2DReport/>}/>
         <Route exact path="/members" element={<Members/>}/>

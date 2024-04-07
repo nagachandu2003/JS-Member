@@ -1,4 +1,4 @@
-import "./index.css"
+import "./attendance.css"
 import {Link} from 'react-router-dom'
 import Popup from 'reactjs-popup'
 import {Component} from 'react'
@@ -445,7 +445,7 @@ const options = [
       ]
 
 
-class Stats extends Component{
+class Attendance extends Component{
     state = {statsList:[], date : '',CampNo:'',CampName:'',THV:'',TPO:'',TWC:'',TSS:'',TYCS:'',TNRB:'',TNS:'',TCD:'',TV:''}
 
     componentDidMount = () => {
@@ -511,9 +511,9 @@ class Stats extends Component{
                     </div>
                     </Link>
                     <div className="inner-top-container">
-                    <h1>Stats</h1>
-             {/*       <Popup
-                        trigger={<button className="addBtn" type="button"> Add </button>}
+                    <h1>Attendance</h1>
+                   <Popup
+                        trigger={<button className="addBtn" type="button"> Mark Attendance </button>}
                         modal
                         nested
                     >
@@ -521,11 +521,11 @@ class Stats extends Component{
                         <div className="modal custom-popup">
                             {/* <button className="close " onClick={close}>
                             &times;
-                            </button> */}
-                            {/* <div className="header popup-cont"> Add Link </div> */}
-                            {/* <div className="content popup-cont2">
+                            </button>  */}
+                             {/* <div className="header popup-cont"> Add Link </div>  */}
+                            <div className="content popup-cont2">
                             <form className="stats-form" onSubmit={this.onSubmitStatsForm}>
-                                <h1>Enter Stats</h1>
+                                <h1>Mark Attendance</h1>
                                 <div className="stats-inp-cont">
                                 <label htmlFor="date">Date</label>
                                 <br/>
@@ -600,9 +600,10 @@ class Stats extends Component{
                             </div>
 
                             </form>
-                            </div>                        </div> */}
-                        {/* )}
-                    </Popup> */}
+                            </div>                        
+                            </div>
+                        )}
+                    </Popup>
                     <div className="date-cont">
                     <p>{(new Date()).toDateString()}</p>
                     <p>Beta</p>
@@ -616,9 +617,9 @@ class Stats extends Component{
                     <button className="nav-button">Stats</button>
                     </Link>
                     <br/>
-                    <Link className="nav-link" to="/attendance">
+                    {/* <Link className="nav-link" to="/comingsoon"> */}
                     <button className="nav-button">Attendance</button>
-                    </Link>
+                    {/* </Link */}
                     <br/>
                     <Link className="nav-link" to="/d2dreport">
                     <button className="nav-button">D2D Report</button>
@@ -653,69 +654,27 @@ class Stats extends Component{
                 <div className="main-inner-container">
                     <div className="table-container">
                     <table> 
-                    {(statsList.length!==0) && (
+                    {/* {(statsList.length!==0) && (
                         statsList.map((ele) => <StatsItem key={ele.id} statDetails={ele} onDeleteReport={this.onDeleteReport} />
-                        ))}
+                        ))} */}
                     <thead>
                 <tr>
                     <th>
                         Date
                     </th>
                     <th>
-                      Team Name
+                        Total Members
                     </th>
                     <th>
-                        Team Number
+                        Present
                     </th>
                     <th>
-                      Team Lead Name
-                    </th>
-                    <th>
-                      District
-                    </th>
-                    <th>
-                      Constituency
-                    </th>
-                    <th>
-                      Block
-                    </th>
-                    <th>
-                      Panchayat
-                    </th>
-                    <th>
-                      Village
-                    </th>
-                    <th>
-                    THV
-                    </th>
-                    <th>
-                        TPO
-                    </th>
-                    <th>
-                        TWC
-                    </th>
-                    <th>
-                        TSS
-                    </th>
-                    <th>
-                        TYCS
-                    </th>
-                    <th>
-                        TNRB
-                    </th>
-                    <th>
-                        TNS
-                    </th>
-                    <th>
-                        TCD
-                    </th>
-                    <th>
-                      TV
+                        Absent
                     </th>
                 </tr>
                 </thead>
                 <tfoot>
-                    <tr>
+                    {/* <tr>
                         <th colSpan="9">Total</th>
                         <th>{THV}</th>
                         <th>{TPO}</th>
@@ -726,7 +685,7 @@ class Stats extends Component{
                         <th>{TNS}</th>
                         <th>{TCD}</th>
                         <th>{TV}</th>
-                    </tr>
+                    </tr> */}
                 </tfoot>
                 </table>
             </div>
@@ -736,4 +695,4 @@ class Stats extends Component{
         );
 }
 }
-export default Stats
+export default Attendance
