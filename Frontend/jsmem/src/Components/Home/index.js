@@ -9,7 +9,7 @@ const Home = () => (
                 <h1 className="main-heading1">JS MEMBER</h1>
             </div>
             <div>
-                <Link to="/camps">
+                <Link to="/stats">
                 <div className="Camps">
                     <h1>Camps</h1>
                 </div>
