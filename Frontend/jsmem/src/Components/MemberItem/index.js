@@ -3,7 +3,7 @@ import Popup from 'reactjs-popup'
 import { Component } from "react"
 
 const MemberItem = (props) => {
-        const {statDetails,onDeleteMember} = props
+        const {statDetails,onDeleteMember,sno} = props
         const {
           id,MemberSno,JSID,Name,Number,district,constituency,selectedConstituency,Block,Panchayat,Village,Team,DOB
         } = statDetails
@@ -14,7 +14,7 @@ const MemberItem = (props) => {
     return (
         <tbody className="table-body">
                 <tr>
-                    <td>{MemberSno}</td>
+                    <td>{sno}</td>
                     <td>{JSID}</td>
                     <td>{Name}</td>
                     <td>{Number}</td>

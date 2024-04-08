@@ -657,7 +657,7 @@ class Members extends Component{
                     <div className="table-container">
                     <table> 
                     {(statsListm.length!==0) && (
-                        statsListm.map((ele) => <MemberItem onDeleteMember={this.onDeleteMember} key={ele.id} statDetails={ele} />
+                        statsListm.map((ele,index) => <MemberItem sno={index+1} onDeleteMember={this.onDeleteMember} key={ele.id} statDetails={ele} />
                         ))}
                     <thead>
                 <tr>

@@ -447,10 +447,13 @@ const options = [
 
 
 class Attendance extends Component{
-    state = {statsList:[], date : '',viewMark:false}
+    state = {statsList:[], date : '',viewMark:false,newAttendanceList:[]}
 
     componentDidMount = () => {
+        let atte = localStorage.getItem("attendanceList")
         let stat = localStorage.getItem("statsListm")
+        if(atte)
+        this.setState({newAttendanceList:JSON.parse(atte)})
         if(stat){
           stat = JSON.parse(stat)
           stat = stat.map((ele) => {
@@ -485,25 +488,42 @@ class Attendance extends Component{
     }
 
     onChangePresentStatus = (uno,sta) => {
-      const {statsList} = this.state
+      const {statsList,date} = this.state
       const updatedList = statsList.map((ele) => {
         if(ele.id===uno)
         {
-          return {...ele,present:sta}
+          return {...ele,present:sta,date}
         }
         return ele
       })
-      console.log(statsList)
       this.setState({statsList:updatedList})
     }
 
-    onClickSave = {
-
+    onClickSave = () => {
+      const {statsList,newAttendanceList,date,viewMark} = this.state
+      let present = 0;
+      let absent = 0;
+        statsList.forEach((ele) => {
+          if(ele.present==="present")
+          present += 1;
+          if(ele.present==="absent")
+          absent += 1;
+        })
+      const newLi = [...newAttendanceList,{
+        date,
+        totMembers:statsList.length,
+        totPresent:present,
+        totAbsent:absent
+      }]
+      localStorage.setItem("attendanceList",JSON.stringify(newLi))
+      this.setState({newAttendanceList:newLi,viewMark:!viewMark})
     }
 
     render(){
-        let {statsList,date,viewMark} = this.state
-        console.log(statsList)
+        let {statsList,date,viewMark,newAttendanceList} = this.state
+        // console.log(newAttendanceList)
+        if(statsList.length===0)
+        alert("Add Members to mark attendance")
         let present = 0;
         let absent = 0;
         statsList.forEach((ele) => {
@@ -512,6 +532,8 @@ class Attendance extends Component{
           if(ele.present==="absent")
           absent += 1;
         })
+        // const uniqueDates = [...new Set(statsList.map(obj => obj.date))];
+        // console.log(uniqueDates)
     return (
         <div className="main-container">
             <div className="top-container">
@@ -595,6 +617,16 @@ class Attendance extends Component{
                     </th>
                 </tr>
                 </thead>
+                <tbody>
+                  {newAttendanceList.map((ele) => {
+                    return (<tr key={ele.date}>
+                      <td>{ele.date}</td>
+                      <td>{ele.totMembers}</td>
+                      <td>{ele.totPresent}</td>
+                      <td>{ele.totAbsent}</td>
+                    </tr>)
+                  })}
+                </tbody>
                 <tfoot>
                     {/* <tr>
                         <th colSpan="9">Total</th>
@@ -662,7 +694,7 @@ class Attendance extends Component{
                 </tfoot>
                   </table>
                   <button onClick={this.onClickMarkAttendance} className="cancelBtn">Cancel</button>
-                  <button type="button" className="saveBtn">Save</button>
+                  <button type="button" onClick={this.onClickSave} className="saveBtn">Save</button>
                   </>
                 )}
             </div>
