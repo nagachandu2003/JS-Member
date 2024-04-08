@@ -1,0 +1,10 @@
+.present-radioBtn{
+    padding:10px;
+    background-color: green;
+    color:green;
+}
+.absent-radioBtn{
+    padding:10px;
+    background-color: red;
+    color:red;
+}

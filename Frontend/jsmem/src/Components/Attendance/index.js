@@ -3,7 +3,8 @@ import {Link} from 'react-router-dom'
 import Popup from 'reactjs-popup'
 import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
-import StatsItem from '../StatsItem'
+import AttendanceItem from '../AttendanceItem'
+
 
 
 const constituencies = {
@@ -446,17 +447,31 @@ const options = [
 
 
 class Attendance extends Component{
-    state = {statsList:[], date : '',CampNo:'',CampName:'',THV:'',TPO:'',TWC:'',TSS:'',TYCS:'',TNRB:'',TNS:'',TCD:'',TV:''}
+    state = {statsList:[], date : '',viewMark:false}
 
     componentDidMount = () => {
-        const stat = localStorage.getItem("statsListd")
-        if(stat)
-        this.setState({statsList:JSON.parse(stat)})
+        let stat = localStorage.getItem("statsListm")
+        if(stat){
+          stat = JSON.parse(stat)
+          stat = stat.map((ele) => {
+            return {...ele,present:"",attendDate:''}
+          })
+          this.setState({statsList:stat})
+        }
+
     }
 
     handleChange = (e) => {
         const { name, value } = e.target;
         this.setState({ [name]: value });
+      }
+
+      onChangeDate = (event) => {
+        this.setState({date:event.target.value})
+      }
+
+      onClickMarkAttendance = () => {
+        this.setState((prevState) => ({viewMark:!prevState.viewMark}))
       }
 
     onSubmitStatsForm = (event) => {
@@ -469,37 +484,34 @@ class Attendance extends Component{
         this.setState({statsList:newStatList})
     }
 
+    onChangePresentStatus = (uno,sta) => {
+      const {statsList} = this.state
+      const updatedList = statsList.map((ele) => {
+        if(ele.id===uno)
+        {
+          return {...ele,present:sta}
+        }
+        return ele
+      })
+      console.log(statsList)
+      this.setState({statsList:updatedList})
+    }
+
+    onClickSave = {
+
+    }
+
     render(){
-        const {statsList,date,CampNo} = this.state
-        let THV = 0;
-        let TPO = 0;
-        let TWC = 0;
-        let TSS = 0;
-        let TYCS = 0;
-        let TNRB = 0;
-        let TNS = 0;
-        let TCD = 0;
-       let TV = 0;
-       statsList.forEach((ele) => {
-        if(ele.THV)
-        THV += parseInt(ele.THV)
-        if(ele.TPO)
-        TPO += parseInt(ele.TPO)
-        if(ele.TWC)
-        TWC += parseInt(ele.TWC)
-        if(ele.TSS)
-        TSS += parseInt(ele.TSS)
-        if(ele.TYCS)
-        TYCS += parseInt(ele.TYCS)
-        if(ele.TNRB)
-        TNRB += parseInt(ele.TNRB) 
-        if(ele.TNS)
-        TNS += parseInt(ele.TNS)
-        if(ele.TCD)
-        TCD += parseInt(ele.TCD)
-        if(ele.TV)
-        TV += parseInt(ele.TV)
-       })
+        let {statsList,date,viewMark} = this.state
+        console.log(statsList)
+        let present = 0;
+        let absent = 0;
+        statsList.forEach((ele) => {
+          if(ele.present==="present")
+          present += 1;
+          if(ele.present==="absent")
+          absent += 1;
+        })
     return (
         <div className="main-container">
             <div className="top-container">
@@ -512,98 +524,7 @@ class Attendance extends Component{
                     </Link>
                     <div className="inner-top-container">
                     <h1>Attendance</h1>
-                   <Popup
-                        trigger={<button className="addBtn" type="button"> Mark Attendance </button>}
-                        modal
-                        nested
-                    >
-                        {close => (
-                        <div className="modal custom-popup">
-                            {/* <button className="close " onClick={close}>
-                            &times;
-                            </button>  */}
-                             {/* <div className="header popup-cont"> Add Link </div>  */}
-                            <div className="content popup-cont2">
-                            <form className="stats-form" onSubmit={this.onSubmitStatsForm}>
-                                <h1>Mark Attendance</h1>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="date">Date</label>
-                                <br/>
-                                <input name="date" onChange={this.handleChange} className="stats-inp-ele" id="date" type="date" alt="date"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label  htmlFor="campNo">Camp Number</label>
-                                <br/>
-                                <input id="campNo" name="CampNo" onChange={this.handleChange} className="stats-inp-ele" type="number" placeholder="Enter the Camp Number " alt="campNo"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="campName">Camp Name</label>
-                                <br/>
-                                <input className="stats-inp-ele" name="CampName" onChange={this.handleChange} id="campName" type="text" placeholder="Enter the Camp Name" alt="campName"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="THV">THV (Total Household Visit)</label>
-                                <br/>
-                                <input name="THV" onChange={this.handleChange} className="stats-inp-ele" id="THV" type="text" placeholder="Enter the THV" alt="THV"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="TPO">TPO (Total People Outreach)</label>
-                                <br/>
-                                <input name="TPO" onChange={this.handleChange} className="stats-inp-ele" id="TPO" type="text" placeholder="Enter the TPO" alt="TPO"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="TWC">TWC (Total Whatsapp Count)</label>
-                                <br/>
-                                <input name="TWC" onChange={this.handleChange} className="stats-inp-ele" id="TWC" type="text" placeholder="Enter the TWC" alt="TWC"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="TWC">TSS (Total Sansthapak Sadasya)</label>
-                                <br/>
-                                <input name="TSS" onChange={this.handleChange} className="stats-inp-ele" id="TSS" type="text" placeholder="Enter the TSS" alt="TSS"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="TYCS">TYCS (Total Youtube Channel Subscribers)</label>
-                                <br/>
-                                <input name="TYCS" onChange={this.handleChange} className="stats-inp-ele" id="TYCS" type="text" placeholder="Enter the TYCS" alt="TYCS"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="TNRB">TNRB (Total Non Resident Bihari)</label>
-                                <br/>
-                                <input name="TNRB" onChange={this.handleChange} className="stats-inp-ele" id="TNRB" type="text" placeholder="Enter the TNRB" alt="TNRB"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="TNS">TNS (Total Nukkad Sabha)</label>
-                                <br/>
-                                <input name="TNS" onChange={this.handleChange} className="stats-inp-ele" id="TNS" type="text" placeholder="Enter the TNS" alt="TNS"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="TCD">TCD (Total Collateral Distributed)</label>
-                                <br/>
-                                <input name="TCD" onChange={this.handleChange} className="stats-inp-ele" id="TCD" type="text" placeholder="Enter the TCD" alt="TCD"/>
-                                </div>
-                                <div className="stats-inp-cont">
-                                <label htmlFor="TV">TV (Total Villages)</label>
-                                <br/>
-                                <input name="TV" onChange={this.handleChange} className="stats-inp-ele" id="TV" type="text" placeholder="Enter the TV" alt="TCD"/>
-                                </div>
-                                <div className="actions">
-                            <button
-                                className="button closeBtn"
-                                onClick={() => {
-                                console.log('modal closed ');
-                                close();
-                                }}
-                            >
-                                Cancel
-                            </button>
-                            <button className="fetchBtn" type="submit">Add</button>
-                            </div>
-
-                            </form>
-                            </div>                        
-                            </div>
-                        )}
-                    </Popup>
+                    <button onClick={this.onClickMarkAttendance} className="addBtn" type="button"> Mark Attendance </button>
                     <div className="date-cont">
                     <p>{(new Date()).toDateString()}</p>
                     <p>Beta</p>
@@ -653,6 +574,7 @@ class Attendance extends Component{
                 </div>
                 <div className="main-inner-container">
                     <div className="table-container">
+                    { viewMark===false && (
                     <table> 
                     {/* {(statsList.length!==0) && (
                         statsList.map((ele) => <StatsItem key={ele.id} statDetails={ele} onDeleteReport={this.onDeleteReport} />
@@ -688,6 +610,61 @@ class Attendance extends Component{
                     </tr> */}
                 </tfoot>
                 </table>
+                )}
+                {viewMark===true && (
+                  <>
+                  <table>
+                  <thead>
+                    <tr >
+                      <th colSpan="4">
+                        Date
+                      </th>
+                      <th colSpan="3">
+                        <input type="date" onChange={this.onChangeDate}/>
+                      </th>
+                    </tr>
+                  <tr>
+                      <th>
+                          S.No.
+                      </th>
+                      <th>
+                          JSID
+                      </th>
+                      <th>
+                        Name
+                      </th>
+                      <th>
+                        Number
+                      </th>
+                      <th>
+                        Total Present
+                      </th>
+                      <th>
+                          Total Absent
+                      </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {statsList.map((ele,index) => <AttendanceItem sno={index+1} key={ele.id} attendDetails={ele} onChangePresentStatus={this.onChangePresentStatus}/>)}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th colSpan="4">
+                        Total
+                      </th>
+                      <th>
+                        {present}
+                      </th>
+                      <th>
+                        {absent}
+                      </th>
+                    </tr>
+                </tfoot>
+                  </table>
+                  <button onClick={this.onClickMarkAttendance} className="cancelBtn">Cancel</button>
+                  <button type="button" className="saveBtn">Save</button>
+                  </>
+                )}
             </div>
             </div>
         </div>

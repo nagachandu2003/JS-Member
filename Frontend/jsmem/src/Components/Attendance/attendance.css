@@ -18,3 +18,17 @@ table,th,td{
 .table-container{
     overflow-x:auto;
 }
+.saveBtn{
+    background-color: #0075f8;
+    padding:10px;
+    color:white;
+    border-width:0;
+    border-radius:5px;
+}
+.cancelBtn{
+    background-color: red;
+    padding:10px;
+    color:white;
+    border-width:0;
+    border-radius:5px;
+}
