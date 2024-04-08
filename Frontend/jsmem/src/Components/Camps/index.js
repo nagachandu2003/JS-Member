@@ -653,7 +653,7 @@ class Camps extends Component {
                     <button className="nav-button">Stats</button>
                     </Link>
                     <br/>
-                    <Link className="nav-link" to="/comingsoon">
+                    <Link className="nav-link" to="/attendance">
                     <button className="nav-button">Attendance</button>
                     </Link>
                     <br/>
