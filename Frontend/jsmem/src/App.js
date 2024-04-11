@@ -13,6 +13,10 @@ import ComingSoon from './Components/ComingSoon';
 import D2DReport from './Components/D2DReport';
 import Members from './Components/Members'
 import Attendance from './Components/Attendance'
+import YTMCLogin from './Components/YTMCLogin';
+import YTMCHome from './Components/YTMCHome'
+
+
 
 class App extends Component {
   state = {isLogin:'false'}
@@ -33,6 +37,8 @@ class App extends Component {
         <Route exact path="/stats" element={<Stats/>}/>
         <Route exact path="/comingsoon" element={<ComingSoon/>}/>
         {/* <Route exact path="/ytmc" element={<Ytmc/>}/> */}
+        <Route exact path="/ytmchome" element={<YTMCHome/>}/>
+        <Route exact path="/ytmclogin" element={<YTMCLogin/>}/>
         <Route exact path="/attendance" element={<Attendance/>}/>
         <Route exact path="/support" element={<Support/>}/>
         <Route exact path="/d2dreport" element={<D2DReport/>}/>
