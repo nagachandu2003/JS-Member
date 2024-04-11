@@ -74,7 +74,7 @@ const YTMCLogin = () => {
         <button className="submitBtn" type="submit">Submit</button>
         {errorMsg.length !== 0 && <p>{errorMsg}</p>}
         <h1 style={{textAlign:'center'}}>OR</h1>
-        <GoogleOAuthProvider clientId={process.env.REACT_APP_SECRET_KEY}>
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
             <GoogleLogin 
             onSuccess={(credentialResponse) => {
                 navigate("/ytmchome")
