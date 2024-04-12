@@ -15,6 +15,7 @@ import Members from './Components/Members'
 import Attendance from './Components/Attendance'
 import YTMCLogin from './Components/YTMCLogin';
 import YTMCHome from './Components/YTMCHome'
+import YTMCRegister from './Components/YTMCRegister'
 
 
 
@@ -37,6 +38,7 @@ class App extends Component {
         <Route exact path="/stats" element={<Stats/>}/>
         <Route exact path="/comingsoon" element={<ComingSoon/>}/>
         {/* <Route exact path="/ytmc" element={<Ytmc/>}/> */}
+        <Route exact path="/ytmcregister" element={<YTMCRegister/>}/>
         <Route exact path="/ytmchome" element={<YTMCHome/>}/>
         <Route exact path="/ytmclogin" element={<YTMCLogin/>}/>
         <Route exact path="/attendance" element={<Attendance/>}/>

@@ -26,7 +26,7 @@ const YTMCLogin = () => {
     console.log("Login Success");
     Cookies.set("jwt_token2","helloworld2",{expires:2});
     // console.log(redir);
-    navigate("/")
+    navigate("/ytmcregister")
   };
 
   const onSubmitUser = event => {
@@ -77,7 +77,7 @@ const YTMCLogin = () => {
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
             <GoogleLogin 
             onSuccess={(credentialResponse) => {
-                navigate("/ytmchome")
+                navigate("/ytmcregister")
             }}
             onError={() => {
                 console.log("Login Failed")

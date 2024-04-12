@@ -12,12 +12,12 @@ body{
 .ytmchome-top-container{
     background-color: #ECCA3D;
     width:100%;
-    height:100px;
+    min-height:10vh;
     padding:20px;
 }
 .ytmchome-left-container{
     width:200px;
-    min-height:80vh;
+    min-height:90vh;
     background-color: #ECCA3D;
     /* padding:20px; */
     text-align: center;
@@ -68,7 +68,7 @@ body{
     }
 }
 .ytmc-content-container{
-    min-height:80vh;
+    min-height:90vh;
 }
 .logoutBtn{
     padding:10px;
@@ -82,4 +82,38 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.ytmcreportBtn{
+    background-color:#2379F7;
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    border-width:0;
+    color:white;
+    font-size:20px;
+    position:absolute;
+    bottom:0;
+    right:0;
+    align-self: flex-end;
+    /* z-index:-1; */
+}
+.ytmchome-popup-cont{
+    background-color: white;
+    border-radius:8px;
+    position:absolute;
+    left:50%;
+    top:50%;
+    bottom:50%;
+    right:50%;
+}
+.ytmchome-custom-popup{
+    background-color:#ECCA3D;
+    border:1px solid black;
+    border-radius:8px;
+}
+.ytmchome-popup-cont2{
+    max-height:400px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    padding:10px;
 }

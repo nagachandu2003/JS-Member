@@ -1,9 +1,6 @@
 import "./index.css"
-import {Component} from 'react'
-import { googleLogout } from '@react-oauth/google';
-import {Navigate} from 'react-router-dom'
-import DistrictItem from '../DistrictItem'
-import {Popup} from 'reactjs-popup'
+import { Component } from "react";
+import DistrictItem from "../DistrictItem";
 
 const constituencies = {
     "SELECT" : ['SELECT'],
@@ -474,10 +471,9 @@ const states = [
     "West Bengal"
   ]
 
-class YTMCHome extends Component{
-    state = {name:'',channelUrl:'',state:'Bihar',district:'SELECT',constituency:'',photo:'',whatsappnumber:'',selectedConstituency:'SELECT'}
+class YTMCRegister extends Component {
+    state = {name:'',channelUrl:'',state:'Bihar',district:'SELECT',constituency:'',photo:'',whatsappnumber:'',selectedConstituency:'SELECT',registeredStatus:false}
     
-
     onChangeSearchInput = (event) => {
         this.setState({userinput:event.target.value})
     }
@@ -510,53 +506,84 @@ class YTMCHome extends Component{
         this.setState({whatsappnumber:event.target.value})
     }
 
-    onClickLogout = () => {
-        googleLogout();
-        console.log("Logged out successfully")
-        window.location.href="/ytmclogin"
-        // return <Navigate to="/ytmclogin" replace={true}/>
+    onSubmitRegisterYTMC = (event) => {
+        event.preventDefault()
+        const {name,channelUrl,state,district,constituency,photo,whatsappnumber,selectedConstituency} = this.state
+
+        this.setState((prevState) => ({registeredStatus:!prevState.registeredStatus}))
     }
 
+
     render(){
+        const {name,channelUrl,state,district,constituency,photo,whatsappnumber,selectedConstituency,registeredStatus} = this.state
         return (
-            <>
-            <div className="ytmchome-main-container">
-                <div>
-                <button className="ytmcreportBtn">+</button>
-                </div>
-                
-                <div className="ytmchome-top-container">
-                    <div className="ytmchome-top-flex-container">
-                    <h1>YTMC</h1>
-                    <button onClick={this.onClickLogout} type="button" className="logoutBtn">Log Out</button>
-                    </div>
-                </div>
-                <div className="ytmchome-flex-container1">
-                
-                <div className="ytmchome-left-container">
-                    <ul className="ytmchome-list-container">
-                        <li className="ytmchome-list-item">Report</li>
-                        <li className="ytmchome-list-item">Reward</li>
-                        <li className="ytmchome-list-item">Content</li>
-                        <li className="ytmchome-list-item">Profile</li>
-                    </ul>
-                </div>
-                <div className="ytmchome-content-container">
-                    <h1>I am Main Container</h1>
-                </div>
-                </div>
+        <div className="ytmcregister-main-container">
+            {registeredStatus===false && (
+                <>
+            <div className="ytmcregister-top-container">
+                <h1>Register</h1>
             </div>
-            <footer className="ytmchome-footer">
-                <ul className="ytmchome-list-container2">
-                    <li className="ytmchome-list-item2">Report</li>
-                    <li className="ytmchome-list-item2">Reward</li>
-                    <li className="ytmchome-list-item2">Content</li>
-                    <li className="ytmchome-list-item2">Profile</li>
-                </ul>
-            </footer>
-            </>
+            <div className="ytmcregister-form-container">
+            <form onSubmit={this.onSubmitRegisterYTMC}>
+                <div className="ytmcregister-cont-ele">
+                <label htmlFor="username">Username</label>
+                <br/>
+                <input placeholder="Enter the Name" onChange={this.onChangeName} className="ytmcregister-user-input" type="text" id="username" required/>
+                </div>
+                <div className="ytmcregister-cont-ele">
+                <label htmlFor="channelurl">Channel URL</label>
+                <br/>
+                <input placeholder="Enter the Channel Url" onChange={this.onChangeChannelUrl} className="ytmcregister-user-input" type="url" id="channelurl" required/>
+                </div>
+                <div className="ytmcregister-cont-ele">
+                    <label htmlFor="state">State</label>
+                    <br/>
+                    <select className="ytmcregister-user-input" id="state" onChange={this.onChangeState} value={state}>
+                        {states.map((ele) =>  <option key={ele}>{ele}</option>)}
+                    </select>
+                    {/* <input placeholder="Enter the State : E.g: Bihar" onChange={this.onChangeState} type="text" className="ytmchome-user-input" required/> */}
+                </div>
+                <div className="ytmcregister-cont-ele">
+                    <label htmlFor="district">District</label>
+                    <br/>
+                    <select onChange={this.onChangeDistrict} id="district" className="ytmcregister-user-input">
+                        <option>SELECT</option>
+                        {options.map((ele) => <DistrictItem key={ele.OptionId} optionDetails={ele} checked/>)}
+                    </select>
+                    </div>
+                    <div className="ytmcregister-cont-ele">
+                    <label htmlFor="constituency">Constituency</label>
+                    <br/>
+                    <select onChange={this.onChangeConstituency} id="constituency" className="ytmcregister-user-input" >
+                        {constituencies[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
+                    </select>
+                </div>
+                <div className="ytmcregister-cont-ele">
+                    <label htmlFor="photo">Photo</label>
+                    <br/>
+                    <input className="ytmcregister-user-input" onChange={this.onChangePhoto} type="file" id="photo" required/>
+                </div>
+                <div className="ytmcregister-cont-ele">
+                    <label htmlFor="whatsappno">Whatsapp Number</label>
+                    <br/>
+                    <input onChange={this.onChangeWhatsApp} placeholder="Enter the whatsapp number E.g : +91 987654321" pattern="^\+91(?:[0-9] ?){6,14}[0-9]$" className="ytmcregister-user-input" type="tel" id="whatsappno" required/>
+                </div>
+                <button className="fetchBtn" type="submit">Register</button>
+            </form>
+        </div>
+        </>
+        )}
+        {registeredStatus && (
+            <div style={{textAlign:'center'}} className="ytmcregister-form-container">
+                <img style={{height:'50px',width:'50px'}} src="https://imgs.search.brave.com/pCrYBKil64ozCVM6c4QGMgFj6qCLcSGLMTSRHJOimbw/rs:fit:500:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzgxLzM0Lzc4/LzM2MF9GXzU4MTM0/Nzg5N19zZ1lnVEVR/MFBCSEtONER3dXhX/UkFucGxOemtlNXNk/Ni5qcGc" alt="image"/>
+                <h1>Your Registration is Pending...</h1>
+                <p>We will get back to you soon.</p>
+            </div>
+
+        )}
+        </div>
         )
     }
 }
 
-export default YTMCHome
+export default YTMCRegister
