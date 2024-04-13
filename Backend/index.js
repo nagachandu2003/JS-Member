@@ -26,7 +26,7 @@ const connectToDatabase = async () => {
 
 
 app.get("/", (req, res) => {
-  res.send("Hello, I am connected");
+  res.send("Hello, I am connected Now");
 });
 
 // Define the /users/:email route first
