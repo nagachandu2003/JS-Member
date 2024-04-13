@@ -65,6 +65,7 @@ app.get("/users", async (req, res) => {
     await connectToDatabase();
     const result = await accountsCollection.findOne({ username: "Vijay" });
     console.log(result);
+    res.send(result)
   } catch (Err) {
     console.log(`Error Occurred : ${Err}`);
   } finally {
