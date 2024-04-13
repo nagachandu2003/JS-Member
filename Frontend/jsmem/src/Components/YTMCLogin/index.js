@@ -28,7 +28,7 @@ const YTMCLogin = () => {
 
   const check = async (arg) => {
     // console.log("I am Check Function")
-    const response = await fetch(`http://localhost:3001/users/${arg}`)
+    const response = await fetch(`https://js-member-backend.vercel.app/users/${arg}`)
     const data = await response.json()
     if(data.success)
     {
