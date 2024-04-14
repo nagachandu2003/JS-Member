@@ -96,20 +96,20 @@ app.get("/users", async (req, res) => {
 // })
 
 
-// app.post("/users", async (req,res) => {
-//   // console.log(req.body)
-//   try{
-//     await connectToDatabase()
-//     const result = await accountsCollection.insertOne(req.body);
-//     res.send({success:'User Inserted Successfully'})
-//   }
-//   catch(Err){
-//       console.log(`Error Occurred : ${Err}`)
-//   }
-//   finally{
-//       await client.close()
-//   }
-// })
+app.post("/users", async (req,res) => {
+  // console.log(req.body)
+  try{
+    await connectToDatabase()
+    const result = await accountsCollection.insertOne(req.body);
+    res.send({success:'User Inserted Successfully'})
+  }
+  catch(Err){
+      console.log(`Error Occurred : ${Err}`)
+  }
+  finally{
+      await client.close()
+  }
+})
 
 app.listen(3001,() => {
     console.log("Server is running on http://localhost:3001")
