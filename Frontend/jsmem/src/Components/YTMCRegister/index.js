@@ -506,7 +506,7 @@ const YTMCRegister = () => {
         },
         body : JSON.stringify(value)
       }
-      const response = await fetch("http://localhost:3001/users",options)
+      const response = await fetch("https://js-member-backend.vercel.app/users",options)
       const data = await response.json()
       console.log(data)
     }
