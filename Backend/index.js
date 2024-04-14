@@ -111,6 +111,31 @@ app.post("/users", async (req,res) => {
   }
 })
 
+
+app.put("/users", async (req,res) => {
+  const {newemail,newregstatus} = req.body
+  // db.collectionName.update(
+  //   { _id: ObjectId("your_objectid") },
+  //   { $set: { regstatus: "approved" } }
+  // );
+  
+  try {
+    await connectToDatabase()
+    const result = await accountsCollection.updateOne(
+      {email:newemail}, // Match the document with the given userId
+      { $set: { regstatus: "approved" } }
+    );
+    // const result = await accountsCollection.updateOne({_id: new ObjectId(userId)},{$set : {regstatus:newregstatus}})
+    res.send({ success: "Password Updated Successfully" });
+  }
+  catch(Err){
+    console.log(`Error Occurred : ${Err}`)
+  }
+  finally {
+    await client.close()
+  }
+})
+
 app.listen(3001,() => {
     console.log("Server is running on http://localhost:3001")
 })
