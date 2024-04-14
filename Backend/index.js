@@ -63,7 +63,9 @@ app.get("/users", async (req, res) => {
   // console.log("I am in /users route");
   try {
     await connectToDatabase();
-    const result = await accountsCollection.findOne({ username: "Vijay" });
+    const result = await accountsCollection.find({
+      regstatus: { $in: ["", "approved", "rejected"] }
+    }).toArray();
     console.log(result);
     res.send(result)
   } catch (Err) {
