@@ -114,6 +114,7 @@ app.post("/users", async (req,res) => {
 
 app.put("/users", async (req,res) => {
   const {newemail,newregstatus} = req.body
+  console.log(newregstatus)
   // console.log(newemail);
   // console.log(newregstatus)
   // db.collectionName.update(
@@ -125,7 +126,7 @@ app.put("/users", async (req,res) => {
     await connectToDatabase()
     const result = await accountsCollection.updateOne(
       {email:newemail}, // Match the document with the given userId
-      { $set: { regstatus: "approved" } }
+      { $set: { regstatus: newregstatus } }
     );
     // const result = await accountsCollection.updateOne({_id: new ObjectId(userId)},{$set : {regstatus:newregstatus}})
     res.send({ success: "Registration Status Updated Successfully" });
