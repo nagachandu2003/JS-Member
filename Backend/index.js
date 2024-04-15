@@ -64,7 +64,7 @@ app.get("/users", async (req, res) => {
   try {
     await connectToDatabase();
     const result = await accountsCollection.find({
-      regstatus: { $in: ["", "approved", "rejected"] }
+      regstatus: { $in: ["pending", "approved", "rejected"] }
     }).toArray();
     console.log(result);
     res.send(result)
@@ -114,6 +114,7 @@ app.post("/users", async (req,res) => {
 
 app.put("/users", async (req,res) => {
   const {newemail,newregstatus} = req.body
+  console.log(newregstatus)
   // db.collectionName.update(
   //   { _id: ObjectId("your_objectid") },
   //   { $set: { regstatus: "approved" } }
@@ -126,7 +127,7 @@ app.put("/users", async (req,res) => {
       { $set: { regstatus: "approved" } }
     );
     // const result = await accountsCollection.updateOne({_id: new ObjectId(userId)},{$set : {regstatus:newregstatus}})
-    res.send({ success: "Password Updated Successfully" });
+    res.send({ success: "Registration Status Updated Successfully" });
   }
   catch(Err){
     console.log(`Error Occurred : ${Err}`)
