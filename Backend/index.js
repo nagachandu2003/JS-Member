@@ -114,7 +114,8 @@ app.post("/users", async (req,res) => {
 
 app.put("/users", async (req,res) => {
   const {newemail,newregstatus} = req.body
-  console.log(newregstatus)
+  // console.log(newemail);
+  // console.log(newregstatus)
   // db.collectionName.update(
   //   { _id: ObjectId("your_objectid") },
   //   { $set: { regstatus: "approved" } }
