@@ -4,6 +4,7 @@ import { googleLogout } from '@react-oauth/google';
 import {Navigate} from 'react-router-dom'
 import DistrictItem from '../DistrictItem'
 import {Popup} from 'reactjs-popup'
+import {v4 as uuidv4} from 'uuid'
 
 const constituencies = {
     "SELECT" : ['SELECT'],
@@ -475,39 +476,18 @@ const states = [
   ]
 
 class YTMCHome extends Component{
-    state = {name:'',channelUrl:'',state:'Bihar',district:'SELECT',constituency:'',photo:'',whatsappnumber:'',selectedConstituency:'SELECT'}
+    state = {channelUrl:'',channelsList:[]}
     
-
-    onChangeSearchInput = (event) => {
-        this.setState({userinput:event.target.value})
-    }
-
-    onChangeName = (event) => {
-        this.setState({name:event.target.value})
-    }
 
     onChangeChannelUrl = (event) => {
         this.setState({channelUrl:event.target.value})
     }
 
-    onChangeState = (event) => {
-        this.setState({state:event.target.value})
-    }
-
-    onChangeDistrict = (event) => {
-        this.setState({district:event.target.value})
-    }
-
-    onChangeConstituency = (event) => {
-        this.setState({selectedConstituency:event.target.value})
-    }
-
-    onChangePhoto = (event) => {
-        this.setState({photo:event.target.files[0]})
-    }
-
-    onChangeWhatsApp = (event) => {
-        this.setState({whatsappnumber:event.target.value})
+    onClickAddChannel = (event) => {
+      event.preventDefault()
+      const {channelUrl,channelsList} = this.state
+      const newObj = [...channelsList,{channelUrl,id:uuidv4()}]
+      this.setState({channelsList:newObj})
     }
 
     onClickLogout = () => {
@@ -518,13 +498,50 @@ class YTMCHome extends Component{
     }
 
     render(){
+      const {channelsList} = this.state
         return (
             <>
             <div className="ytmchome-main-container">
                 <div>
-                <button className="ytmcreportBtn">+</button>
-                </div>
-                
+                <Popup
+                        trigger={<button className="ytmcreportBtn">+</button>}
+                        modal
+                        nested
+                    >
+                        {close => (
+                        <div className="modal custom-popup">
+                            {
+                            /* <button className="close " onClick={close}>
+                            &times;
+                            </button> */
+                            }
+                            {/* <div className="header popup-cont"> Add Link </div> */}
+                            <div className="content popup-cont2">
+                            <form onSubmit={this.onSubmitUrl}>
+                                <div>
+                                <label htmlFor="channelurl">Channel URL</label>
+                                <br/>
+                                <input placeholder="Enter the Channel Url" onChange={this.onChangeChannelUrl} className="user-input2" type="url" id="channelurl" required/>
+                                </div>
+                                <div className="actions">
+                            <button
+                                className="button closeBtn"
+                                onClick={() => {
+                                console.log('modal closed ');
+                                close();
+                                }}
+                            >
+                                Cancel
+                            </button>
+                            <button className="fetchBtn" onClick={this.onClickAddChannel} type="submit">Add Channel</button>
+                            </div>
+
+                            </form>
+                            </div>                        
+                            </div>
+                        )}
+                    </Popup>
+                    </div>
                 <div className="ytmchome-top-container">
                     <div className="ytmchome-top-flex-container">
                     <h1>YTMC</h1>
@@ -542,7 +559,13 @@ class YTMCHome extends Component{
                     </ul>
                 </div>
                 <div className="ytmchome-content-container">
-                    <h1>I am Main Container</h1>
+                    <h1>Your Channels</h1>
+                    {(channelsList.length===0)? (<p>Please add Channels</p>):
+                    (<ul className="ytmchome-channel-container">
+                      {channelsList.map((ele) => <li className="ytmchome-channel-item" key={ele.id}>
+                        <a href={ele.channelUrl} target="_blank" rel="noreferrer">{ele.channelUrl}</a></li>)}
+                    </ul>)
+                    }
                 </div>
                 </div>
             </div>
