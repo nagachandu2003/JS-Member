@@ -28,7 +28,9 @@ const YTMCLogin = () => {
 
   const check = async (arg) => {
     // console.log("I am Check Function")
+    console.log(arg);
     const response = await fetch(`https://js-member-backend.vercel.app/users/${arg}`)
+    if (response.ok){
     const data = await response.json()
     if(data.success)
     {
@@ -37,6 +39,7 @@ const YTMCLogin = () => {
     else
     return false
     }
+  }
 
   const onSubmitSuccess = () => {
     console.log("Login Success");
@@ -107,7 +110,7 @@ const YTMCLogin = () => {
             // console.log("User ID:", userId);
             // console.log("User Name:", userName);
             // console.log("User Email:", userEmail);
-            if(!res)
+            if(res===false)
                 navigate("/ytmcregister",{ state: {email,Googlename:name} })
             else 
               navigate("/ytmchome")
