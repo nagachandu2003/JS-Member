@@ -476,7 +476,7 @@ const states = [
     "West Bengal"
   ]
 
-class YTMCHome extends Component{
+class YTMCVideo extends Component{
     state = {channelUrl:'',channelsList:[]}
     
     componentDidMount = () => {
@@ -533,9 +533,9 @@ class YTMCHome extends Component{
                             <div className="content ytmchome-popup">
                             <form onSubmit={this.onSubmitUrl}>
                                 <div>
-                                <label htmlFor="channelurl">Channel URL</label>
+                                <label htmlFor="channelurl">Video URL</label>
                                 <br/>
-                                <input placeholder="Enter the Channel Url" onChange={this.onChangeChannelUrl} className="ytmchome-user-input" type="url" id="channelurl" required/>
+                                <input placeholder="Enter the Video Url" onChange={this.onChangeChannelUrl} className="ytmchome-user-input" type="url" id="channelurl" required/>
                                 </div>
                                 <div className="actions">
                             <button
@@ -595,4 +595,4 @@ class YTMCHome extends Component{
     }
 }
 
-export default YTMCHome
+export default YTMCVideo

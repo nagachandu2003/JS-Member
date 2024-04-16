@@ -45,8 +45,10 @@ body{
     background-color: #ECCA3D;
     min-height:10vh;
 }
+@media (min-width:767px){
 .ytmchome-flex-container1{
     display: flex;
+}
 }
 .ytmchome-list-container2{
     display:flex;
@@ -69,7 +71,16 @@ body{
 }
 .ytmc-content-container{
     min-height:90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
 }
+/* @media (max-width:767px){
+    .ytmchome-channel-container{
+        width:8
+    }
+} */
 .logoutBtn{
     padding:10px;
     background-color:#2379F7;
@@ -123,9 +134,19 @@ body{
     padding:10px;
     list-style-type:none;
     padding-left:0;
+    width:100%;
     text-align: center;
+    overflow-y:scroll;
+    max-height:300px;
 }
 .ytmchome-channel-item{
     /* background-color:#ECCA3D; */
     color:black;
+    text-align: left;
+}
+.ytmchome-custom-popup{
+    background-color: #ECCA3D;
+    font-family: "Roboto";
+    text-align: center;
+    padding:10px;
 }

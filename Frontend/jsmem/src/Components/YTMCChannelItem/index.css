@@ -1,0 +1,12 @@
+.ytmcchannel-list-item{
+    background-color: lightgreen;
+    text-align: center;
+    width:90%;
+    padding:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.ytmcchannel-link-btn{
+    display: flex;
+    justify-content: space-between;
+}
