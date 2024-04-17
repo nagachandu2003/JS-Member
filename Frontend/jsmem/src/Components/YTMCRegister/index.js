@@ -522,7 +522,7 @@ const YTMCRegister = () => {
             whatsappNumber,
             Googlename,
             email,
-            regstatus:""
+            regstatus:"pending"
         };
         postData(formData);
 
