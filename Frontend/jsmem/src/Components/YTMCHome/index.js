@@ -6,6 +6,7 @@ import DistrictItem from '../DistrictItem'
 import {Popup} from 'reactjs-popup'
 import {v4 as uuidv4} from 'uuid'
 import YTMCChannelItem from "../YTMCChannelItem";
+import Cookies from 'js-cookie'
 
 const constituencies = {
     "SELECT" : ['SELECT'],
@@ -480,9 +481,24 @@ class YTMCHome extends Component{
     state = {channelUrl:'',channelsList:[]}
     
     componentDidMount = () => {
-      const channels = localStorage.getItem("ytmcchannels")
-      if(channels)
-      this.setState({channelsList:JSON.parse(channels)})
+      this.getChannelData()
+    }
+
+    getChannelData = async () =>{
+      const email = Cookies.get("useremail")
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({email})
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/users/channelsdetails`,options)
+      if(response.ok){
+      const data = await response.json()
+      const {channels} = data
+      this.setState({channelsList:channels})
+      }
     }
 
     onChangeChannelUrl = (event) => {
@@ -495,17 +511,35 @@ class YTMCHome extends Component{
       return channelName
     }
 
+    onReplaceObj = async (value) =>{
+      const em = Cookies.get("useremail")
+      const newObj = {...value,email:em}
+      let options = {
+        method : "POST",
+        headers : {
+        "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(newObj)
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/users/channels`,options)
+      if(response.ok){
+        const data = await response.json()
+        console.log(data)
+      }
+    }
+
     onClickAddChannel = (event) => {
       event.preventDefault()
       const {channelUrl,channelsList} = this.state
 
       const newObj = [...channelsList,{channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl)}]
-      localStorage.setItem("ytmcchannels",JSON.stringify(newObj))
+      this.onReplaceObj({channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl)})
       this.setState({channelsList:newObj})
     }
 
     onClickLogout = () => {
         googleLogout();
+        Cookies.remove("useremail")
         console.log("Logged out successfully")
         window.location.href="/ytmclogin"
         // return <Navigate to="/ytmclogin" replace={true}/>

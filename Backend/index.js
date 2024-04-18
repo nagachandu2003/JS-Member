@@ -54,9 +54,44 @@ app.get("/users/:email", async (req, res) => {
   finally {
     await client.close()
   }
-
-  
 });
+
+// get channel details route 
+app.post("/users/channelsdetails", async (req,res) => {
+  try {
+    await connectToDatabase()
+    const result = await accountsCollection.findOne({email:req.body.email})
+    res.send({channels : result.channels})
+    // res.send({channels:result['channels']})
+  }
+  catch (Err) {
+    console.log(`Error Occurred ${Err}`)
+  }
+  finally {
+    await client.close()
+  }
+})
+
+// Adding channel Route
+app.post("/users/channels", async (req,res) => {
+  // console.log(req.body)
+  const newObj = {
+    channelUrl : req.body.channelUrl,
+    channelName:req.body.channelName,
+    id : req.body.id
+  }
+  try {
+    await connectToDatabase()
+    const result = await accountsCollection.updateOne({email:req.body.email},{ $push: { channels: newObj } })
+    res.send({success:"Channel Inserted Successfully"})
+  }
+  catch (Err) {
+    console.log(`Error Occurred : ${Err}`)
+  }
+  finally{
+    await client.close()
+  }
+})
 
 // Define the /users route next
 app.get("/users", async (req, res) => {
@@ -95,7 +130,7 @@ app.get("/users", async (req, res) => {
 //     }
 // })
 
-
+// Add Newly Registered User
 app.post("/users", async (req,res) => {
   // console.log(req.body)
   try{
@@ -111,7 +146,7 @@ app.post("/users", async (req,res) => {
   }
 })
 
-
+// Update the user
 app.put("/users", async (req,res) => {
   const {newemail,newregstatus} = req.body
   console.log(newregstatus)

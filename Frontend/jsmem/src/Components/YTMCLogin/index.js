@@ -101,6 +101,7 @@ const YTMCLogin = () => {
               const {email,name} = token
               setEmail(email);
               setName(name);
+              Cookies.set("useremail",email)
               const res = await check(email)
             //   const { profileObj } = credentialResponse;
             // const userId = profileObj.googleId;
