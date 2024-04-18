@@ -3,6 +3,7 @@ import {Component} from 'react'
 import { googleLogout } from '@react-oauth/google';
 import {Navigate} from 'react-router-dom'
 import DistrictItem from '../DistrictItem'
+import {ThreeDots} from 'react-loader-spinner'
 import {Popup} from 'reactjs-popup'
 import {v4 as uuidv4} from 'uuid'
 import YTMCChannelItem from "../YTMCChannelItem";
@@ -478,13 +479,14 @@ const states = [
   ]
 
 class YTMCHome extends Component{
-    state = {channelUrl:'',channelsList:[]}
+    state = {channelUrl:'',channelsList:[],isLoading:false}
     
     componentDidMount = () => {
       this.getChannelData()
     }
 
     getChannelData = async () =>{
+      this.setState({isLoading:true})
       const email = Cookies.get("useremail")
       const options = {
         method : "POST",
@@ -497,7 +499,7 @@ class YTMCHome extends Component{
       if(response.ok){
       const data = await response.json()
       const {channels} = data
-      this.setState({channelsList:channels})
+      this.setState({channelsList:channels,isLoading:false})
       }
     }
 
@@ -546,7 +548,7 @@ class YTMCHome extends Component{
     }
 
     render(){
-      const {channelsList} = this.state
+      const {channelsList,isLoading} = this.state
         return (
             <>
             <div className="ytmchome-main-container">
@@ -606,6 +608,12 @@ class YTMCHome extends Component{
                         <li className="ytmchome-list-item">Profile</li>
                     </ul>
                 </div>
+                {isLoading===true && (
+                    <div className="ytmchome-content-container">
+                        <ThreeDots color="gray" height={50} width={50}/>
+                        </div>
+                )}
+                {isLoading===false && (
                 <div className="ytmchome-content-container">
                     <h1>Your Channels</h1>
                     {(channelsList.length===0)? (<p>Please add Channels</p>):
@@ -613,7 +621,7 @@ class YTMCHome extends Component{
                       {channelsList.map((ele) => <YTMCChannelItem key={ele.id} itemDetails={ele}/>)}
                     </ul>)
                     }
-                </div>
+                </div>)}
                 </div>
             </div>
             <footer className="ytmchome-footer">
