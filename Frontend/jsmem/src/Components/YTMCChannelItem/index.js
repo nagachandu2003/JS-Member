@@ -1,5 +1,5 @@
 import "./index.css"
-
+import {Link} from 'react-router-dom'
 
 const YTMCChannelItem = (props) => {
     const {itemDetails} = props
@@ -10,7 +10,9 @@ const YTMCChannelItem = (props) => {
             <h3>{channelName}</h3>
             <div className="ytmcchannel-link-btn">
             <a href={url} target="_blank" rel="noreferrer">Link</a>
+            <Link to={`/ytmcvideo/${channelName}`}>
             <button type="button" className="fetch-Btn">View</button>
+            </Link>
             </div>
         </li>
     )

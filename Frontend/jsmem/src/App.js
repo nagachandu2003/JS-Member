@@ -16,7 +16,7 @@ import Attendance from './Components/Attendance'
 import YTMCLogin from './Components/YTMCLogin';
 import YTMCHome from './Components/YTMCHome'
 import YTMCRegister from './Components/YTMCRegister'
-
+import YTMCVideo from './Components/YTMCVideo'
 
 
 class App extends Component {
@@ -45,6 +45,7 @@ class App extends Component {
         <Route exact path="/support" element={<Support/>}/>
         <Route exact path="/d2dreport" element={<D2DReport/>}/>
         <Route exact path="/members" element={<Members/>}/>
+        <Route exact path="/ytmcvideo/:channelName" element={<YTMCVideo/>}/>
       </Routes>
       </BrowserRouter>
     )

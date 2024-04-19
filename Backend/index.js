@@ -29,6 +29,38 @@ app.get("/", (req, res) => {
   res.send("Hello, I am connected Now");
 });
 
+
+app.post("/users/videosdetails", async (req,res) => {
+  console.log(req.body)
+  try {
+    await connectToDatabase()
+    const result = await accountsCollection.findOne({email:req.body.email})
+    res.send({videos : result.videos})
+    // res.send({channels:result['channels']})
+  }
+  catch (Err) {
+    console.log(`Error Occurred ${Err}`)
+  }
+  finally {
+    await client.close()
+  }
+})
+
+app.post("/users/videos", async (req,res) => {
+  console.log(req.body)
+  try{
+    await connectToDatabase()
+    const result = await accountsCollection.updateOne({email:req.body.email},{$push : {videos : req.body}})
+    res.send({success : "Video Inserted Successfully"})
+  }
+  catch (Err) {
+    console.log(`Error Occurred : ${Err}`)
+  }
+  finally {
+    await client.close()
+  }
+})
+
 // Define the /users/:email route first
 app.get("/users/:email", async (req, res) => {
   // console.log("I am in /users/:email route");

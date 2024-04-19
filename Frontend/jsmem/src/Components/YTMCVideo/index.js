@@ -5,7 +5,8 @@ import {Navigate} from 'react-router-dom'
 import DistrictItem from '../DistrictItem'
 import {Popup} from 'reactjs-popup'
 import {v4 as uuidv4} from 'uuid'
-import YTMCChannelItem from "../YTMCChannelItem";
+import YTMCVideoItem from "../YTMCVideoItem";
+import Cookies from 'js-cookie'
 
 const constituencies = {
     "SELECT" : ['SELECT'],
@@ -477,31 +478,72 @@ const states = [
   ]
 
 class YTMCVideo extends Component{
-    state = {channelUrl:'',channelsList:[]}
+    state = {videoUrl:'',videosList:[]}
     
     componentDidMount = () => {
-      const channels = localStorage.getItem("ytmcchannels")
-      if(channels)
-      this.setState({channelsList:JSON.parse(channels)})
+      this.getVideos()
+      // navigator.geolocation.getCurrentPosition((position) => {
+      //   console.log(position)
     }
 
-    onChangeChannelUrl = (event) => {
-        this.setState({channelUrl:event.target.value})
+    getVideos = async () => {
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({email:Cookies.get("useremail")})
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/users/videosdetails`,options)
+      const data = await response.json()
+      this.setState({videosList:data.videos})
     }
 
-    getChannelName = (value) => {
-      const channelName = value.slice(value.indexOf('@')+1)
-      console.log(channelName)
-      return channelName
+    onChangevideoUrl = (event) => {
+        this.setState({videoUrl:event.target.value})
     }
 
-    onClickAddChannel = (event) => {
+    getVideoId = (url) => {
+  // Regex pattern to match YouTube video URLs
+  const pattern = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+
+  // Test the URL against the pattern
+  const match = url.match(pattern);
+
+  // If there's a match, return the video ID
+  if (match) {
+    return match[1];
+  } else {
+    return null; // No match found
+  }
+}
+
+  addVideo = async (value) => {
+    const options = {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(value)
+    }
+    const response = await fetch(`https://js-member-backend.vercel.app/users/videos`,options)
+    const data = await response.json()
+    console.log(data)
+  }
+
+    onClickAddChannel = async (event) => {
       event.preventDefault()
-      const {channelUrl,channelsList} = this.state
-
-      const newObj = [...channelsList,{channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl)}]
-      localStorage.setItem("ytmcchannels",JSON.stringify(newObj))
-      this.setState({channelsList:newObj})
+      const {videoUrl,videosList} = this.state
+      const videoid = this.getVideoId(videoUrl)
+      const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${process.env.REACT_APP_API_KEY}&id=${videoid}&part=snippet,contentDetails,statistics`)
+      const data = await response.json()
+      const {title} = data.items[0].snippet
+      const {viewCount} = data.items[0].statistics
+      const {channelTitle} = data.items[0].snippet
+      const obj = {videoUrl,id:uuidv4(),videoName:title,views:viewCount,channelTitle,email:Cookies.get("useremail")}
+      const newObj = [...videosList,obj]
+      this.addVideo(obj)
+      this.setState({videosList:newObj})
     }
 
     onClickLogout = () => {
@@ -512,7 +554,7 @@ class YTMCVideo extends Component{
     }
 
     render(){
-      const {channelsList} = this.state
+      const {videosList} = this.state
         return (
             <>
             <div className="ytmchome-main-container">
@@ -533,9 +575,9 @@ class YTMCVideo extends Component{
                             <div className="content ytmchome-popup">
                             <form onSubmit={this.onSubmitUrl}>
                                 <div>
-                                <label htmlFor="channelurl">Video URL</label>
+                                <label htmlFor="videoUrl">Video URL</label>
                                 <br/>
-                                <input placeholder="Enter the Video Url" onChange={this.onChangeChannelUrl} className="ytmchome-user-input" type="url" id="channelurl" required/>
+                                <input placeholder="Enter the Video Url" onChange={this.onChangevideoUrl} className="ytmchome-user-input" type="url" id="videoUrl" required/>
                                 </div>
                                 <div className="actions">
                             <button
@@ -547,7 +589,7 @@ class YTMCVideo extends Component{
                             >
                                 Cancel
                             </button>
-                            <button className="fetchBtn" onClick={this.onClickAddChannel} type="submit">Add Channel</button>
+                            <button className="fetchBtn" onClick={this.onClickAddChannel} type="submit">Add Video</button>
                             </div>
 
                             </form>
@@ -573,10 +615,10 @@ class YTMCVideo extends Component{
                     </ul>
                 </div>
                 <div className="ytmchome-content-container">
-                    <h1>Your Channels</h1>
-                    {(channelsList.length===0)? (<p>Please add Channels</p>):
+                    <h1>Your Videos</h1>
+                    {(videosList.length===0)? (<p>Please add Videos</p>):
                     (<ul className="ytmchome-channel-container">
-                      {channelsList.map((ele) => <YTMCChannelItem key={ele.id} itemDetails={ele}/>)}
+                      {videosList.map((ele) => <YTMCVideoItem key={ele.id} itemDetails={ele}/>)}
                     </ul>)
                     }
                 </div>
