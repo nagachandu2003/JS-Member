@@ -30,35 +30,35 @@ app.get("/", (req, res) => {
 });
 
 
-app.post("/users/videosdetails", async (req,res) => {
-  console.log(req.body)
-  try {
-    await connectToDatabase()
-    const result = await accountsCollection.findOne({email:req.body.email})
-    res.send({videos : result.videos})
-    // res.send({channels:result['channels']})
-  }
-  catch (Err) {
-    console.log(`Error Occurred ${Err}`)
-  }
-  finally {
-    await client.close()
-  }
-})
+// app.post("/users/videosdetails", async (req,res) => {
+//   console.log(req.body)
+//   try {
+//     await connectToDatabase()
+//     const result = await accountsCollection.findOne({email:req.body.email})
+//     res.send({videos : result.videos})
+//     // res.send({channels:result['channels']})
+//   }
+//   catch (Err) {
+//     console.log(`Error Occurred ${Err}`)
+//   }
+//   finally {
+//     await client.close()
+//   }
+// })
 
 app.post("/users/videos", async (req,res) => {
   console.log(req.body)
-  try{
-    await connectToDatabase()
-    const result = await accountsCollection.updateOne({email:req.body.email},{$push : {videos : req.body}})
-    res.send({success : "Video Inserted Successfully"})
-  }
-  catch (Err) {
-    console.log(`Error Occurred : ${Err}`)
-  }
-  finally {
-    await client.close()
-  }
+  // try{
+  //   await connectToDatabase()
+  //   const result = await accountsCollection.updateOne({email:req.body.email},{$push : {videos : req.body}})
+  //   res.send({success : "Video Inserted Successfully"})
+  // }
+  // catch (Err) {
+  //   console.log(`Error Occurred : ${Err}`)
+  // }
+  // finally {
+  //   await client.close()
+  // }
 })
 
 // Define the /users/:email route first
@@ -108,6 +108,7 @@ app.post("/users/channelsdetails", async (req,res) => {
 app.post("/users/channels", async (req,res) => {
   // console.log(req.body)
   const newObj = {
+    ...req.body,
     channelUrl : req.body.channelUrl,
     channelName:req.body.channelName,
     id : req.body.id
