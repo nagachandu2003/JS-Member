@@ -58,9 +58,11 @@ const YTMCVideo = () => {
         if(response.ok===true){
         const data = await response.json()
         // console.log(data)
-        if(data.Videos!==undefined)
-        setVideosList(data.Videos)
+        if(data.Videos!==undefined){
+        const li = data.Videos.map((ele) => JSON.parse(ele))
+        setVideosList(li)
         setIsLoading(false)
+        }
         }
       }
       catch(Err){
