@@ -29,13 +29,62 @@ app.get("/", (req, res) => {
   res.send("Hello, I am connected Now");
 });
 
+app.post("/users/videosdetails", async (req, res) => {
+  console.log("I am from Video Details")
+  console.log(req.body)
+  try{
+    await connectToDatabase()
+    const result = await accountsCollection.findOne({email:req.body.email,channels : {$elemMatch : {
+      channelUrl : `https://www.youtube.com/@${req.body.channelName}`
+    }}})
+    const Videos = result.channels.filter((ele) => ele.channelName===req.body.channelName)[0].videos
+    res.send({success:true,Videos})
+  }
+  catch(Err){
+    console.log(`Error Occurred : ${Err}`)
+  }
+})
+
+
+// app.get("/users/videosdetails", async (req, res) => {
+//   console.log(req.query)
+//   try {
+//     await connectToDatabase()
+//     const result = await accountsCollection.findOne({email:req.query.email,channels:{$elemMatch:{
+//       channelUrl:`https://www.youtube.com/@${req.query.channelName}`
+//     }}})
+//     // const result = await accountsCollection.findOne({
+//     //   email: req.body.email,
+//     //   channels: {
+//     //     $elemMatch: {
+//     //       channelUrl: `https://www.youtube.com/channel/${req.body.channelName}`,
+//     //     },
+//     //   },
+//     // });
+//     console.log(result)
+//     res.send({ success: true, data: result });
+//     await client.close()
+//   } catch (err) {
+//     console.error(`Error Occurred: ${err}`);
+//     res.status(500).send({ success: false, error: err });
+//     await client.close()
+//   }
+// });
 
 // app.post("/users/videosdetails", async (req,res) => {
 //   console.log(req.body)
 //   try {
 //     await connectToDatabase()
-//     const result = await accountsCollection.findOne({email:req.body.email})
-//     res.send({videos : result.videos})
+//     const result = await accountsCollection.findOne({
+//       email: req.body.email, // Specify the email associated with the document
+//       channels: {
+//         $elemMatch: {
+//           channelUrl: `https://www.youtube.com/channel/${req.body.channelName}`, // Specify the channelUrl for the channel
+//         },
+//       },
+//     })
+//     console.log(result)
+//     // res.send({videos : result.videos})
 //     // res.send({channels:result['channels']})
 //   }
 //   catch (Err) {
@@ -44,21 +93,32 @@ app.get("/", (req, res) => {
 //   finally {
 //     await client.close()
 //   }
+//   res.send({success:true})
 // })
 
-app.post("/users/videos", async (req,res) => {
-  console.log(req.body)
-  // try{
-  //   await connectToDatabase()
-  //   const result = await accountsCollection.updateOne({email:req.body.email},{$push : {videos : req.body}})
-  //   res.send({success : "Video Inserted Successfully"})
-  // }
-  // catch (Err) {
-  //   console.log(`Error Occurred : ${Err}`)
-  // }
-  // finally {
-  //   await client.close()
-  // }
+app.post("/users/addvideo/:channelName", async (req,res) => {
+  const {channelName} = req.params
+  try{
+    await connectToDatabase()
+    const result = await accountsCollection.updateOne({email:req.body.email,
+    channels: {
+      $elemMatch : {
+        channelUrl : `https://www.youtube.com/@${channelName}`
+      }
+    }},
+    {$addToSet: {
+      "channels.$.videos": JSON.parse(req.body),
+    }
+  }
+  )
+    res.send({success : "Video Inserted Successfully"})
+  }
+  catch (Err) {
+    console.log(`Error Occurred : ${Err}`)
+  }
+  finally {
+    await client.close()
+  }
 })
 
 // Define the /users/:email route first

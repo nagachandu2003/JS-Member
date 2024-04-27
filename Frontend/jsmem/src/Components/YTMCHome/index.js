@@ -534,8 +534,8 @@ class YTMCHome extends Component{
       event.preventDefault()
       const {channelUrl,channelsList} = this.state
 
-      const newObj = [...channelsList,{channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl)}]
-      this.onReplaceObj({channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl)})
+      const newObj = [...channelsList,{channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl),videos:[]}]
+      this.onReplaceObj({channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl),videos:[]})
       this.setState({channelsList:newObj})
     }
 
@@ -611,7 +611,7 @@ class YTMCHome extends Component{
                 {isLoading===true && (
                     <div className="ytmchome-content-container">
                         <ThreeDots color="gray" height={50} width={50}/>
-                        </div>
+                    </div>
                 )}
                 {isLoading===false && (
                 <div className="ytmchome-content-container">
