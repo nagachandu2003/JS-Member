@@ -107,7 +107,7 @@ app.post("/users/addvideo/:channelName", async (req,res) => {
       }
     }},
     {$addToSet: {
-      "channels.$.videos": JSON.parse(req.body),
+      "channels.$.videos": req.body,
     }
   }
   )
