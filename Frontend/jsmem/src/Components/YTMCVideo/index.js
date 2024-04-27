@@ -5,11 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 import Cookies from 'js-cookie';
 import { useParams } from 'react-router-dom';
 import YTMCVideoItem from '../YTMCVideoItem';
+import { ThreeDots } from 'react-loader-spinner';
 
 const YTMCVideo = () => {
   const { channelName } = useParams();
   const [videoUrl, setVideoUrl] = useState('');
   const [videosList, setVideosList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const cname = channelName;
   console.log(cname)
 
@@ -42,6 +44,7 @@ const YTMCVideo = () => {
   useEffect(() => {
     // Code that would run on component mount
     const getVideos = async () => {
+      setIsLoading(true);
       try{
         const email = Cookies.get("useremail")
         const options  = {
@@ -55,10 +58,10 @@ const YTMCVideo = () => {
         if(response.ok===true){
         const data = await response.json()
         // console.log(data)
+        if(data.Videos!==undefined)
         setVideosList(data.Videos)
+        setIsLoading(false)
         }
-        else
-        setVideosList([])
       }
       catch(Err){
         console.log(`Error Occurred : ${Err}`)
@@ -84,7 +87,7 @@ const YTMCVideo = () => {
     };
     const response = await fetch(`https://js-member-backend.vercel.app/users/addvideo/${channelName}`, options);
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
   };
 
   const onClickAddChannel = async (event) => {
@@ -92,6 +95,8 @@ const YTMCVideo = () => {
     const videoid = getVideoId(videoUrl);
     const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${process.env.REACT_APP_API_KEY}&id=${videoid}&part=snippet,contentDetails,statistics`);
     const data = await response.json();
+    console.log(data)
+    console.log(process.env.REACT_APP_API_KEY)
     const { title } = data.items[0].snippet;
     const { viewCount } = data.items[0].statistics;
     const { channelTitle } = data.items[0].snippet;
@@ -108,7 +113,7 @@ const YTMCVideo = () => {
     window.location.href = '/ytmclogin';
   };
 
-  console.log(videosList)
+  console.log("Videos : " + videosList)
 
   return (
     <>
@@ -172,6 +177,12 @@ const YTMCVideo = () => {
               <li className="ytmchome-list-item">Profile</li>
             </ul>
           </div>
+          {isLoading===true && (
+                    <div className="ytmchome-content-container">
+                        <ThreeDots color="gray" height={50} width={50}/>
+                    </div>
+                )}
+          {isLoading===false && (
           <div className="ytmchome-content-container">
             <h1>Your Videos</h1>
             {(videosList===undefined || videosList.length === 0) ? (
@@ -184,6 +195,7 @@ const YTMCVideo = () => {
               </ul>
             )}
           </div>
+          )}
         </div>
       </div>
       <footer className="ytmchome-footer">
