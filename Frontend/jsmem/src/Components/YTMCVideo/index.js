@@ -24,7 +24,7 @@ const YTMCVideo = () => {
   //     };
 
   //     try {
-  //       const response = await fetch(`http://localhost:3001/users/videosdetails`, options);
+  //       const response = await fetch(`https://js-member-backend.vercel.app/users/videosdetails`, options);
   //       const data = await response.json();
   //       console.log(data);
   //       // Update videosList state with the fetched data
@@ -51,7 +51,7 @@ const YTMCVideo = () => {
           },
           body : JSON.stringify({email:Cookies.get("useremail"),channelName:cname})
         }
-        const response = await fetch(`http://localhost:3001/users/videosdetails`,options);
+        const response = await fetch(`https://js-member-backend.vercel.app/users/videosdetails`,options);
         if(response.ok===true){
         const data = await response.json()
         // console.log(data)
@@ -82,7 +82,7 @@ const YTMCVideo = () => {
       },
       body: JSON.stringify(value),
     };
-    const response = await fetch(`http://localhost:3001/users/addvideo/${channelName}`, options);
+    const response = await fetch(`https://js-member-backend.vercel.app/users/addvideo/${channelName}`, options);
     const data = await response.json();
     // console.log(data);
   };
@@ -239,7 +239,7 @@ export default YTMCVideo;
     //     },
     //     body : JSON.stringify({email:Cookies.get("useremail")})
     //   }
-    //   const response = await fetch(`http://localhost:3001/users/videosdetails`,options)
+    //   const response = await fetch(`https://js-member-backend.vercel.app/users/videosdetails`,options)
     //   const data = await response.json()
     //   this.setState({videosList:data.videos})
     // }
@@ -271,7 +271,7 @@ export default YTMCVideo;
 //       },
 //       body : JSON.stringify(value)
 //     }
-//     const response = await fetch(`http://localhost:3001/users/videos`,options)
+//     const response = await fetch(`https://js-member-backend.vercel.app/users/videos`,options)
 //     const data = await response.json()
 //     console.log(data)
 //   }
