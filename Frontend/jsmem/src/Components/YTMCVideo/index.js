@@ -98,14 +98,14 @@ const YTMCVideo = () => {
     const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${process.env.REACT_APP_API_KEY}&id=${videoid}&part=snippet,contentDetails,statistics`);
     const data = await response.json();
     console.log(data)
-    console.log("API KEY"+process.env.REACT_APP_API_KEY)
+    // console.log("API KEY"+process.env.REACT_APP_API_KEY)
     const { title } = data.items[0].snippet;
     const { viewCount } = data.items[0].statistics;
     const { channelTitle } = data.items[0].snippet;
     const obj = { videoUrl, id: uuidv4(), videoName: title, views: viewCount, channelTitle, email: Cookies.get('useremail'), days: [viewCount] };
     const newObj = [...videosList, obj];
     addVideo(obj);
-    console.log(obj)
+    // console.log(obj)
     setVideosList(newObj);
   };
 
@@ -115,7 +115,7 @@ const YTMCVideo = () => {
     window.location.href = '/ytmclogin';
   };
 
-  console.log("Videos : " + videosList)
+  // console.log("Videos : " + videosList)
 
   return (
     <>
