@@ -102,7 +102,14 @@ const YTMCVideo = () => {
     const { title } = data.items[0].snippet;
     const { viewCount } = data.items[0].statistics;
     const { channelTitle } = data.items[0].snippet;
-    const obj = { videoUrl, id: uuidv4(), videoName: title, views: viewCount, channelTitle, email: Cookies.get('useremail'), days: [viewCount] };
+    const currentDate = new Date();
+    let dateArray = [];
+    for (let i = 0; i < 7; i++) {
+      const nextDate = new Date(currentDate); // Create a new Date object for each day
+      nextDate.setDate(nextDate.getDate() + i); // Add the day offset
+      dateArray.push(nextDate.toLocaleDateString()); // Push the formatted date into the array
+    }
+    const obj = { videoUrl, id: uuidv4(),videoId:videoid,videoDate:currentDate.toLocaleDateString(),videoName: title, views: viewCount, channelTitle:channelName, email: Cookies.get('useremail'), days: [viewCount,0,0,0,0,0,0],dateArray };
     const newObj = [...videosList, obj];
     addVideo(obj);
     // console.log(obj)

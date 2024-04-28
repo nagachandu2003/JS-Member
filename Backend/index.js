@@ -29,6 +29,25 @@ app.get("/", (req, res) => {
   res.send("Hello, I am connected Now");
 });
 
+
+app.post("/ytmcvideo/channel/videostats", async (req,res) => {
+  console.log("I am from Video Stats")
+  try{
+    await connectToDatabase()
+    const result = await accountsCollection.findOne({email:req.body.email})
+    let channelItem
+    if(result.channels){
+    channelItem = result.channels.filter((ele) => ele.channelName===req.body.channelName)[0]
+    }
+    const videoItem = channelItem.videos.filter((ele) => ele.videoId===req.body.videoid)[0]
+    // console.log(videoItem)
+    res.send({videoItem})
+  }
+  catch(Err){
+    console.log(`Error Occurred : ${Err}`)
+  }
+})
+
 app.post("/users/videosdetails", async (req, res) => {
   console.log("I am from Video Details")
   console.log(req.body)

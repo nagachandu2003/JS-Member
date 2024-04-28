@@ -17,7 +17,7 @@ import YTMCLogin from './Components/YTMCLogin';
 import YTMCHome from './Components/YTMCHome'
 import YTMCRegister from './Components/YTMCRegister'
 import YTMCVideo from './Components/YTMCVideo'
-
+import YTMCVideoDetailItem from './Components/YTMCVideoDetailItem'
 
 class App extends Component {
   state = {isLogin:'false'}
@@ -46,6 +46,7 @@ class App extends Component {
         <Route exact path="/d2dreport" element={<D2DReport/>}/>
         <Route exact path="/members" element={<Members/>}/>
         <Route exact path="/ytmcvideo/:channelName" element={<YTMCVideo/>}/>
+        <Route exact path="/ytmcvideo/videoinfo/:channelName/:videoid" element={<YTMCVideoDetailItem/>}/>
       </Routes>
       </BrowserRouter>
     )
