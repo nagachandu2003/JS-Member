@@ -324,123 +324,160 @@ const constituencies = {
       "Chakai"
     ]
   }  
-
-const options = [
-      {
-        OptionId : "PASCHIM CHAMPARAN"
-      },
-      {
-          OptionId : "PURVI CHAMPARAN"
-      },
-      {
-          OptionId : "SHEOHAR"
-      },
-      {
-          OptionId : "SITAMARHI"
-      },
-      {
-          OptionId : "MADHUBANI"
-      },
-      {
-          OptionId : "SUPAUL"
-      },
-      {
-          OptionId : "ARARIA"
-      },
-      {
-          OptionId : "KISHANGANJ"
-      },
-      {
-          OptionId : "PURNIA"
-      },
-      {
-          OptionId : "KATIHAR"
-      },
-      {
-          OptionId : "MADHEPURA"
-      },
-      {
-          OptionId : "SAHARSA"
-      },
-      {
-          OptionId : "DARBHANGA"
-      },
-      {
-          OptionId : "MUZAFFARPUR"
-      },
-      {
-          OptionId : "GOPALGANJ"
-      },
-      {
-          OptionId : "SIWAN"
-      },
-      {
-          OptionId : "SARAN"
-      },
-      {
-          OptionId : "VAISHALI"
-      },
-      {
-          OptionId : "SAMASTIPUR"
-      },
-      {
-          OptionId : "BEGUSARAI"
-      },
-      {
-          OptionId : "KHAGARIA"
-      },
-      {
-          OptionId : "BHAGALPUR"
-      },
-      {
-          OptionId : "BANKA"
-      },
-      {
-          OptionId : "MUNGER"
-      },
-      {
-          OptionId : "LAKHISARAI"
-      },
-      {
-          OptionId : "SHEIKHPURA"
-      },
-      {
-          OptionId : "NALANDA"
-      },
-      {
-          OptionId : "PATNA"
-      },
-      {
-          OptionId : "BHOJPUR"
-      },
-      {
-          OptionId : "BUXAR"
-      },
-      {
-          OptionId : "KAIMUR (BHABHUA)"
-      },
-      {
-          OptionId : "ROHTAS"
-      },
-      {
-          OptionId : "ARWAL"
-      },
-      {
-          OptionId : "JAHANABAD"
-      },
-      {
-          OptionId : "AURANGABAD"
-      },
-      {
-          OptionId : "GAYA"
-      },
-      {
-          OptionId : "NAWADA"
-      },
-      {
-          OptionId : "JAMUI"
-      }
-    ]
+  const options = [
+    { OptionId: "ARARIA" },
+    { OptionId: "ARWAL" },
+    { OptionId: "AURANGABAD" },
+    { OptionId: "BANKA" },
+    { OptionId: "BEGUSARAI" },
+    { OptionId: "BHAGALPUR" },
+    { OptionId: "BHOJPUR" },
+    { OptionId: "BUXAR" },
+    { OptionId: "DARBHANGA" },
+    { OptionId: "GAYA" },
+    { OptionId: "GOPALGANJ" },
+    { OptionId: "JAHANABAD" },
+    { OptionId: "JAMUI" },
+    { OptionId: "KAIMUR (BHABHUA)" },
+    { OptionId: "KATIHAR" },
+    { OptionId: "KHAGARIA" },
+    { OptionId: "KISHANGANJ" },
+    { OptionId: "LAKHISARAI" },
+    { OptionId: "MADHEPURA" },
+    { OptionId: "MADHUBANI" },
+    { OptionId: "MUZAFFARPUR" },
+    { OptionId: "MUNGER" },
+    { OptionId: "NALANDA" },
+    { OptionId: "NAWADA" },
+    { OptionId: "PASCHIM CHAMPARAN" },
+    { OptionId: "PATNA" },
+    { OptionId: "PURNIA" },
+    { OptionId: "ROHTAS" },
+    { OptionId: "SAMASTIPUR" },
+    { OptionId: "SARAN" },
+    { OptionId: "SHEIKHPURA" },
+    { OptionId: "SHEOHAR" },
+    { OptionId: "SITAMARHI" },
+    { OptionId: "SUPAUL" },
+    { OptionId: "VAISHALI" }
+  ];
+  
+// const options = [
+//       {
+//         OptionId : "PASCHIM CHAMPARAN"
+//       },
+//       {
+//           OptionId : "PURVI CHAMPARAN"
+//       },
+//       {
+//           OptionId : "SHEOHAR"
+//       },
+//       {
+//           OptionId : "SITAMARHI"
+//       },
+//       {
+//           OptionId : "MADHUBANI"
+//       },
+//       {
+//           OptionId : "SUPAUL"
+//       },
+//       {
+//           OptionId : "ARARIA"
+//       },
+//       {
+//           OptionId : "KISHANGANJ"
+//       },
+//       {
+//           OptionId : "PURNIA"
+//       },
+//       {
+//           OptionId : "KATIHAR"
+//       },
+//       {
+//           OptionId : "MADHEPURA"
+//       },
+//       {
+//           OptionId : "SAHARSA"
+//       },
+//       {
+//           OptionId : "DARBHANGA"
+//       },
+//       {
+//           OptionId : "MUZAFFARPUR"
+//       },
+//       {
+//           OptionId : "GOPALGANJ"
+//       },
+//       {
+//           OptionId : "SIWAN"
+//       },
+//       {
+//           OptionId : "SARAN"
+//       },
+//       {
+//           OptionId : "VAISHALI"
+//       },
+//       {
+//           OptionId : "SAMASTIPUR"
+//       },
+//       {
+//           OptionId : "BEGUSARAI"
+//       },
+//       {
+//           OptionId : "KHAGARIA"
+//       },
+//       {
+//           OptionId : "BHAGALPUR"
+//       },
+//       {
+//           OptionId : "BANKA"
+//       },
+//       {
+//           OptionId : "MUNGER"
+//       },
+//       {
+//           OptionId : "LAKHISARAI"
+//       },
+//       {
+//           OptionId : "SHEIKHPURA"
+//       },
+//       {
+//           OptionId : "NALANDA"
+//       },
+//       {
+//           OptionId : "PATNA"
+//       },
+//       {
+//           OptionId : "BHOJPUR"
+//       },
+//       {
+//           OptionId : "BUXAR"
+//       },
+//       {
+//           OptionId : "KAIMUR (BHABHUA)"
+//       },
+//       {
+//           OptionId : "ROHTAS"
+//       },
+//       {
+//           OptionId : "ARWAL"
+//       },
+//       {
+//           OptionId : "JAHANABAD"
+//       },
+//       {
+//           OptionId : "AURANGABAD"
+//       },
+//       {
+//           OptionId : "GAYA"
+//       },
+//       {
+//           OptionId : "NAWADA"
+//       },
+//       {
+//           OptionId : "JAMUI"
+//       }
+//     ]
 
 const states = [
   "Andhra Pradesh",
@@ -473,6 +510,519 @@ const states = [
   "West Bengal"
 ]
 
+const blocks = {
+  "SELECT" : ["SELECT"],
+  "ARARIA": [
+    "Araria",
+    "Bhargama",
+    "Forbesganj",
+    "Jokihat",
+    "Kursakanta",
+    "Narpatganj",
+    "Palasi",
+    "Raniganj",
+    "Sikti"
+  ],
+  "ARWAL": [
+    "Arwal",
+    "Kaler",
+    "Kurtha",
+    "Sonbhadra-Bikramganj"
+  ],
+  "AURANGABAD": [
+    "Aurangabad",
+    "Barun",
+    "Daudnagar",
+    "Deo",
+    "Goh",
+    "Haspura",
+    "Kutumba",
+    "Madanpur",
+    "Nabinagar",
+    "Obra",
+    "Rafiganj"
+  ],
+  "BANKA": [
+    "Amarpur",
+    "Banka",
+    "Barahat",
+    "Belhar",
+    "Chandan",
+    "Dhoraiya",
+    "Katoria",
+    "Phulidumar",
+    "Shambhuganj"
+  ],
+  "BEGUSARAI": [
+    "Bachhwara",
+    "Bakhri",
+    "Barauni",
+    "Begusarai",
+    "Bhagwanpur",
+    "Birpur",
+    "Cheria Bariarpur",
+    "Mansurchak",
+    "Matihani",
+    "Naokothi",
+    "Sahebpur Kamal",
+    "Teghra"
+  ],
+  "BHAGALPUR": [
+    "Bhagalpur",
+    "Colgong",
+    "Kahalgaon",
+    "Kharik",
+    "Narayanpur",
+    "Pirpainti",
+    "Sabour",
+    "Sultanganj"
+  ],
+  "BHOJPUR": [
+    "Agiaon",
+    "Arrah",
+    "Barhara",
+    "Behea",
+    "Charpokhari",
+    "Garhani",
+    "Jagdishpur",
+    "Koilwar",
+    "Piro",
+    "Sahar",
+    "Sandesh",
+    "Shahpur"
+  ],
+  "BUXAR": [
+    "Buxar",
+    "Chausa",
+    "Dumraon",
+    "Itarhi",
+    "Nawanagar",
+    "Rajpur"
+  ],
+  "DARBHANGA": [
+    "Alinagar",
+    "Bahadurpur",
+    "Benipur",
+    "Biraul",
+    "Ghanshyampur",
+    "Hanuman Nagar",
+    "Hayaghat",
+    "Jale",
+    "Keoti",
+    "Kiratpur",
+    "Kusheshwar Asthan",
+    "Singhwara"
+  ],
+  "PURVI CHAMPARAN": [
+    "Adapur",
+    "Areraj",
+    "Banjariya",
+    "Chakia",
+    "Chiraia",
+    "Dhaka",
+    "Harsidhi",
+    "Kesaria",
+    "Kotwa",
+    "Madhuban",
+    "Motihari",
+    "Paharpur",
+    "Pakridayal",
+    "Phenhara",
+    "Piprakothi",
+    "Raxaul",
+    "Sangrampur",
+    "Sugauli",
+    "Tetaria",
+    "Turkaulia"
+  ],
+  "GAYA": [
+    "Belaganj",
+    "BodhGaya",
+    "Dobhi",
+    "Fatehpur",
+    "GayaTown",
+    "Guraru",
+    "Imamganj",
+    "Khizarsarai",
+    "Manpur",
+    "Mohanpur",
+    "Paraiya",
+    "Sherghati",
+    "Tankuppa"
+  ],
+  "GOPALGANJ": [
+    "Baikunthpur",
+    "Barauli",
+    "Bhorey",
+    "Gopalganj",
+    "Hathua",
+    "Kuchaikote",
+    "Manjha",
+    "Phulwaria",
+    "Sidhwalia",
+    "Thawe",
+    "Uchkagaon"
+  ],
+  "JAMUI": [
+    "Barhat",
+    "Chakai",
+    "Gidhaur",
+    "IslamnagarAliganj",
+    "Jamui",
+    "Jhajha",
+    "Khaira",
+    "Lakshmipur",
+    "Sikandra",
+    "Sono"
+  ],
+  "JEHANABAD": [
+    "Ghoshi",
+    "Hulasganj",
+    "Jehanabad",
+    "Kako",
+    "Makhdumpur",
+    "Modanganj",
+    "Parbatta",
+    "RatniFaridpur"
+  ],
+  "KAIMUR (BHABHUA)": [
+    "Adhaura",
+    "Bhabua",
+    "Chainpur",
+    "Chand",
+    "Durgawati",
+    "Kudra",
+    "Mohania",
+    "Ramgarh",
+    "Rampur",
+    "Rohtas"
+  ],
+  "KATIHAR": [
+    "Amdabad",
+    "Azamnagar",
+    "Balrampur",
+    "Barari",
+    "Barsoi",
+    "Dandkhora",
+    "Falka",
+    "Hasanganj",
+    "Kadwa",
+    "Katihar",
+    "Korha",
+    "Manihari"
+  ],
+  "KHAGARIA": [
+    "Alauli",
+    "Beldaur",
+    "Chautham",
+    "Gogri",
+    "Khagaria",
+    "Mansi",
+    "Parbatta"
+  ],
+  "KISHANGANJ": [
+    "Bahadurganj",
+    "Dighalbank",
+    "Kishanganj",
+    "Kochadhaman",
+    "Pothia",
+    "Terhagachh",
+    "Thakurganj"
+  ],
+  "LAKHISARAI": [
+    "Barahiya",
+    "Halsi",
+    "Lakhisarai",
+    "Pipariya",
+    "RamgarhChowk"
+  ],
+  "MADHEPURA": [
+    "Alamnagar",
+    "Bihariganj",
+    "Chausa",
+    "Ghelarh",
+    "Kumarkhand",
+    "Madhepura",
+    "Murliganj",
+    "Puraini",
+    "Singheshwar"
+  ],
+  "MADHUBANI": [
+    "Andhratharhi",
+    "Babubarhi",
+    "Basopatti",
+    "Benipatti",
+    "Bisfi",
+    "Harlakhi",
+    "Jainagar",
+    "Jhanjharpur",
+    "Kaluahi",
+    "Khajauli",
+    "Ladania",
+    "Laukahi",
+    "Laukaha",
+    "Madhubani",
+    "Madhwapur",
+    "Pandaul",
+    "Phulparas",
+    "Rajnagar",
+    "Sahidabad"
+  ],
+  "MUNGER": [
+    "Asarganj",
+    "Bariarpur",
+    "Dharhara",
+    "HaveliKharagpur",
+    "Jamalpur",
+    "Kharagpur",
+    "Munger",
+    "Tarapur"
+  ],
+  "MUZAFFARPUR": [
+    "Ahiapur",
+    "Bandra",
+    "Baruraj",
+    "Bochaha",
+    "Gaighat",
+    "Kanti",
+    "Katra",
+    "Kurhani",
+    "Marwan",
+    "Minapur",
+    "Motipur",
+    "Mushahari",
+    "Paroo",
+    "Sahebganj",
+    "Saraiya"
+  ],
+  "NALANDA": [
+    "Asthawan",
+    "Ben",
+    "Biharsharif",
+    "Bind",
+    "Chandi",
+    "Ekangarsarai",
+    "Giriyak",
+    "Harnaut",
+    "Islampur",
+    "KaraiParsurai",
+    "NagarNausa",
+    "Noorsarai",
+    "Rahui",
+    "Rajgir",
+    "Sarmera",
+    "Silao",
+    "Tharthari"
+  ],
+  "NAWADA": [
+    "Akbarpur",
+    "Gobindpur",
+    "Hisua",
+    "KashiChak",
+    "Meskaur",
+    "Narhat",
+    "Nawada",
+    "Pakribarawan",
+    "Rajauli",
+    "Roh"
+  ],
+  "PASCHIM CHAMPARAN": [
+    "Bagaha",
+    "Bairia",
+    "Bhitaha",
+    "Jogapatti",
+    "Lauriya",
+    "Madhuban",
+    "Narkatiaganj",
+    "Ramnagar",
+    "Sikta",
+    "Thakrahan"
+  ],
+  "PATNA": [
+    "Athmalgola",
+    "Bakhtiarpur",
+    "Barh",
+    "Belchhi",
+    "Bihta",
+    "Bikram",
+    "Daniawan",
+    "Dhanarua",
+    "DulhinBazar",
+    "Fatwah",
+    "Khusrupur",
+    "Maner",
+    "Masaurhi",
+    "Naubatpur",
+    "Paliganj",
+    "Pandarak",
+    "PatnaSadar",
+    "PhulwariSharif"
+  ],
+  "PURNIA": [
+    "Amour",
+    "Baisi",
+    "Banmankhi",
+    "Bhawanipur",
+    "Dagarua",
+    "Dhamdaha",
+    "Jalalgarh",
+    "Kasba",
+    "KrityanandNagar",
+    "PurniaEast",
+    "PurniaWest",
+    "Rupauli",
+    "Srinagar",
+    "Visheshwarganj"
+  ],
+  "ROHTAS": [
+    "AkorhiGola",
+    "Bhabua",
+    "Chainpur",
+    "Chenari",
+    "Dalmianagar",
+    "Dawath",
+    "Dehri",
+    "Dinara",
+    "Karakat",
+    "Kargahar",
+    "Kochas",
+    "Nasriganj",
+    "Nauhatta",
+    "Nokha"
+  ],
+  "SAHARSA": [
+    "BanmaItahari",
+    "Kahara",
+    "Mahishi",
+    "Nauhatta",
+    "Salkhua",
+    "Sonbarsa",
+    "SaurBazar",
+    "SimriBakhtiarpur"
+  ],
+  "SAMASTIPUR": [
+    "Bibhutpur",
+    "Bithan",
+    "Dalsinghsarai",
+    "Hasanpur",
+    "Khanpur",
+    "Mohiuddinagar",
+    "Morwa",
+    "Patori",
+    "Rosera",
+    "Sarairanjan",
+    "ShivajiNagar",
+    "Singhia",
+    "Tajpur",
+    "Ujiarpur",
+    "VidyapatiNagar",
+    "Warisnagar"
+  ],
+  "SARAN": [
+    "Amnour",
+    "Baniapur",
+    "Chapra",
+    "Dariapur",
+    "Dighwara",
+    "Ekma",
+    "Garkha",
+    "Ishupur",
+    "Jalalpur",
+    "Lahladpur",
+    "Maker",
+    "Manjhi",
+    "Marhaura",
+    "Mashrakh",
+    "Nagra",
+    "Panapur",
+    "Parsa",
+    "Revelganj",
+    "Taraiya"
+  ],
+  "SHEIKHPURA": [
+    "Ariari",
+    "Barbigha",
+    "Chewara",
+    "Ghatkusumbha",
+    "Sheikhpura",
+    "ShekhopurSarai"
+  ],
+  "SHEOHAR": [
+    "DumriKatsari",
+    "Piprarhi",
+    "Purnahiya",
+    "Sheohar",
+    "TarianiChowk"
+  ],
+  "SITAMARHI": [
+    "Bairgania",
+    "Bajpatti",
+    "Bathnaha",
+    "Belsand",
+    "Dumra",
+    "Majorganj",
+    "Nanpur",
+    "Parihar",
+    "Parsauni",
+    "Pupri",
+    "Riga",
+    "Runnisaidpur",
+    "Sonbarsa",
+    "Suppi",
+    "Sursand",
+    "Tetaria"
+  ],
+  "SIWAN": [
+    "Andar",
+    "Barharia",
+    "Basantpur",
+    "BhagwanpurHat",
+    "Darauli",
+    "Daraundha",
+    "Goriakothi",
+    "Guthani",
+    "HasanPura",
+    "Hussainganj",
+    "LakriNabiganj",
+    "Maharajganj",
+    "Mairwa",
+    "Nautan",
+    "Pachrukhi",
+    "Raghunathpur",
+    "Siwan"
+  ],
+  "SUPAUL": [
+    "Amour",
+    "Birpur",
+    "Chhatapur",
+    "Kishanpur",
+    "Marauna",
+    "Nirmali",
+    "Pipra",
+    "Pratapganj",
+    "Raghopur",
+    "SaraigarhBhaptiyahi",
+    "Supaul",
+    "Triveniganj"
+  ],
+  "VAISHALI": [
+    "Bhagwanpur",
+    "Bidupur",
+    "Chehrakala",
+    "Desri",
+    "Hajipur",
+    "Jandaha",
+    "Lalganj",
+    "Mahnar",
+    "Mahua",
+    "PatedhiBelsar",
+    "Patepur",
+    "Raghopur"
+  ]
+}
+
+
+
 const YTMCRegister = () => {
     const [name, setName] = useState('');
     const [channelUrl, setChannelUrl] = useState('');
@@ -483,7 +1033,7 @@ const YTMCRegister = () => {
     const [whatsappNumber, setWhatsappNumber] = useState('');
     const [selectedConstituency, setSelectedConstituency] = useState('SELECT');
     const [registeredStatus, setRegisteredStatus] = useState(false);
-
+    const [block,setBlock] = useState('SELECT')
     const navigate = useNavigate();
     const location = useLocation();
     // const history = useHistory();
@@ -495,10 +1045,14 @@ const YTMCRegister = () => {
     const onChangeDistrict = (event) => {
         setDistrict(event.target.value);
         setSelectedConstituency(constituencies[event.target.value][0]);
+        setBlock(blocks[event.target.value][0])
+        console.log(event.target.value)
+        console.log(blocks[event.target.value])
     };
     const onChangeConstituency = (event) => setSelectedConstituency(event.target.value);
     const onChangePhoto = (event) => setPhoto(event.target.files[0]);
     const onChangeWhatsApp = (event) => setWhatsappNumber(event.target.value);
+    const onChangeBlock = (event) => setBlock(event.target.value)
 
     const postData = async (value) => {
       let options = {
@@ -521,6 +1075,7 @@ const YTMCRegister = () => {
             state,
             district,
             constituency: selectedConstituency,
+            block,
             whatsappNumber,
             Googlename,
             email,
@@ -581,6 +1136,13 @@ const YTMCRegister = () => {
                       {constituencies[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
                   </select>
               </div>
+              <div className="ytmcregister-cont-ele">
+                  <label htmlFor="block">Block</label>
+                  <br/>
+                  <select onChange={onChangeBlock} id="block" className="ytmcregister-user-input" >
+                      {blocks[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
+                  </select>
+                  </div>
               {/* <div className="ytmcregister-cont-ele">
                   <label htmlFor="photo">Photo</label>
                   <br/>
