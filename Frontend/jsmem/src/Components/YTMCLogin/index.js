@@ -32,13 +32,14 @@ const YTMCLogin = () => {
     const response = await fetch(`https://js-member-backend.vercel.app/users/${arg}`)
     if (response.ok){
     const data = await response.json()
-    if(data.regstatus==="pending")
-    {
-      return "pending"
-    }
-    if(data.success)
+    console.log(data)
+    if(data.success===true)
     {
       return true
+    }
+    else if(data.success==="pending")
+    {
+      return "pending"
     }
     else
     return false
