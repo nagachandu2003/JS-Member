@@ -32,6 +32,10 @@ const YTMCLogin = () => {
     const response = await fetch(`https://js-member-backend.vercel.app/users/${arg}`)
     if (response.ok){
     const data = await response.json()
+    if(data.regstatus==="pending")
+    {
+      return "pending"
+    }
     if(data.success)
     {
       return true
@@ -111,7 +115,9 @@ const YTMCLogin = () => {
             // console.log("User ID:", userId);
             // console.log("User Name:", userName);
             // console.log("User Email:", userEmail);
-            if(res===false)
+            if(res==="pending")
+             navigate("/regpending", {replace:true})
+            else if(res===false)
                 navigate("/ytmcregister",{ state: {email,Googlename:name}},{replace:true} )
             else 
               navigate("/ytmchome", {replace:true})

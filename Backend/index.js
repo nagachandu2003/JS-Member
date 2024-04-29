@@ -156,7 +156,7 @@ app.get("/users/:email", async (req, res) => {
     if(result.regstatus==="approved")
     res.send({success:true})
     else
-    res.send({success:false})
+    res.send({success:false,regstatus})
     }
   }
   catch (Err){
