@@ -18,6 +18,7 @@ import YTMCHome from './Components/YTMCHome'
 import YTMCRegister from './Components/YTMCRegister'
 import YTMCVideo from './Components/YTMCVideo'
 import YTMCVideoDetailItem from './Components/YTMCVideoDetailItem'
+import RegistrationSuccess from './Components/RegistrationSuccess';
 
 class App extends Component {
   state = {isLogin:'false'}
@@ -47,6 +48,7 @@ class App extends Component {
         <Route exact path="/members" element={<Members/>}/>
         <Route exact path="/ytmcvideo/:channelName" element={<YTMCVideo/>}/>
         <Route exact path="/ytmcvideo/videoinfo/:channelName/:videoid" element={<YTMCVideoDetailItem/>}/>
+        <Route exact path="/regpending" element={<RegistrationSuccess/>}/>
       </Routes>
       </BrowserRouter>
     )

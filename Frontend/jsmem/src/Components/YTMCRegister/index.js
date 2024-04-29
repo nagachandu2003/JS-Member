@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { googleLogout } from '@react-oauth/google';
 import {useNavigate, useLocation } from 'react-router-dom';
+// import {useHistory} from 'react-router-dom'
 import DistrictItem from '../DistrictItem';
 import "./index.css"
 const constituencies = {
@@ -485,6 +486,7 @@ const YTMCRegister = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
+    // const history = useHistory();
     const {Googlename,email} = location.state
 
     const onChangeName = (event) => setName(event.target.value);
@@ -527,13 +529,14 @@ const YTMCRegister = () => {
             videos:[]
         };
         postData(formData);
-
+        // history.replace("/regpending")
+        navigate("/regpending",{replace:true})
         setRegisteredStatus(!registeredStatus);
     };
 
     const onLogOut = () => {
         googleLogout();
-        navigate("/")
+        navigate("/",{replace:true})
     };
 
     return (
@@ -593,14 +596,14 @@ const YTMCRegister = () => {
       </div>
       </>
       )}
-      {registeredStatus && (
+      {/* {registeredStatus && (
           <div style={{textAlign:'center'}} className="ytmcregister-form-container">
               <img style={{height:'50px',width:'50px'}} src="https://imgs.search.brave.com/pCrYBKil64ozCVM6c4QGMgFj6qCLcSGLMTSRHJOimbw/rs:fit:500:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzgxLzM0Lzc4/LzM2MF9GXzU4MTM0/Nzg5N19zZ1lnVEVR/MFBCSEtONER3dXhX/UkFucGxOemtlNXNk/Ni5qcGc" alt="image"/>
               <h1>Your Registration is Pending...</h1>
               <p>We will get back to you soon.</p>
               <button onClick={onLogOut} type="button" className="last24HrsBtn">Log Out</button>
           </div>
-      )}
+      )} */}
       </div>
       )
 

@@ -45,7 +45,7 @@ const YTMCLogin = () => {
     console.log("Login Success");
     Cookies.set("jwt_token2","helloworld2",{expires:2});
     // console.log(redir);
-    navigate("/ytmcregister")
+    navigate("/ytmcregister",{replace:true})
   };
 
   const onSubmitUser = event => {
@@ -112,9 +112,9 @@ const YTMCLogin = () => {
             // console.log("User Name:", userName);
             // console.log("User Email:", userEmail);
             if(res===false)
-                navigate("/ytmcregister",{ state: {email,Googlename:name} })
+                navigate("/ytmcregister",{ state: {email,Googlename:name}},{replace:true} )
             else 
-              navigate("/ytmchome")
+              navigate("/ytmchome", {replace:true})
             }}
             onError={() => {
                 console.log("Login Failed")
