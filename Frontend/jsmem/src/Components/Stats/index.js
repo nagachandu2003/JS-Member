@@ -4,7 +4,8 @@ import Popup from 'reactjs-popup'
 import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import StatsItem from '../StatsItem'
-
+import Navbar from '../Navbar'
+import Dashboard from '../Dashboard'
 
 const constituencies = {
     "SELECT" : ['SELECT'],
@@ -501,17 +502,51 @@ class Stats extends Component{
         TV += parseInt(ele.TV)
        })
     return (
+    //   <Router>
+    //   <Navbar/>
+    //   <div className='main-container'>
+    //     <div className="sidebar-container">
+    //       <Dashboard />
+    //     </div>
+    //     <div className="content-container">
+    //       <Routes>
+    //       <Route path="/" element={<About />} />
+    //         <Route path="/edit" element={<EditDetails />} />
+    //         <Route path="/stats" element={<Stats />} />
+    //         <Route path="/ytcm" element={<YTCM />} />
+    //         <Route path="/reports" element={<Reports />} />
+    //         <Route path="/rewards" element={<Rewards />} />
+    //         <Route path="/tickets" element={<Tickets />} />
+    //         <Route path="/attendance" element={<Attedance />} />
+    //         <Route path="/d2d" element={<D2D />} />
+    //         <Route path="/members" element={<Members />} />
+    //         <Route path="/collaterals" element={<Collaterals />} />
+    //         <Route path="/transport" element={<Transport />} />
+    //         <Route path="/kitchen" element={<Kitchen />} />
+    //         <Route path="/request" element={<Request />} />
+    //         <Route path="/profile" element={<Profile />} />
+    //         <Route path="/management" element={<Management />} />
+    //         <Route path="/faqs" element={<Faqs />} />
+    //         <Route path="/trainings" element={<Trainings />} />
+    //         <Route path="/feedback" element={<Feedback />} />
+    //         <Route path="/vision" element={<Vision />} />
+    //         <Route path="/mission" element={<Mission />} />
+    //         <Route path="*" element={<NotFound />} />
+    //       </Routes>
+    //     </div>
+    //   </div>
+    // </Router>
+      <>
+      <Navbar/>
+      <div className="stats-main-container">
+           <div className="stats-sidebar-container">
+            <Dashboard />
+           </div>
+      <div className="stats-content-container">
         <div className="main-container">
             <div className="top-container">
-            <Link to="/" className="link-item">
-                    <div className="flexi3">
-                    <img src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" className="logo-img2" alt="logo"/>
-                    <h2 className="main-heading1">JS MEMBER</h2>
-                    <h3>Camp No : 1</h3>
-                    </div>
-                    </Link>
                     <div className="inner-top-container">
-                    <h1>Stats</h1>
+                    <h1 className="stats-main-heading">Stats</h1>
              {/*       <Popup
                         trigger={<button className="addBtn" type="button"> Add </button>}
                         modal
@@ -603,13 +638,13 @@ class Stats extends Component{
                             </div>                        </div> */}
                         {/* )}
                     </Popup> */}
-                    <div className="date-cont">
+                    <div >
                     <p>{(new Date()).toDateString()}</p>
                     <p>Beta</p>
                     </div>
                     </div>
             </div>
-            <div className="flex-cont1">
+            {/* <div className="flex-cont1">
             <div className="left-container">
                     <div className="left-container-items">
                     <Link className="nav-link" to="/stats">
@@ -649,12 +684,12 @@ class Stats extends Component{
                     </Link>
                     <br/>
                     </div>
-                </div>
-                <div className="main-inner-container">
-                    <div className="table-container">
+                </div> */}
+                <div className="stats-main-inner-container">
+                    <div className="stats-table-container">
                     <table> 
                     {(statsList.length!==0) && (
-                        statsList.map((ele) => <StatsItem key={ele.id} statDetails={ele} onDeleteReport={this.onDeleteReport} />
+                        statsList.map((ele) => <StatsItem key={ele.id} statDetails={ele} onDeleteReport={this.onDeleteReport} belong={"stats"} />
                         ))}
                     <thead>
                 <tr>
@@ -716,7 +751,7 @@ class Stats extends Component{
                 </thead>
                 <tfoot>
                     <tr>
-                        <th colSpan="9">Total</th>
+                        <th style={{textAlign:'center'}} colSpan="9">Total</th>
                         <th>{THV}</th>
                         <th>{TPO}</th>
                         <th>{TWC}</th>
@@ -733,6 +768,8 @@ class Stats extends Component{
             </div>
         </div>
         </div>
+        </div>
+        </>
         );
 }
 }

@@ -1,0 +1,108 @@
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    width: 21vw;
+}
+.left-section-container {
+    background-color: #ffecec7f;
+    position: fixed;
+    overflow-y: auto;
+    min-height: 100vh;
+}
+
+.student-card {
+    background-color: rgb(255, 205, 26);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 44px;
+    width: 100%;
+    height: 20vh;
+}
+.student-details-card {
+    display: flex;
+    padding-left: 4px;
+    flex-direction: column; 
+}
+
+.users-dashboard-heading {
+    font-weight: 800;
+    margin: 2px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 2px 2px 4px rgba(179, 147, 211, 0.1);
+    padding-bottom: 20px;
+    color: black;
+    margin: 0; /* Remove margin to prevent spacing issues */
+    padding: 0; /* Remove padding to prevent spacing issues */
+    line-height: 1; /* Adjust line height for better alignment */
+ }
+
+.users-heading {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(179, 147, 211, 0.1);
+    margin-left: 45px;
+}
+
+.left-options {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+.left-options-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+}
+.option-logo {
+    color: #6E6E6E;
+    font-size: 23px;
+    margin-right: 12px;
+}
+.left-options-text {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 18px;
+    color: #4d4b4b;
+}
+.down-symbol {
+    color: #4d4b4b;
+    font-size: 30px;
+}
+.down-button {
+    border: none;
+    outline: none;
+    background-color: #ffecec17;
+    cursor: pointer;
+}
+.two-options {
+    display: flex;
+    align-items: center;
+}
+.dropdown-content {
+    padding-left: 0px;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-options {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    padding-left: 32px;
+    margin: 6px;
+    margin-top: 0px;
+    padding-top: 0px;
+    text-decoration: none;
+    color: #4d4b4b;
+    font-size: 18px;
+}
+.sidebar-options:hover {
+    background-color: bisque;
+    border-radius: 2px;
+    margin: 2px;
+    cursor: pointer;
+    color: black;
+}

@@ -9,7 +9,46 @@
     min-width:420px;
     margin:10px;
 }
-table,th,td{
+.stats-main-heading{
+  margin-left:5%;
+}
+.stats-main-inner-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  margin:10px;
+}
+
+.stats-table-container {
+  width: 75vw;
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+table {
+  width: 100%; /* Full width within the table-container */
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+thead th {
+  background-color: #f2f2f2;
+}
+
+tfoot th {
+  background-color: #e6e6e6;
+}
+
+tfoot th[colspan="9"] {
+  text-align: right;
+}
+
+/* table,th,td{
     padding-left:0;
     border:1px solid black;
     padding:10px;
@@ -17,4 +56,22 @@ table,th,td{
 }
 .table-container{
     overflow-x:auto;
-}
+} */
+
+/* app.css */
+.stats-main-container {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .stats-sidebar-container {
+    width: 20vw; /* Set the width of the sidebar */
+  }
+  
+  .stats-content-container {
+    width:80vw;
+    flex-grow: 1; /* Let the content container grow to occupy the remaining space */
+  }
+  

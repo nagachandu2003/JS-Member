@@ -4,8 +4,8 @@ import Popup from 'reactjs-popup'
 import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import AttendanceItem from '../AttendanceItem'
-
-
+import Navbar from "../Navbar"
+import Dashboard from "../Dashboard"
 
 const constituencies = {
     "SELECT" : ['SELECT'],
@@ -501,6 +501,9 @@ class Attendance extends Component{
 
     onClickSave = () => {
       const {statsList,newAttendanceList,date,viewMark} = this.state
+      if(date==="")
+        alert("Please Enter date")
+      else {
       let present = 0;
       let absent = 0;
         statsList.forEach((ele) => {
@@ -518,12 +521,11 @@ class Attendance extends Component{
       localStorage.setItem("attendanceList",JSON.stringify(newLi))
       this.setState({newAttendanceList:newLi,viewMark:!viewMark})
     }
+    }
 
     render(){
         let {statsList,date,viewMark,newAttendanceList} = this.state
         // console.log(newAttendanceList)
-        if(statsList.length===0)
-        alert("Add Members to mark attendance")
         let present = 0;
         let absent = 0;
         statsList.forEach((ele) => {
@@ -535,17 +537,17 @@ class Attendance extends Component{
         // const uniqueDates = [...new Set(statsList.map(obj => obj.date))];
         // console.log(uniqueDates)
     return (
+      <>
+      <Navbar/>
+      <div className="stats-main-container">
+           <div className="stats-sidebar-container">
+            <Dashboard />
+           </div>
+           <div className="stats-content-container">
         <div className="main-container">
             <div className="top-container">
-            <Link to="/" className="link-item">
-                    <div className="flexi3">
-                    <img src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" className="logo-img2" alt="logo"/>
-                    <h2 className="main-heading1">JS MEMBER</h2>
-                    <h3>Camp No : 1</h3>
-                    </div>
-                    </Link>
                     <div className="inner-top-container">
-                    <h1>Attendance</h1>
+                    <h1 className="stats-main-heading">Attendance</h1>
                     <button onClick={this.onClickMarkAttendance} className="addBtn" type="button"> Mark Attendance </button>
                     <div className="date-cont">
                     <p>{(new Date()).toDateString()}</p>
@@ -553,16 +555,16 @@ class Attendance extends Component{
                     </div>
                     </div>
             </div>
-            <div className="flex-cont1">
+            {/* <div className="flex-cont1">
             <div className="left-container">
                     <div className="left-container-items">
                     <Link className="nav-link" to="/stats">
                     <button className="nav-button">Stats</button>
                     </Link>
                     <br/>
-                    {/* <Link className="nav-link" to="/comingsoon"> */}
+                     <Link className="nav-link" to="/comingsoon">
                     <button className="nav-button">Attendance</button>
-                    {/* </Link */}
+                    </Link 
                     <br/>
                     <Link className="nav-link" to="/d2dreport">
                     <button className="nav-button">D2D Report</button>
@@ -593,9 +595,9 @@ class Attendance extends Component{
                     </Link>
                     <br/>
                     </div>
-                </div>
-                <div className="main-inner-container">
-                    <div className="table-container">
+                </div> */}
+                <div className="stats-main-inner-container">
+                    <div className="stats-table-container">
                     { viewMark===false && (
                     <table> 
                     {/* {(statsList.length!==0) && (
@@ -701,6 +703,8 @@ class Attendance extends Component{
             </div>
         </div>
         </div>
+        </div>
+        </>
         );
 }
 }

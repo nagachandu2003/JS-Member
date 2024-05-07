@@ -5,6 +5,8 @@ import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import MemberItem from '../MemberItem'
 import DistrictItem from "../DistrictItem"
+import Navbar from "../Navbar"
+import Dashboard from "../Dashboard"
 {/* Make a new Member Item */}
 
 const constituencies = {
@@ -444,10 +446,519 @@ const options = [
             OptionId : "JAMUI"
         }
       ]
-
+const blocks = {
+        "SELECT" : ["SELECT"],
+        "ARARIA": [
+          "Araria",
+          "Bhargama",
+          "Forbesganj",
+          "Jokihat",
+          "Kursakanta",
+          "Narpatganj",
+          "Palasi",
+          "Raniganj",
+          "Sikti"
+        ],
+        "ARWAL": [
+          "Arwal",
+          "Kaler",
+          "Kurtha",
+          "Sonbhadra-Bikramganj"
+        ],
+        "AURANGABAD": [
+          "Aurangabad",
+          "Barun",
+          "Daudnagar",
+          "Deo",
+          "Goh",
+          "Haspura",
+          "Kutumba",
+          "Madanpur",
+          "Nabinagar",
+          "Obra",
+          "Rafiganj"
+        ],
+        "BANKA": [
+          "Amarpur",
+          "Banka",
+          "Barahat",
+          "Belhar",
+          "Chandan",
+          "Dhoraiya",
+          "Katoria",
+          "Phulidumar",
+          "Shambhuganj"
+        ],
+        "BEGUSARAI": [
+          "Bachhwara",
+          "Bakhri",
+          "Barauni",
+          "Begusarai",
+          "Bhagwanpur",
+          "Birpur",
+          "Cheria Bariarpur",
+          "Mansurchak",
+          "Matihani",
+          "Naokothi",
+          "Sahebpur Kamal",
+          "Teghra"
+        ],
+        "BHAGALPUR": [
+          "Bhagalpur",
+          "Colgong",
+          "Kahalgaon",
+          "Kharik",
+          "Narayanpur",
+          "Pirpainti",
+          "Sabour",
+          "Sultanganj"
+        ],
+        "BHOJPUR": [
+          "Agiaon",
+          "Arrah",
+          "Barhara",
+          "Behea",
+          "Charpokhari",
+          "Garhani",
+          "Jagdishpur",
+          "Koilwar",
+          "Piro",
+          "Sahar",
+          "Sandesh",
+          "Shahpur"
+        ],
+        "BUXAR": [
+          "Buxar",
+          "Chausa",
+          "Dumraon",
+          "Itarhi",
+          "Nawanagar",
+          "Rajpur"
+        ],
+        "DARBHANGA": [
+          "Alinagar",
+          "Bahadurpur",
+          "Benipur",
+          "Biraul",
+          "Ghanshyampur",
+          "Hanuman Nagar",
+          "Hayaghat",
+          "Jale",
+          "Keoti",
+          "Kiratpur",
+          "Kusheshwar Asthan",
+          "Singhwara"
+        ],
+        "PURVI CHAMPARAN": [
+          "Adapur",
+          "Areraj",
+          "Banjariya",
+          "Chakia",
+          "Chiraia",
+          "Dhaka",
+          "Harsidhi",
+          "Kesaria",
+          "Kotwa",
+          "Madhuban",
+          "Motihari",
+          "Paharpur",
+          "Pakridayal",
+          "Phenhara",
+          "Piprakothi",
+          "Raxaul",
+          "Sangrampur",
+          "Sugauli",
+          "Tetaria",
+          "Turkaulia"
+        ],
+        "GAYA": [
+          "Belaganj",
+          "BodhGaya",
+          "Dobhi",
+          "Fatehpur",
+          "GayaTown",
+          "Guraru",
+          "Imamganj",
+          "Khizarsarai",
+          "Manpur",
+          "Mohanpur",
+          "Paraiya",
+          "Sherghati",
+          "Tankuppa"
+        ],
+        "GOPALGANJ": [
+          "Baikunthpur",
+          "Barauli",
+          "Bhorey",
+          "Gopalganj",
+          "Hathua",
+          "Kuchaikote",
+          "Manjha",
+          "Phulwaria",
+          "Sidhwalia",
+          "Thawe",
+          "Uchkagaon"
+        ],
+        "JAMUI": [
+          "Barhat",
+          "Chakai",
+          "Gidhaur",
+          "IslamnagarAliganj",
+          "Jamui",
+          "Jhajha",
+          "Khaira",
+          "Lakshmipur",
+          "Sikandra",
+          "Sono"
+        ],
+        "JEHANABAD": [
+          "Ghoshi",
+          "Hulasganj",
+          "Jehanabad",
+          "Kako",
+          "Makhdumpur",
+          "Modanganj",
+          "Parbatta",
+          "RatniFaridpur"
+        ],
+        "KAIMUR (BHABHUA)": [
+          "Adhaura",
+          "Bhabua",
+          "Chainpur",
+          "Chand",
+          "Durgawati",
+          "Kudra",
+          "Mohania",
+          "Ramgarh",
+          "Rampur",
+          "Rohtas"
+        ],
+        "KATIHAR": [
+          "Amdabad",
+          "Azamnagar",
+          "Balrampur",
+          "Barari",
+          "Barsoi",
+          "Dandkhora",
+          "Falka",
+          "Hasanganj",
+          "Kadwa",
+          "Katihar",
+          "Korha",
+          "Manihari"
+        ],
+        "KHAGARIA": [
+          "Alauli",
+          "Beldaur",
+          "Chautham",
+          "Gogri",
+          "Khagaria",
+          "Mansi",
+          "Parbatta"
+        ],
+        "KISHANGANJ": [
+          "Bahadurganj",
+          "Dighalbank",
+          "Kishanganj",
+          "Kochadhaman",
+          "Pothia",
+          "Terhagachh",
+          "Thakurganj"
+        ],
+        "LAKHISARAI": [
+          "Barahiya",
+          "Halsi",
+          "Lakhisarai",
+          "Pipariya",
+          "RamgarhChowk"
+        ],
+        "MADHEPURA": [
+          "Alamnagar",
+          "Bihariganj",
+          "Chausa",
+          "Ghelarh",
+          "Kumarkhand",
+          "Madhepura",
+          "Murliganj",
+          "Puraini",
+          "Singheshwar"
+        ],
+        "MADHUBANI": [
+          "Andhratharhi",
+          "Babubarhi",
+          "Basopatti",
+          "Benipatti",
+          "Bisfi",
+          "Harlakhi",
+          "Jainagar",
+          "Jhanjharpur",
+          "Kaluahi",
+          "Khajauli",
+          "Ladania",
+          "Laukahi",
+          "Laukaha",
+          "Madhubani",
+          "Madhwapur",
+          "Pandaul",
+          "Phulparas",
+          "Rajnagar",
+          "Sahidabad"
+        ],
+        "MUNGER": [
+          "Asarganj",
+          "Bariarpur",
+          "Dharhara",
+          "HaveliKharagpur",
+          "Jamalpur",
+          "Kharagpur",
+          "Munger",
+          "Tarapur"
+        ],
+        "MUZAFFARPUR": [
+          "Ahiapur",
+          "Bandra",
+          "Baruraj",
+          "Bochaha",
+          "Gaighat",
+          "Kanti",
+          "Katra",
+          "Kurhani",
+          "Marwan",
+          "Minapur",
+          "Motipur",
+          "Mushahari",
+          "Paroo",
+          "Sahebganj",
+          "Saraiya"
+        ],
+        "NALANDA": [
+          "Asthawan",
+          "Ben",
+          "Biharsharif",
+          "Bind",
+          "Chandi",
+          "Ekangarsarai",
+          "Giriyak",
+          "Harnaut",
+          "Islampur",
+          "KaraiParsurai",
+          "NagarNausa",
+          "Noorsarai",
+          "Rahui",
+          "Rajgir",
+          "Sarmera",
+          "Silao",
+          "Tharthari"
+        ],
+        "NAWADA": [
+          "Akbarpur",
+          "Gobindpur",
+          "Hisua",
+          "KashiChak",
+          "Meskaur",
+          "Narhat",
+          "Nawada",
+          "Pakribarawan",
+          "Rajauli",
+          "Roh"
+        ],
+        "PASCHIM CHAMPARAN": [
+          "Bagaha",
+          "Bairia",
+          "Bhitaha",
+          "Jogapatti",
+          "Lauriya",
+          "Madhuban",
+          "Narkatiaganj",
+          "Ramnagar",
+          "Sikta",
+          "Thakrahan"
+        ],
+        "PATNA": [
+          "Athmalgola",
+          "Bakhtiarpur",
+          "Barh",
+          "Belchhi",
+          "Bihta",
+          "Bikram",
+          "Daniawan",
+          "Dhanarua",
+          "DulhinBazar",
+          "Fatwah",
+          "Khusrupur",
+          "Maner",
+          "Masaurhi",
+          "Naubatpur",
+          "Paliganj",
+          "Pandarak",
+          "PatnaSadar",
+          "PhulwariSharif"
+        ],
+        "PURNIA": [
+          "Amour",
+          "Baisi",
+          "Banmankhi",
+          "Bhawanipur",
+          "Dagarua",
+          "Dhamdaha",
+          "Jalalgarh",
+          "Kasba",
+          "KrityanandNagar",
+          "PurniaEast",
+          "PurniaWest",
+          "Rupauli",
+          "Srinagar",
+          "Visheshwarganj"
+        ],
+        "ROHTAS": [
+          "AkorhiGola",
+          "Bhabua",
+          "Chainpur",
+          "Chenari",
+          "Dalmianagar",
+          "Dawath",
+          "Dehri",
+          "Dinara",
+          "Karakat",
+          "Kargahar",
+          "Kochas",
+          "Nasriganj",
+          "Nauhatta",
+          "Nokha"
+        ],
+        "SAHARSA": [
+          "BanmaItahari",
+          "Kahara",
+          "Mahishi",
+          "Nauhatta",
+          "Salkhua",
+          "Sonbarsa",
+          "SaurBazar",
+          "SimriBakhtiarpur"
+        ],
+        "SAMASTIPUR": [
+          "Bibhutpur",
+          "Bithan",
+          "Dalsinghsarai",
+          "Hasanpur",
+          "Khanpur",
+          "Mohiuddinagar",
+          "Morwa",
+          "Patori",
+          "Rosera",
+          "Sarairanjan",
+          "ShivajiNagar",
+          "Singhia",
+          "Tajpur",
+          "Ujiarpur",
+          "VidyapatiNagar",
+          "Warisnagar"
+        ],
+        "SARAN": [
+          "Amnour",
+          "Baniapur",
+          "Chapra",
+          "Dariapur",
+          "Dighwara",
+          "Ekma",
+          "Garkha",
+          "Ishupur",
+          "Jalalpur",
+          "Lahladpur",
+          "Maker",
+          "Manjhi",
+          "Marhaura",
+          "Mashrakh",
+          "Nagra",
+          "Panapur",
+          "Parsa",
+          "Revelganj",
+          "Taraiya"
+        ],
+        "SHEIKHPURA": [
+          "Ariari",
+          "Barbigha",
+          "Chewara",
+          "Ghatkusumbha",
+          "Sheikhpura",
+          "ShekhopurSarai"
+        ],
+        "SHEOHAR": [
+          "DumriKatsari",
+          "Piprarhi",
+          "Purnahiya",
+          "Sheohar",
+          "TarianiChowk"
+        ],
+        "SITAMARHI": [
+          "Bairgania",
+          "Bajpatti",
+          "Bathnaha",
+          "Belsand",
+          "Dumra",
+          "Majorganj",
+          "Nanpur",
+          "Parihar",
+          "Parsauni",
+          "Pupri",
+          "Riga",
+          "Runnisaidpur",
+          "Sonbarsa",
+          "Suppi",
+          "Sursand",
+          "Tetaria"
+        ],
+        "SIWAN": [
+          "Andar",
+          "Barharia",
+          "Basantpur",
+          "BhagwanpurHat",
+          "Darauli",
+          "Daraundha",
+          "Goriakothi",
+          "Guthani",
+          "HasanPura",
+          "Hussainganj",
+          "LakriNabiganj",
+          "Maharajganj",
+          "Mairwa",
+          "Nautan",
+          "Pachrukhi",
+          "Raghunathpur",
+          "Siwan"
+        ],
+        "SUPAUL": [
+          "Amour",
+          "Birpur",
+          "Chhatapur",
+          "Kishanpur",
+          "Marauna",
+          "Nirmali",
+          "Pipra",
+          "Pratapganj",
+          "Raghopur",
+          "SaraigarhBhaptiyahi",
+          "Supaul",
+          "Triveniganj"
+        ],
+        "VAISHALI": [
+          "Bhagwanpur",
+          "Bidupur",
+          "Chehrakala",
+          "Desri",
+          "Hajipur",
+          "Jandaha",
+          "Lalganj",
+          "Mahnar",
+          "Mahua",
+          "PatedhiBelsar",
+          "Patepur",
+          "Raghopur"
+        ]
+      }
 
 class Members extends Component{
-    state = {statsListm:[],MemberSno:0,JSID:'',Name:'',Number:'',district:'SELECT',constituency:'SELECT',selectedConstituency:'',Block:'',Panchayat:'',Village:'',Team:'',DOB:''}
+    state = {statsListm:[],MemberSno:0,JSID:'',Name:'',Number:'',district:'SELECT',constituency:'SELECT',selectedConstituency:'',Block:'SELECT',Panchayat:'',Village:'',Team:'',DOB:''}
 
     componentDidMount = () => {
         const stat = localStorage.getItem("statsListm")
@@ -469,6 +980,9 @@ class Members extends Component{
         this.setState({selectedConstituency:event.target.value})
     }
 
+    onChangeBlock = (event) => {
+      this.setState({Block:event.target.value})
+    }
     onSubmitStatsForm = (event) => {
         event.preventDefault()
         const {statsListm,MemberSno,JSID,Name,Number,district,constituency,selectedConstituency,Block,Panchayat,Village,Team,DOB} = this.state
@@ -495,17 +1009,17 @@ class Members extends Component{
     render(){
         const {statsListm,district} = this.state
     return (
+      <>
+      <Navbar/>
+      <div className="stats-main-container">
+           <div className="stats-sidebar-container">
+            <Dashboard />
+           </div>
+        <div className="stats-content-container">
         <div className="main-container">
             <div className="top-container">
-            <Link to="/" className="link-item">
-                    <div className="flexi3">
-                    <img src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" className="logo-img2" alt="logo"/>
-                    <h2 className="main-heading1">JS Member</h2>
-                    <h3>Camp No : 1</h3>
-                    </div>
-                    </Link>
                     <div className="inner-top-container">
-                    <h1>Members</h1>
+                    <h1 className="stats-main-heading">Members</h1>
                     <Popup
                         trigger={<button className="addBtn" type="button"> Add </button>}
                         modal
@@ -550,12 +1064,18 @@ class Members extends Component{
                                         {constituencies[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
                                     </select>
                                 </div>
-
                                 <div className="stats-inp-cont">
                                 <label htmlFor="block">Block</label>
                                 <br/>
-                                <input name="Block" onChange={this.handleChange} className="stats-inp-ele" id="block" type="text" placeholder="Enter the Block" alt="Block" required/>
+                                <select onChange={this.onChangeBlock} id="block" className="stats-inp-ele" >
+                                    {blocks[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
+                                </select>
                                 </div>
+                                {/* <div className="stats-inp-cont">
+                                <label htmlFor="block">Block</label>
+                                <br/>
+                                <input name="Block" onChange={this.handleChange} className="stats-inp-ele" id="block" type="text" placeholder="Enter the Block" alt="Block" required/>
+                                </div> */}
                                 <div className="stats-inp-cont">
                                 <label htmlFor="panchayat">Panchayat</label>
                                 <br/>
@@ -609,10 +1129,11 @@ class Members extends Component{
                     </Popup>
                     <div className="date-cont">
                     <p>{(new Date()).toDateString()}</p>
+                    <p>Beta</p>
                     </div>
                     </div>
             </div>
-            <div className="flex-cont1">
+            {/* <div className="flex-cont1">
             <div className="left-container">
                     <div className="left-container-items">
                     <Link className="nav-link" to="/stats">
@@ -652,9 +1173,9 @@ class Members extends Component{
                     </Link>
                     <br/>
                     </div>
-                </div>
-                <div className="main-inner-container">
-                    <div className="table-container">
+                </div> */}
+                <div className="stats-main-inner-container">
+                    <div className="stats-table-container">
                     <table> 
                     {(statsListm.length!==0) && (
                         statsListm.map((ele,index) => <MemberItem sno={index+1} onDeleteMember={this.onDeleteMember} key={ele.id} statDetails={ele} />
@@ -711,6 +1232,8 @@ class Members extends Component{
             </div>
         </div>
         </div>
+        </div>
+        </>
         );
 }
 }

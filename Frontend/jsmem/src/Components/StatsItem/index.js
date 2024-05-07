@@ -1,7 +1,7 @@
 import "./index.css"
 import Popup from 'reactjs-popup'
 const MemberItem = (props) => {
-        const {statDetails,onDeleteReport} = props
+        const {statDetails,onDeleteReport,belong} = props
         const {
           id,TeamName,TeamNo,TeamLeadName,date ,district,constituency,selectedConstituency,	Block,	Panchayat,	Village,THV,TPO,TWC,TSS,TYCS,TNRB,TNS,TCD,TV
         } = statDetails
@@ -29,9 +29,9 @@ const MemberItem = (props) => {
                     <td>{TNS}</td>
                     <td>{TCD}</td>
                     <td>{TV}</td>
-                    <td>
+                    {belong==="d2d" && (<td>
                     <Popup
-    trigger={<button className="edit-Btn" type="button"> Delete </button>}
+    trigger={<button className="closeBtn" type="button"> Delete </button>}
     modal
     nested
   >
@@ -62,7 +62,7 @@ const MemberItem = (props) => {
       </div>
     )}
   </Popup>
-                    </td>
+                    </td>)}
                 </tr>
         </tbody>
     )

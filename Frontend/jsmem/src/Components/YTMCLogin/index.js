@@ -70,7 +70,7 @@ const YTMCLogin = () => {
         <img src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" className='login-logo' alt="img"/>
       </div>
       <form className="login-form" onSubmit={onSubmitUser}>
-         <h1 className="main-heading">YTMC Login</h1>
+         <h1 className="main-heading">YTCM Login</h1>
         {/* <div className="form-ele">
           <label className='label-ele' htmlFor="username">Username</label>
           <br />

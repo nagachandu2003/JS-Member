@@ -26,7 +26,7 @@ button{
     font-family:"Roboto";
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-content:space-between ;
 }
 .user-input2{
     width:420px;
@@ -89,10 +89,10 @@ ul{
 .top-container{
     display:flex;
     justify-content: space-between;
-    background-color: #ECCA3D;
-    width:100%;
-    height:35vh;
-    position: sticky;
+    background-color: #ffcd1a;
+    width:79vw;
+    margin-left:auto;
+    min-height:15vh;
 }
 .left-container-elements{
     margin-left:10px;
@@ -115,7 +115,7 @@ ul{
 .left-container{
     width:20%;
     min-height:80vh;
-    background-color:#ECCA3D;
+    background-color:#ffcd1a;
     text-align: left;
     display:flex;
     flex-direction: column;
@@ -142,7 +142,7 @@ ul{
     align-self: center;
 }
 .custom-popup{
-    background-color: #ECCA3D;
+    background-color: #ffcd1a;
     border:1px solid black;
     width:500px;
     border-radius:8px;
@@ -198,7 +198,7 @@ button{
     color:#3D7FE5;
 }
 .date-cont{
-    background-color: #ECCA3D;
+    background-color: #ffcd1a;
     color:black;
     align-self:flex-start;
     text-align:right;

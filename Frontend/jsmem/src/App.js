@@ -2,9 +2,9 @@
 import './App.css';
 import {Component} from 'react'
 import {Routes,Route,BrowserRouter} from 'react-router-dom'
+import {ReactContext} from './ReactContext'
 import Home from "./Components/Home"
 import Login from './Components/Login'
-import ReactContext from './ReactContext';
 import Cookies from 'js-cookie'
 import Camps from './Components/Camps'
 import Stats from './Components/Stats'
@@ -19,16 +19,11 @@ import YTMCRegister from './Components/YTMCRegister'
 import YTMCVideo from './Components/YTMCVideo'
 import YTMCVideoDetailItem from './Components/YTMCVideoDetailItem'
 import RegistrationSuccess from './Components/RegistrationSuccess';
+import Navbar from './Components/Navbar';
+import Dashboard from './Components/Dashboard'
 
 class App extends Component {
-  state = {isLogin:'false'}
 
-  changeLoginStatus = () => {
-    const {isLogin} = this.state
-    const token = Cookies.get("jwt_token2")
-    if(isLogin==='false')
-    this.setState({isLogin:'true'})
-  }
   render(){
     return (
       <BrowserRouter>
