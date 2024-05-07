@@ -21,6 +21,7 @@ import YTMCVideoDetailItem from './Components/YTMCVideoDetailItem'
 import RegistrationSuccess from './Components/RegistrationSuccess';
 import Navbar from './Components/Navbar';
 import Dashboard from './Components/Dashboard'
+import Profile from './Components/Profile'
 
 class App extends Component {
 
@@ -32,6 +33,7 @@ class App extends Component {
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/camps" element={<Camps/>}/>
         <Route exact path="/stats" element={<Stats/>}/>
+        <Route exact path="/profile" element={<Profile/>}/>
         <Route exact path="/comingsoon" element={<ComingSoon/>}/>
         {/* <Route exact path="/ytmc" element={<Ytmc/>}/> */}
         <Route exact path="/ytmcregister" element={<YTMCRegister/>}/>
@@ -44,6 +46,7 @@ class App extends Component {
         <Route exact path="/ytmcvideo/:channelName" element={<YTMCVideo/>}/>
         <Route exact path="/ytmcvideo/videoinfo/:channelName/:videoid" element={<YTMCVideoDetailItem/>}/>
         <Route exact path="/regpending" element={<RegistrationSuccess/>}/>
+        {/* <Route path="*" element={<ComingSoon/>}/> */}
       </Routes>
       </BrowserRouter>
     )

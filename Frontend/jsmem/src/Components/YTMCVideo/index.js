@@ -6,6 +6,8 @@ import Cookies from 'js-cookie';
 import { useParams } from 'react-router-dom';
 import YTMCVideoItem from '../YTMCVideoItem';
 import { ThreeDots } from 'react-loader-spinner';
+import Footer from '../YTCMFooter'
+import "./index.css"
 
 const YTMCVideo = () => {
   const { channelName } = useParams();
@@ -172,20 +174,11 @@ const YTMCVideo = () => {
         <div className="ytmchome-top-container">
           <div className="ytmchome-top-flex-container">
             <h1>YTMC</h1>
-            <button onClick={onClickLogout} type="button" className="logoutBtn">
+            {/* <button onClick={onClickLogout} type="button" className="logoutBtn">
               Log Out
-            </button>
+            </button> */}
           </div>
         </div>
-        <div className="ytmchome-flex-container1">
-          <div className="ytmchome-left-container">
-            <ul className="ytmchome-list-container">
-              <li className="ytmchome-list-item">Report</li>
-              <li className="ytmchome-list-item">Reward</li>
-              <li className="ytmchome-list-item">Content</li>
-              <li className="ytmchome-list-item">Profile</li>
-            </ul>
-          </div>
           {isLoading===true && (
                     <div className="ytmchome-content-container">
                         <ThreeDots color="gray" height={50} width={50}/>
@@ -206,15 +199,7 @@ const YTMCVideo = () => {
           </div>
           )}
         </div>
-      </div>
-      <footer className="ytmchome-footer">
-        <ul className="ytmchome-list-container2">
-          <li className="ytmchome-list-item2">Report</li>
-          <li className="ytmchome-list-item2">Reward</li>
-          <li className="ytmchome-list-item2">Content</li>
-          <li className="ytmchome-list-item2">Profile</li>
-        </ul>
-      </footer>
+      <Footer/>
     </>
   );
 };

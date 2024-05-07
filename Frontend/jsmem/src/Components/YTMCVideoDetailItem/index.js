@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { ThreeDots } from "react-loader-spinner"
 import { googleLogout } from "@react-oauth/google"
 import Cookies from 'js-cookie'
+import Footer from '../YTCMFooter'
 
 const YTMCVideoDetailItem = () => {
     const {videoid,channelName} = useParams()
@@ -63,21 +64,12 @@ const YTMCVideoDetailItem = () => {
         <div className="ytmchome-main-container">
         <div className="ytmchome-top-container">
           <div className="ytmchome-top-flex-container">
-            <h1>YTMC</h1>
+            <h1>Video Details</h1>
             <button onClick={onClickLogout} type="button" className="logoutBtn">
               Log Out
             </button>
           </div>
         </div>
-        <div className="ytmchome-flex-container1">
-          <div className="ytmchome-left-container">
-            <ul className="ytmchome-list-container">
-              <li className="ytmchome-list-item">Report</li>
-              <li className="ytmchome-list-item">Reward</li>
-              <li className="ytmchome-list-item">Content</li>
-              <li className="ytmchome-list-item">Profile</li>
-            </ul>
-          </div>
           {isLoading===true && (
                     <div className="ytmchome-content-container">
                         <ThreeDots color="gray" height={50} width={50}/>
@@ -86,7 +78,7 @@ const YTMCVideoDetailItem = () => {
           {isLoading===false && (
           <div className="ytmchome-content-container">
             <h2>7 Day Views & Reward</h2>
-            <table style={{margin:'auto'}}>
+            <table style={{margin:'auto',backgroundColor:'white',color:'black'}}>
                 <thead>
                     <tr>
                     <th>Days</th>
@@ -150,15 +142,7 @@ const YTMCVideoDetailItem = () => {
             </div>
           )}
         </div>
-      </div>
-      <footer className="ytmchome-footer">
-        <ul className="ytmchome-list-container2">
-          <li className="ytmchome-list-item2">Report</li>
-          <li className="ytmchome-list-item2">Reward</li>
-          <li className="ytmchome-list-item2">Content</li>
-          <li className="ytmchome-list-item2">Profile</li>
-        </ul>
-      </footer>
+        <Footer/>
     </>
     )
 }

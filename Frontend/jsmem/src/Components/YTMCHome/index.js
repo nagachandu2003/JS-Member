@@ -8,6 +8,7 @@ import {Popup} from 'reactjs-popup'
 import {v4 as uuidv4} from 'uuid'
 import YTMCChannelItem from "../YTMCChannelItem";
 import Cookies from 'js-cookie'
+import Footer from '../YTCMFooter'
 
 const constituencies = {
     "SELECT" : ['SELECT'],
@@ -534,7 +535,7 @@ class YTMCHome extends Component{
       event.preventDefault()
       const {channelUrl,channelsList} = this.state
 
-      const newObj = [...channelsList,{channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl),videos:[]}]
+      const newObj = [...channelsList,{channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl),videos:[],channelDate:(new Date()).toLocaleDateString()}]
       this.onReplaceObj({channelUrl,id:uuidv4(),channelName : this.getChannelName(channelUrl),videos:[]})
       this.setState({channelsList:newObj})
     }
@@ -592,21 +593,12 @@ class YTMCHome extends Component{
                         )}
                     </Popup>
                     </div>
+                    <div className="ytmchome-main-inner-container">
                 <div className="ytmchome-top-container">
                     <div className="ytmchome-top-flex-container">
-                    <h1>YTMC</h1>
-                    <button onClick={this.onClickLogout} type="button" className="logoutBtn">Log Out</button>
+                    <h1>Report</h1>
+                    {/* <button onClick={this.onClickLogout} type="button" className="logoutBtn">Log Out</button> */}
                     </div>
-                </div>
-                <div className="ytmchome-flex-container1">
-                
-                <div className="ytmchome-left-container">
-                    <ul className="ytmchome-list-container">
-                        <li className="ytmchome-list-item">Report</li>
-                        <li className="ytmchome-list-item">Reward</li>
-                        <li className="ytmchome-list-item">Content</li>
-                        <li className="ytmchome-list-item">Profile</li>
-                    </ul>
                 </div>
                 {isLoading===true && (
                     <div className="ytmchome-content-container">
@@ -623,15 +615,8 @@ class YTMCHome extends Component{
                     }
                 </div>)}
                 </div>
-            </div>
-            <footer className="ytmchome-footer">
-                <ul className="ytmchome-list-container2">
-                    <li className="ytmchome-list-item2">Report</li>
-                    <li className="ytmchome-list-item2">Reward</li>
-                    <li className="ytmchome-list-item2">Content</li>
-                    <li className="ytmchome-list-item2">Profile</li>
-                </ul>
-            </footer>
+                </div>
+            <Footer/>
             </>
         )
     }
