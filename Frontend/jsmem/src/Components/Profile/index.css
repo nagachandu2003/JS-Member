@@ -1,4 +1,18 @@
 .profile-cont{
-    text-align: left;
+    text-align: center;
     font-size:15px;
+    color: black;
+    background-color: white;
+    border-radius: 8px;
+}
+.hrline{
+}
+.profile-icon{
+    height:50px;
+    width:50px;
+}
+.profile-item-cont{
+    display: flex;
+    align-items: center;
+    border-bottom:2px solid gray;
 }

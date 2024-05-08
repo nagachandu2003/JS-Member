@@ -16,13 +16,14 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",
     "react-loader-spinner": "^6.1.6",
+    "react-qr-code": "^2.0.12",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "reactjs-popup": "^2.0.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --port 10565",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
