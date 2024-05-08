@@ -25,6 +25,7 @@ const Content = () => {
     const [state, setState] = useState('');
     const [date, setDate] = useState('');
     const [type, setType] = useState('');
+    const [link, setLink] = useState('');
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -35,6 +36,7 @@ const Content = () => {
         state,
         date,
         type,
+        link,
         time: currentTime
       });
       // Reset input fields after submission
@@ -43,6 +45,7 @@ const Content = () => {
       setState('');
       setDate('');
       setType('');
+      setLink('');
     };
   
     const handleCancel = () => {
@@ -64,6 +67,16 @@ const Content = () => {
               onChange={(e) => setHeading(e.target.value)}
               required
             />
+            <label htmlFor="link" className="form-label">Add Link:</label>
+            <input
+              type="text"
+              id="link"
+              className="form-input"
+              placeholder="Enter Link"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              required
+            />
             <label htmlFor="source" className="form-label">Source:</label>
             <select
               id="source"
@@ -76,16 +89,19 @@ const Content = () => {
               <option value="Telegram">Telegram</option>
               <option value="YouTube">YouTube</option>
             </select>
+            
             <label htmlFor="state" className="form-label">State:</label>
-            <input
-              type="text"
+            <select
               id="state"
               className="form-input"
-              placeholder="Enter State"
               value={state}
-              onChange={(e) => setState(e.target.value)}
+              onChange={(e) => setSource(e.target.value)}
               required
-            />
+            >
+              <option value="">Select State</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
             <label htmlFor="date" className="form-label">Date:</label>
             <input
               id="date"

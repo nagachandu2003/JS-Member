@@ -24,6 +24,7 @@ import Dashboard from './Components/Dashboard'
 import Profile from './Components/Profile'
 import Reward from './Components/Reward'
 import Content from './Components/Content'
+import Account from './Components/Account'
 
 class App extends Component {
 
@@ -36,6 +37,7 @@ class App extends Component {
         <Route exact path="/camps" element={<Camps/>}/>
         <Route exact path="/stats" element={<Stats/>}/>
         <Route exact path="/profile" element={<Profile/>}/>
+        <Route exact path="/account" element={<Account/>}/>
         <Route exact path="/comingsoon" element={<ComingSoon/>}/>
         <Route exact path="/reward" element={<Reward/>}/>
         <Route exact path="/content" element={<Content/>}/>

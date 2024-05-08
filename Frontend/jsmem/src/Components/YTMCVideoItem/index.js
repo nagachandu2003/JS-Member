@@ -9,7 +9,7 @@ const YTMCVideoItem = (props) => {
         <li className="ytmcchannel-list-item">
             <div className="list-item-cont2">
             <img className="user-img" src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`} alt="thumbnail"/>
-            <div>
+            <div style={{width:'80%',display:'flex',flexDirection:'column',alignItems:'center'}}>
             <p>Added Date : {videoDate}</p>
             <div className="ytmcchannel-link-btn" style={{display:'flex',alignItems:'center'}}>
             <Link to={`/ytmcvideo/videoinfo/${channelTitle}/${videoId}`}>
@@ -18,7 +18,7 @@ const YTMCVideoItem = (props) => {
             </div>
             </div>
             </div>
-            <a style={{color:'black'}} href={videoUrl} target="_blank" rel="noreferrer"><h5>{videoName}</h5></a>
+            <a style={{color:'black', textAlign:'left'}} href={videoUrl} target="_blank" rel="noreferrer"><h5>{videoName}</h5></a>
         </li>
     )
 }

@@ -21,20 +21,20 @@ const Reward = () => {
   return (
     <>
       <header className="task-main-header-container">
-        <h1 className="task-main-heading">Team</h1>
+        <h1 className="task-main-heading">Reward</h1>
       </header>
       <nav className="task-tabs-container">
         <div
           className={`task-tab ${activeTab === 'current' ? 'active' : ''}`}
           onClick={() => handleTabClick('current')}
         >
-          current
+          Current
         </div>
         <div
           className={`task-tab ${activeTab === 'claimed' ? 'active' : ''}`}
           onClick={() => handleTabClick('claimed')}
         >
-          claimed
+          Claimed
         </div>
         <div className="task-tab-slider" style={{ left: activeTab === 'claimed' ? '50%' : '0' }} />
       </nav>
