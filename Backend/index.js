@@ -30,6 +30,43 @@ app.get("/", (req, res) => {
 });
 
 
+app.get('/content/:email', async (req,res) => {
+  const {email} = req.params
+  try{
+    await connectToDatabase()
+    const result = await accountsCollection.findOne({email})
+    res.send({'Content':result.content})
+    await client.close()
+  }
+  catch(Err){
+    console.log(`Error Occurred : ${Err}`);
+    await client.close()
+  }
+})
+
+
+app.post('/addcontent', async (req, res) => {
+  const {obj} = req.body
+  try {
+    await connectToDatabase()
+    const result = await accountsCollection.updateOne({email:req.body.email},{
+       $push: { content: obj } 
+    })
+    // const result = await collection.updateOne(
+    //   {email:req.body.email},
+    //   { $push: { contentArray: objectToAdd } } 
+    // );
+
+    res.status(200).send({success:'Content Item added successfully'});
+    await client.close()
+  } catch (error) {
+    console.error('Error adding object:', error);
+    res.status(500).send({failure:'Error adding object'});
+    await client.close()
+  }
+});
+
+
 app.post("/ytmcvideo/channel/videostats", async (req,res) => {
   console.log("I am from Video Stats")
   try{

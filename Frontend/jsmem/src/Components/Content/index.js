@@ -1,19 +1,102 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { RiArrowRightSLine } from "react-icons/ri";
 import Footer from '../YTCMFooter'
+import Cookies from 'js-cookie'
 
 import './index.css'; // Import CSS file
 
 const Content = () => {
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null); // Track selected item index
+  const [selectedItem, setSelectedItem] = useState(null); 
+  const [isLoading,setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const getVideos = async () => {
+      setIsLoading(true)
+      const email = Cookies.get("useremail");
+      try {
+        const response = await fetch(`http://localhost:3001/content/${email}`);
+        const data = await response.json();
+        setUsers(data.Content)
+        setIsLoading(false)
+        // Update videosList state with the fetched data
+        // setVideosList(data.videos); // Assuming the response structure has a 'videos' property
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+      }
+    };
+
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+  // useEffect(() => {
+  //   const getContent = async () => {
+  //     const email = Cookies.get("useremail");
+  //     try {
+  //       const response = await fetch(`http://localhost:3001/content/${email}`);
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setUsers(data.Content);
+  //       }
+  //     } catch (error) {
+  //       console.log(`Error Occurred : ${error}`);
+  //     }
+  //   };
+  
+  //   getContent(); // Call getContent directly inside useEffect
+  
+  // }, [users]); // Empty array as the second argument to useEffect
+  
+
+  // useEffect(() => {
+  //   const getContent = async () => {
+  //     const email = Cookies.get("useremail");
+  //     try{
+  //       const response = await fetch(`http://localhost:3001/content/${email}`)
+  //       if(response.ok)
+  //       {
+  //         const data = await response.json()
+  //         setUsers(data.Content)
+  //       }
+  //     }
+  //     catch(Err)
+  //     {
+  //       console.log(`Error Occurred : ${Err}`)
+  //     }
+  //   }
+  //   getContent()
+  // })
+
+  const onAddContent = async (obj) => {
+    const email = Cookies.get("useremail");
+    try{
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json",
+        },
+        body : JSON.stringify({email,obj})
+      }
+      const response = await fetch(`http://localhost:3001/addcontent`,options);
+      if(response.ok)
+        {
+          const data = await response.json();
+          console.log(data);
+        }
+    }
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`);
+    }
+  }
 
   const handleSave = (userData) => {
     if (userData) {
       const defaultName = `Content${users.length + 1}`;
       const d2dName = { ...userData, name: defaultName };
+      onAddContent(d2dName)
       setUsers([...users, d2dName]);
     }
     setShowForm(false);
@@ -73,8 +156,8 @@ const Content = () => {
               id="link"
               className="form-input"
               placeholder="Enter Link"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
               required
             />
             <label htmlFor="source" className="form-label">Source:</label>
@@ -95,7 +178,7 @@ const Content = () => {
               id="state"
               className="form-input"
               value={state}
-              onChange={(e) => setSource(e.target.value)}
+              onChange={(e) => setState(e.target.value)}
               required
             >
               <option value="">Select State</option>
