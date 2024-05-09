@@ -17,7 +17,7 @@ const Content = () => {
       setIsLoading(true)
       const email = Cookies.get("useremail");
       try {
-        const response = await fetch(`http://localhost:3001/content/${email}`);
+        const response = await fetch(`https://js-member-backend.vercel.app/content/${email}`);
         const data = await response.json();
         setUsers(data.Content)
         setIsLoading(false)
@@ -36,7 +36,7 @@ const Content = () => {
   //   const getContent = async () => {
   //     const email = Cookies.get("useremail");
   //     try {
-  //       const response = await fetch(`http://localhost:3001/content/${email}`);
+  //       const response = await fetch(`https://js-member-backend.vercel.app/content/${email}`);
   //       if (response.ok) {
   //         const data = await response.json();
   //         setUsers(data.Content);
@@ -55,7 +55,7 @@ const Content = () => {
   //   const getContent = async () => {
   //     const email = Cookies.get("useremail");
   //     try{
-  //       const response = await fetch(`http://localhost:3001/content/${email}`)
+  //       const response = await fetch(`https://js-member-backend.vercel.app/content/${email}`)
   //       if(response.ok)
   //       {
   //         const data = await response.json()
@@ -80,7 +80,7 @@ const Content = () => {
         },
         body : JSON.stringify({email,obj})
       }
-      const response = await fetch(`http://localhost:3001/addcontent`,options);
+      const response = await fetch(`https://js-member-backend.vercel.app/addcontent`,options);
       if(response.ok)
         {
           const data = await response.json();
