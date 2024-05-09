@@ -688,9 +688,6 @@ class Stats extends Component{
                 <div className="stats-main-inner-container">
                     <div className="stats-table-container">
                     <table> 
-                    {(statsList.length!==0) && (
-                        statsList.map((ele) => <StatsItem key={ele.id} statDetails={ele} onDeleteReport={this.onDeleteReport} belong={"stats"} />
-                        ))}
                     <thead>
                 <tr>
                     <th>
@@ -749,6 +746,11 @@ class Stats extends Component{
                     </th>
                 </tr>
                 </thead>
+                <tbody>
+                {(statsList.length!==0) && (
+                        statsList.map((ele) => <StatsItem key={ele.id} statDetails={ele} onDeleteReport={this.onDeleteReport} belong={"stats"} />
+                        ))}
+                        </tbody>
                 <tfoot>
                     <tr>
                         <th style={{textAlign:'center'}} colSpan="9">Total</th>

@@ -25,11 +25,10 @@
   overflow-x: auto; /* Enable horizontal scrolling */
 }
 
-table {
-  width: 100%; /* Full width within the table-container */
+/* table {
+  width: 100%; 
   border-collapse: collapse;
 }
-
 th,
 td {
   border: 1px solid black;
@@ -46,6 +45,31 @@ tfoot th {
 
 tfoot th[colspan="9"] {
   text-align: right;
+} */
+
+table {
+  min-width:400px;
+  margin:25px 0;
+  font-size:0.9em;
+  border-collapse: collapse;
+  border-radius:20px;
+}
+table thead tr{
+  background-color: #ffcd1a;
+  color:black;
+  text-align:left;
+  font-weight:bold;
+}
+
+th, td {
+  padding: 12px 15px;
+}
+table tbody tr{
+  border-bottom:1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even){
+  background-color: #f3f3f3;
 }
 
 /* table,th,td{

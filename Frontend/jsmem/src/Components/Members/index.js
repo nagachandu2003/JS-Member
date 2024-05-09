@@ -1177,9 +1177,7 @@ class Members extends Component{
                 <div className="stats-main-inner-container">
                     <div className="stats-table-container">
                     <table> 
-                    {(statsListm.length!==0) && (
-                        statsListm.map((ele,index) => <MemberItem sno={index+1} onDeleteMember={this.onDeleteMember} key={ele.id} statDetails={ele} />
-                        ))}
+
                     <thead>
                 <tr>
                     <th>
@@ -1218,6 +1216,11 @@ class Members extends Component{
                     </th>
                 </tr>
                 </thead>
+                <tbody>
+                {(statsListm.length!==0) && (
+                        statsListm.map((ele,index) => <MemberItem sno={index+1} onDeleteMember={this.onDeleteMember} key={ele.id} statDetails={ele} />
+                        ))}
+                </tbody>
                 {/* <tfoot>
                     <tr>
                         <th colSpan="3">Total</th>

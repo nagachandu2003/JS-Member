@@ -9,7 +9,6 @@ const MemberItem = (props) => {
           onDeleteReport(id);
         }
     return (
-        <tbody className="table-body">
                 <tr>
                 <td>{date}</td>
                   <td>{TeamName}</td>
@@ -64,7 +63,6 @@ const MemberItem = (props) => {
   </Popup>
                     </td>)}
                 </tr>
-        </tbody>
     )
 }
 export default MemberItem

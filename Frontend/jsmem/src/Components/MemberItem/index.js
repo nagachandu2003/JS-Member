@@ -12,7 +12,6 @@ const MemberItem = (props) => {
           onDeleteMember(id);
         }
     return (
-        <tbody className="table-body">
                 <tr>
                     <td>{sno}</td>
                     <td>{JSID}</td>
@@ -60,7 +59,6 @@ const MemberItem = (props) => {
   </Popup>
                     </td>
                 </tr>
-        </tbody>
     )
 }
 export default MemberItem
