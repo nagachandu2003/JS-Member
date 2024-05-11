@@ -71,7 +71,7 @@ const YTMCVideoDetailItem = () => {
           </div>
         </div>
           {isLoading===true && (
-                    <div className="ytmchome-content-container">
+                    <div className="ytmchome-content-container" style>
                         <ThreeDots color="gray" height={50} width={50}/>
                     </div>
                 )}
