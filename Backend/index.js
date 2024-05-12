@@ -24,47 +24,106 @@ const connectToDatabase = async () => {
   }
 };
 
+let dashboardCollection;
+const connectToDatabaseDashboard = async () => {
+  try {
+    await client.connect();
+    console.log(`Connected to the ${dbname} database`);
+    dashboardCollection = client.db(dbname).collection("dashboard");
+  } catch (err) {
+    console.error(`Error connecting to the database : ${err}`);
+  }
+};
+
+
 
 app.get("/", (req, res) => {
   res.send("Hello, I am connected Now");
 });
 
-
-app.get('/content/:email', async (req,res) => {
-  const {email} = req.params
-  try{
-    await connectToDatabase()
-    const result = await accountsCollection.findOne({email})
-    res.send({'Content':result.content})
+app.get("/getcontentdetails", async (req,res) => {
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { content: 1, _id: 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    res.send({success:'Content Sent Successfully',Content:result[0].content})
+  }
+  catch(Err) {
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
     await client.close()
   }
+})
+
+app.delete("/content/:id", async (req,res) => {
+  // const {id} = req.params
+  try {
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateMany({},{ $pull: { content: { id: req.params.id } } })
+    res.send({success:'Item Deleted Successfully'})
+  }
+  catch(Err) {
+    res.send({failure : Err})
+  }
+  finally {
+    await client.close()
+  }
+})
+
+app.post("/addcontentdata", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { content: req.body } })
+    res.send({success : 'Content Added Successfully'})
+  }
   catch(Err){
-    console.log(`Error Occurred : ${Err}`);
+    res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
     await client.close()
   }
 })
 
 
-app.post('/addcontent', async (req, res) => {
-  const {obj} = req.body
-  try {
-    await connectToDatabase()
-    const result = await accountsCollection.updateOne({email:req.body.email},{
-       $push: { content: obj } 
-    })
-    // const result = await collection.updateOne(
-    //   {email:req.body.email},
-    //   { $push: { contentArray: objectToAdd } } 
-    // );
+// app.get('/content/:email', async (req,res) => {
+//   const {email} = req.params
+//   try{
+//     await connectToDatabase()
+//     const result = await accountsCollection.findOne({email})
+//     res.send({'Content':result.content})
+//     await client.close()
+//   }
+//   catch(Err){
+//     console.log(`Error Occurred : ${Err}`);
+//     await client.close()
+//   }
+// })
 
-    res.status(200).send({success:'Content Item added successfully'});
-    await client.close()
-  } catch (error) {
-    console.error('Error adding object:', error);
-    res.status(500).send({failure:'Error adding object'});
-    await client.close()
-  }
-});
+
+// app.post('/addcontent', async (req, res) => {
+//   const {obj} = req.body
+//   try {
+//     await connectToDatabase()
+//     const result = await accountsCollection.updateOne({email:req.body.email},{
+//        $push: { content: obj } 
+//     })
+//     // const result = await collection.updateOne(
+//     //   {email:req.body.email},
+//     //   { $push: { contentArray: objectToAdd } } 
+//     // );
+
+//     res.status(200).send({success:'Content Item added successfully'});
+//     await client.close()
+//   } catch (error) {
+//     console.error('Error adding object:', error);
+//     res.status(500).send({failure:'Error adding object'});
+//     await client.close()
+//   }
+// });
 
 
 app.post("/ytmcvideo/channel/videostats", async (req,res) => {
