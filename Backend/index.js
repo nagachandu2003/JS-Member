@@ -90,6 +90,53 @@ app.post("/addcontentdata", async (req,res) => {
   }
 })
 
+app.get("/getreferraldetails", async (req,res) => {
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { referral: 1, _id: 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    res.send({success:'Referrals Sent Successfully',Referral:result[0].referral})
+  }
+  catch(Err) {
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.delete("/referral/:id", async (req,res) => {
+  // const {id} = req.params
+  try {
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateMany({},{ $pull: { referral: { id: req.params.id } } })
+    res.send({success:'Referral Deleted Successfully'})
+  }
+  catch(Err) {
+    res.send({failure : Err})
+  }
+  finally {
+    await client.close()
+  }
+})
+
+app.post("/addreferral", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { referral: req.body } })
+    res.send({success : 'Referral Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
 app.post("/addKYC", async (req,res) => {
   try{
     await connectToDatabase()
