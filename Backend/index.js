@@ -3,6 +3,8 @@ const cors = require("cors");
 const { MongoClient, ObjectId } = require("mongodb");
 const dotenv = require("dotenv");
 
+
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -82,6 +84,23 @@ app.post("/addcontentdata", async (req,res) => {
   }
   catch(Err){
     res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.post("/addKYC", async (req,res) => {
+  try{
+    await connectToDatabase()
+    const result = await accountsCollection.updateOne({email:req.body.email},{
+      $set : {kyc : req.body.obj}
+    })
+    res.send({success : 'KYC Sent Successfully'})
+  }
+  catch(Err)
+  {
+    res.send({failure : `Error Occurred ${Err}`})
   }
   finally{
     await client.close()
