@@ -90,6 +90,56 @@ app.post("/addcontentdata", async (req,res) => {
   }
 })
 
+// Trending APIs
+app.post("/addtrendingdata", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { trending: req.body } })
+    res.send({success : 'Video Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.delete("/trending/:id", async (req,res) => {
+  // const {id} = req.params
+  try {
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateMany({},{ $pull: { trending: { id: req.params.id } } })
+    res.send({success:'Video Deleted Successfully'})
+  }
+  catch(Err) {
+    res.send({failure : Err})
+  }
+  finally {
+    await client.close()
+  }
+})
+
+app.get("/gettrendingdetails", async (req,res) => {
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { trending: 1, _id: 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    res.send({success:'Trending Videos Sent Successfully',Trending:result[0].trending})
+  }
+  catch(Err) {
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+// Referral APIs
+
 app.get("/getreferraldetails", async (req,res) => {
   try {
     await connectToDatabaseDashboard()
