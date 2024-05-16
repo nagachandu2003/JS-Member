@@ -173,6 +173,7 @@ app.delete("/referral/:id", async (req,res) => {
   }
 })
 
+
 app.post("/addreferral", async (req,res) => {
   try{
     await connectToDatabaseDashboard()
@@ -183,6 +184,24 @@ app.post("/addreferral", async (req,res) => {
     res.send({failure:`Error Occurred : ${Err}`})
   }
   finally{
+    await client.close()
+  }
+})
+
+// KYC APIs
+app.get("/getkyclist", async (req,res) => {
+  try{
+    await connectToDatabase()
+    const query = { kyc: { $exists: true, $not: { $size: 0 } } };
+    // Fetch the documents
+    const result = await accountsCollection.find(query).toArray();
+    const finalResult = result.map((ele) => ({...ele.kyc,email:ele.email,kycstatus:ele.kycstatus}))
+    res.send({success : "KYC sent successfully", details:finalResult})
+  }
+  catch(Err){
+    res.send({failure : Err})
+  }
+  finally {
     await client.close()
   }
 })
@@ -204,6 +223,24 @@ app.post("/addKYC", async (req,res) => {
   }
 })
 
+app.put("/updatekycstatus", async (req,res) => {
+  const {newemail,newkycstatus} = req.body 
+  try {
+    await connectToDatabase()
+    const result = await accountsCollection.updateOne(
+      {email:newemail}, // Match the document with the given userId
+      { $set: { kycstatus: newkycstatus } }
+    );
+    // const result = await accountsCollection.updateOne({_id: new ObjectId(userId)},{$set : {regstatus:newregstatus}})
+    res.send({ success: "KYC Status Updated Successfully" });
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally {
+    await client.close()
+  }
+})
 
 // app.get('/content/:email', async (req,res) => {
 //   const {email} = req.params
@@ -497,7 +534,7 @@ app.post("/users", async (req,res) => {
   }
 })
 
-// Update the user
+// Update the Registrations status
 app.put("/users", async (req,res) => {
   const {newemail,newregstatus} = req.body
   console.log(newregstatus)
