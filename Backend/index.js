@@ -466,7 +466,9 @@ app.post("/users/channels", async (req,res) => {
     ...req.body,
     channelUrl : req.body.channelUrl,
     channelName:req.body.channelName,
-    id : req.body.id
+    id : req.body.id,
+    channelDate : req.body.channelDate,
+    channelTime : req.body.channelTime
   }
   try {
     await connectToDatabase()
