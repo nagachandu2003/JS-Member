@@ -242,6 +242,24 @@ app.put("/updatekycstatus", async (req,res) => {
   }
 })
 
+app.delete("/deletekyc", async (req,res) => {
+  console.log(req.body);
+  try{
+    await connectToDatabase()
+    const result = await accountsCollection.updateOne({email:req.body.email},{
+      $unset: { kyc: "" },
+      $set: { kycStatus: "pending" }
+  })
+    res.send({success : 'KYC Deleted Successfully'})
+  }
+  catch(Err){
+    res.send({failure : Err})
+  }
+  finally{
+    await client.close()
+  }
+})
+
 // app.get('/content/:email', async (req,res) => {
 //   const {email} = req.params
 //   try{
