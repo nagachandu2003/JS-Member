@@ -248,7 +248,7 @@ app.delete("/deletekyc", async (req,res) => {
     await connectToDatabase()
     const result = await accountsCollection.updateOne({email:req.body.email},{
       $unset: { kyc: "" },
-      $set: { kycStatus: "pending" }
+      $set: { kycstatus: "pending" }
   })
     res.send({success : 'KYC Deleted Successfully'})
   }
