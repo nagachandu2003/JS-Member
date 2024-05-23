@@ -260,6 +260,37 @@ app.delete("/deletekyc", async (req,res) => {
   }
 })
 
+// CartItems API
+app.post("/addclaimeditems", async (req,res) => {
+  try{
+    await connectToDatabase()
+    const result = await accountsCollection.updateOne({email:req.body.email},{$push : {claimedvideoslist:req.body.claimeddetails},$set : {claimstatus:'pending'}})
+    res.send({success : 'Items sent for Claim Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/claimeddetails/:email", async (req,res) => {
+  // console.log(req.params)
+  try{
+    await connectToDatabase();
+    const result = await accountsCollection.findOne({email:req.params.email})
+    res.send({success:"Claimed details send Successfully",claimedDetails:result.claimedvideoslist})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+
 // app.get('/content/:email', async (req,res) => {
 //   const {email} = req.params
 //   try{
