@@ -432,6 +432,40 @@ finally {
 }
 })
 
+// NEW API SPACE
+app.get("/allvideoss/:email", async (req,res) => {
+  const { email } = req.params;
+  try {
+    await connectToDatabase()
+    const pipeline = [
+      { $unwind: '$channels' },
+      { $match: { 'channels.email': email } },
+      { $project: { videos: '$channels.videos' } }
+    ];
+    const result = await accountsCollection.aggregate(pipeline).toArray();
+    let le = [];
+    for(let values of result)
+      {
+        le = [...le,...values.videos]
+      }
+      const result2 = await accountsCollection.findOne({email:req.params.email})
+      let claimedVideos = [];
+      if(result2.claimedvideoslist)
+        {
+          for(let values of result2.claimedvideoslist)
+            {
+              claimedVideos = [...claimedVideos,...values.cartList]
+            }
+        }
+        const l = le.filter(obj1 => !claimedVideos.some(obj2 => obj2.videoId === obj1.videoId));
+        res.send({success:"Videos Sent Successfully",result:l})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+})
+// NEW API SPACE
+
 app.post("/users/videosdetails", async (req, res) => {
   console.log("I am from Video Details")
   console.log(req.body)
