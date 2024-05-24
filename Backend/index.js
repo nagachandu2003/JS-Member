@@ -290,6 +290,67 @@ app.get("/claimeddetails/:email", async (req,res) => {
   }
 })
 
+// Get all claimed items API
+app.get("/rewarditems", async (req,res) => {
+  try{
+    await connectToDatabase()
+    const projection = {
+      email:1,
+      name:1,
+      whatsappNumber:1,
+      claimedvideoslist: 1,
+      _id: 0
+    };
+    const result = await accountsCollection.find({}, { projection }).toArray();
+    const processedResult = result.map(doc => {
+      if (doc.claimedvideoslist && Array.isArray(doc.claimedvideoslist)) {
+        doc.claimedvideoslist = doc.claimedvideoslist.map(item => ({
+          ...item,
+          email: doc.email,
+          name: doc.name,
+          whatsappNumber: doc.whatsappNumber
+        }));
+      }
+      return doc;
+    });
+    let newList = []
+    for(let values of processedResult)
+      {
+        if(values.claimedvideoslist)
+          newList = [...newList,...values.claimedvideoslist]
+      }
+    res.send({success:'Reward Items sent Successfully',rewardItems : newList})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.post("/updaterewardstatus", async (req,res) => {
+  try{
+    await connectToDatabase()
+    const filter = { email: req.body.email };
+    const update = {
+      $set: {
+        'claimedvideoslist.$[elem].status': req.body.newstatus
+      }
+    };
+    const arrayFilters = [{ 'elem.rewardId': req.body.rewardId }];
+
+    const result = await accountsCollection.updateOne(filter, update, { arrayFilters: arrayFilters });
+    res.send({success:'Reward Status Updated Successfully'})
+  }
+  catch(Err)
+  {
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
 // app.get('/content/:email', async (req,res) => {
 //   const {email} = req.params
