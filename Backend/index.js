@@ -407,33 +407,33 @@ app.post("/ytmcvideo/channel/videostats", async (req,res) => {
   }
 })
 
-app.get("/allvideos/:email", async(req,res) => {
-  const {email} = req.params
-  try{
-    await connectToDatabase()
-    const pipeline = [
-      { $unwind: '$channels' },
-      { $match: { 'channels.email': email } },
-      { $project: { videos: '$channels.videos' } }
-    ];
-    const result = await accountsCollection.aggregate(pipeline).toArray();
-    let l = [];
-    for(let values of result)
-      {
-        l = [...l,...values.videos]
-      }
-    res.send({success:'Videos sent Successfully',result:l})
-}
-catch(Err){
-  console.log(`Error Occurred : ${Err}`)
-}
-finally {
-  await client.close()
-}
-})
+// app.get("/allvideos/:email", async(req,res) => {
+//   const {email} = req.params
+//   try{
+//     await connectToDatabase()
+//     const pipeline = [
+//       { $unwind: '$channels' },
+//       { $match: { 'channels.email': email } },
+//       { $project: { videos: '$channels.videos' } }
+//     ];
+//     const result = await accountsCollection.aggregate(pipeline).toArray();
+//     let l = [];
+//     for(let values of result)
+//       {
+//         l = [...l,...values.videos]
+//       }
+//     res.send({success:'Videos sent Successfully',result:l})
+// }
+// catch(Err){
+//   console.log(`Error Occurred : ${Err}`)
+// }
+// finally {
+//   await client.close()
+// }
+// })
 
 // NEW API SPACE
-app.get("/allvideoss/:email", async (req,res) => {
+app.get("/allvideos/:email", async (req,res) => {
   const { email } = req.params;
   try {
     await connectToDatabase()
