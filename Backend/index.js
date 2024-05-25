@@ -37,12 +37,73 @@ const connectToDatabaseDashboard = async () => {
   }
 };
 
+let campCollection;
+const connectToDatabaseCamp = async () => {
+  try {
+    await client.connect();
+    console.log(`Connected to the ${dbname} database`);
+    campCollection = client.db(dbname).collection("campusers");
+  } catch (err) {
+    console.error(`Error connecting to the database : ${err}`);
+  }
+};
+
 
 
 app.get("/", (req, res) => {
   res.send("Hello, I am connected Now");
 });
 
+//CAMP APP APIs
+app.post("/campusers", async (req,res) => {
+  // console.log(req.body)
+  try{
+    await connectToDatabase()
+    const result = await campCollection.insertOne(req.body);
+    res.send({success:'User Inserted Successfully'})
+  }
+  catch(Err){
+      console.log(`Error Occurred : ${Err}`)
+  }
+  finally{
+      await client.close()
+  }
+})
+// Inserting a new User
+
+// Getting Particular User Details
+app.get("/campusers/:email", async (req, res) => {
+  const {email} = req.params
+  try {
+    await connectToDatabaseCamp()
+    const result = await campCollection.findOne({email})
+    // console.log(result.regstatus!=="approved")
+    // console.log(result.regstatus)
+    if(result===null)
+    res.send({success:false})
+    else
+    {
+    if(result.regstatus==="approved")
+    res.send({success:true})
+    else if(result.regstatus==="pending")
+    res.send({success:"pending"})
+    else
+    res.send({success:false})
+    }
+  }
+  catch (Err){
+    console.log(`Error Occurred : ${Err}`)
+  }
+  finally {
+    await client.close()
+  }
+});
+
+
+
+
+
+// YTCM AND JSDASHBOARD APIs
 app.get("/getcontentdetails", async (req,res) => {
   try {
     await connectToDatabaseDashboard()
