@@ -99,6 +99,21 @@ app.get("/campusers/:email", async (req, res) => {
   }
 });
 
+app.get("/campusers", async (req, res) => {
+  // console.log("I am in /users route");
+  try {
+    await connectToDatabaseCamp();
+    const result = await campCollection.find({
+      regstatus: { $in: ["pending", "approved", "rejected"] }
+    }).toArray();
+    console.log(result);
+    res.send(result)
+  } catch (Err) {
+    console.log(`Error Occurred : ${Err}`);
+  } finally {
+    await client.close();
+  }
+});
 
 
 
