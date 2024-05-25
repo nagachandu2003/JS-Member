@@ -75,22 +75,19 @@ app.post("/campusers", async (req,res) => {
 app.get("/campusers/:email", async (req, res) => {
   const {email} = req.params
   try {
-    await connectToDatabaseCamp()
-    const result = await campCollection.findOne({email})
-    // console.log(result.regstatus!=="approved")
-    // console.log(result.regstatus)
-    if(result===null)
-    res.send({success:false})
-    else
-    {
-    if(result.regstatus==="approved")
-    res.send({success:true})
-    else if(result.regstatus==="pending")
-    res.send({success:"pending"})
-    else
-    res.send({success:false})
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { campregisteredlist: 1, _id: 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    // console.log(result)
+    const usersList = result[0].campregisteredlist
+    const emailsList = usersList.map((ele) => ele.campInchargeGmail)
+    const campsList = usersList.filter((ele) => ele.campInchargeGmail===email)
+    const ress = emailsList.includes(email)
+    res.send({success:ress,campsList})
     }
-  }
   catch (Err){
     console.log(`Error Occurred : ${Err}`)
   }
@@ -258,6 +255,39 @@ app.post("/addreferral", async (req,res) => {
   }
   catch(Err){
     res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+// CampRegistration APIs
+app.post("/addcampuserjsd",async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { campregisteredlist: req.body } })
+    res.send({success : 'User Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getcampusers", async (req,res) => {
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { campregisteredlist : 1, _id : 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    res.send({success:'Camp Users Sent Successfully',CampusersList:result[0].campregisteredlist})
+  }
+  catch(Err) {
+    res.send({failure : `Error Occurred : ${Err}`})
   }
   finally{
     await client.close()
