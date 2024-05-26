@@ -9,14 +9,9 @@ const Home = () => (
                 <h1 className="main-heading1">JS MEMBER</h1>
             </div>
             <div>
-                <Link to="/stats">
+                <Link to="/camplogin">
                 <div className="Camps">
                     <h1>Camps</h1>
-                </div>
-                </Link>
-                <Link to="/ytmclogin">
-                <div className="YTMC">
-                    <h1>YTCM</h1>
                 </div>
                 </Link>
             </div>

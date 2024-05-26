@@ -25,6 +25,8 @@ import Profile from './Components/Profile'
 import Reward from './Components/Reward'
 import Content from './Components/Content'
 import Account from './Components/Account'
+import CampLogin from './Components/CampLogin';
+import SelectCamp from './Components/SelectCamp';
 
 class App extends Component {
 
@@ -33,6 +35,8 @@ class App extends Component {
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route exact path="/camplogin" element={<CampLogin/>}/>
+        <Route exact path="/selectcamp" element={<SelectCamp/>}/>
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/camps" element={<Camps/>}/>
         <Route exact path="/stats" element={<Stats/>}/>
@@ -42,15 +46,15 @@ class App extends Component {
         <Route exact path="/reward" element={<Reward/>}/>
         <Route exact path="/content" element={<Content/>}/>
         {/* <Route exact path="/ytmc" element={<Ytmc/>}/> */}
-        <Route exact path="/ytmcregister" element={<YTMCRegister/>}/>
+        {/* <Route exact path="/ytmcregister" element={<YTMCRegister/>}/>
         <Route exact path="/ytmchome" element={<YTMCHome/>}/>
-        <Route exact path="/ytmclogin" element={<YTMCLogin/>}/>
+        <Route exact path="/ytmclogin" element={<YTMCLogin/>}/> */}
         <Route exact path="/attendance" element={<Attendance/>}/>
         <Route exact path="/support" element={<Support/>}/>
         <Route exact path="/d2dreport" element={<D2DReport/>}/>
         <Route exact path="/members" element={<Members/>}/>
-        <Route exact path="/ytmcvideo/:channelName" element={<YTMCVideo/>}/>
-        <Route exact path="/ytmcvideo/videoinfo/:channelName/:videoid" element={<YTMCVideoDetailItem/>}/>
+        {/* <Route exact path="/ytmcvideo/:channelName" element={<YTMCVideo/>}/>
+        <Route exact path="/ytmcvideo/videoinfo/:channelName/:videoid" element={<YTMCVideoDetailItem/>}/> */}
         <Route exact path="/regpending" element={<RegistrationSuccess/>}/>
         {/* <Route path="*" element={<ComingSoon/>}/> */}
       </Routes>
