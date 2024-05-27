@@ -56,9 +56,9 @@ app.get("/", (req, res) => {
 
 //CAMP APP APIs
 app.post("/campusers", async (req,res) => {
-  // console.log(req.body)
+  console.log(req.body)
   try{
-    await connectToDatabase()
+    await connectToDatabaseCamp()
     const result = await campCollection.insertOne(req.body);
     res.send({success:'User Inserted Successfully'})
   }
@@ -70,9 +70,36 @@ app.post("/campusers", async (req,res) => {
   }
 })
 // Inserting a new User
-
-// Getting Particular User Details
+// Camp APP 
 app.get("/campusers/:email", async (req, res) => {
+  const {email} = req.params
+  try {
+    await connectToDatabaseCamp()
+    const result = await campCollection.findOne({email})
+    // console.log(result.regstatus!=="approved")
+    // console.log(result.regstatus)
+    if(result===null)
+    res.send({success:false})
+    else
+    {
+    if(result.regstatus==="approved")
+    res.send({success:true})
+    else if(result.regstatus==="pending")
+    res.send({success:"pending"})
+    else
+    res.send({success:false})
+    }
+  }
+  catch (Err){
+    console.log(`Error Occurred : ${Err}`)
+  }
+  finally {
+    await client.close()
+  }
+});
+
+// Getting admin users from jsdashboard
+app.get("/admincampusers/:email", async (req, res) => {
   const {email} = req.params
   try {
     await connectToDatabaseDashboard()
@@ -290,6 +317,28 @@ app.get("/getcampusers", async (req,res) => {
     res.send({failure : `Error Occurred : ${Err}`})
   }
   finally{
+    await client.close()
+  }
+})
+
+app.put("/campusers", async (req,res) => {
+  const {newemail,newregstatus} = req.body
+  // console.log(newemail);
+  // console.log(newregstatus)
+  
+  try {
+    await connectToDatabaseCamp()
+    const result = await campCollection.updateOne(
+      {email:newemail}, // Match the document with the given userId
+      { $set: { regstatus: newregstatus } }
+    );
+    // const result = await accountsCollection.updateOne({_id: new ObjectId(userId)},{$set : {regstatus:newregstatus}})
+    res.send({ success: "Registration Status Updated Successfully" });
+  }
+  catch(Err){
+    console.log(`Error Occurred : ${Err}`)
+  }
+  finally {
     await client.close()
   }
 })
