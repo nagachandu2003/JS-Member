@@ -54,6 +54,7 @@ app.get("/", (req, res) => {
   res.send("Hello, I am connected Now");
 });
 
+
 //CAMP APP APIs
 app.post("/campusers", async (req,res) => {
   console.log(req.body)
@@ -139,6 +140,46 @@ app.get("/campusers", async (req, res) => {
   }
 });
 
+// Sub Admin Storage
+app.post("/addsubadmindata", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const query = {
+      subadminlist: { $elemMatch: { email: req.body.email } }
+    };
+    const result2 = await dashboardCollection.findOne(query)
+    if(result2.length!==0)
+      res.send({msg:'User already exists'})
+    else{
+    const result = await dashboardCollection.updateOne({},{ $push: { subadminlist: req.body } })
+    res.send({success : 'Sub Admin Added Successfully'})
+    }
+  }
+  catch(Err){
+    res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getsubadmindetails", async (req,res) => {
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { subadminlist: 1, _id: 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    res.send({success:'Sub Admins List Sent Successfully',subadminList:result[0].subadminlist})
+  }
+  catch(Err) {
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
 
 
