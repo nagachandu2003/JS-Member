@@ -124,6 +124,30 @@ app.get("/admincampusers/:email", async (req, res) => {
   }
 });
 
+//getting subadmin details from jsdashboard
+app.get("/subadmincampusers/:email", async (req, res) => {
+  const {email} = req.params
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { subadminlist: 1, _id: 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    const usersList = result[0].subadminlist
+    const emailsList = usersList.map((ele) => ele.email)
+    const campsList = usersList.filter((ele) => ele.email===email)
+    const ress = emailsList.includes(email)
+    res.send({success:ress,subadminList:campsList})
+    }
+  catch (Err){
+    console.log(`Error Occurred : ${Err}`)
+  }
+  finally {
+    await client.close()
+  }
+});
+
 app.get("/campusers", async (req, res) => {
   // console.log("I am in /users route");
   try {
@@ -148,7 +172,7 @@ app.post("/addsubadmindata", async (req,res) => {
       subadminlist: { $elemMatch: { email: req.body.email } }
     };
     const result2 = await dashboardCollection.findOne(query)
-    if(result2.length!==0)
+    if(result2!==null)
       res.send({msg:'User already exists'})
     else{
     const result = await dashboardCollection.updateOne({},{ $push: { subadminlist: req.body } })
