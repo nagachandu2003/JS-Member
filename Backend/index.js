@@ -205,7 +205,55 @@ app.get("/getsubadmindetails", async (req,res) => {
   }
 })
 
+//Camp Teams for admin
+app.post("/addteaminadmin", async(req,res) => {
+    try{
+      await connectToDatabaseDashboard()
+      const result = await dashboardCollection.updateOne({},{ $push: { campteams: req.body } })
+      res.send({success : 'Team Added Successfully'})
+    }
+    catch(Err){
+      res.send({failure:`Error Occurred : ${Err}`})
+    }
+    finally{
+      await client.close()
+    }
+})
 
+app.delete("/deleteteaminadmin", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne(
+      {}, // Filter to match the document containing the campteams array
+      { $pull: { campteams: { id: req.body.id } } } // Pull the object with the matching id from the array
+    );
+    res.send({success : 'Team Deleted Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get('/getcampteams', async (req,res) => {
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { campteams: 1, _id: 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    res.send({success:'Teams Sent Successfully',Teams:result[0].campteams})
+  }
+  catch(Err) {
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
 // YTCM AND JSDASHBOARD APIs
 app.get("/getcontentdetails", async (req,res) => {
