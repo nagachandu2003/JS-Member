@@ -255,6 +255,39 @@ app.get('/getcampteams', async (req,res) => {
   }
 })
 
+// Attendance APIs
+app.post("/addattendanceadmin", async(req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { attendancelist : req.body } })
+    res.send({success : 'Attendance Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getattendanceadmin", async (req,res) => {
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { attendancelist: 1, _id: 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    res.send({success:'Attendance Sent Successfully',AttendanceList:result[0].attendancelist})
+  }
+  catch(Err) {
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
 // YTCM AND JSDASHBOARD APIs
 app.get("/getcontentdetails", async (req,res) => {
   try {
