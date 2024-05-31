@@ -55,6 +55,47 @@ app.get("/", (req, res) => {
 });
 
 
+// Getting registered members based on CampId
+app.get("/regcampusers/:campId", async (req,res) => {
+  try{
+    await connectToDatabaseCamp()
+    const result = await campCollection.find({campid:req.params.campId}).toArray()
+    console.log(result)
+    res.send({success : `Registered Users for camp id ${req.params.campId} sent successfully`,result})
+  }
+  catch(Err)
+  {
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //CAMP APP APIs
 app.post("/campusers", async (req,res) => {
   console.log(req.body)
