@@ -55,6 +55,21 @@ app.get("/", (req, res) => {
 });
 
 
+app.delete("/deletecampadmin", async (req,res) => {
+    try {
+      await connectToDatabaseDashboard()
+      const result = await dashboardCollection.updateMany({},{ $pull: { campregisteredlist: { id: req.body.id } } })
+      res.send({success:'Item Deleted Successfully'})
+    }
+    catch(Err) {
+      res.send({failure : Err})
+    }
+    finally {
+      await client.close()
+    }
+  })
+
+
 // Getting registered members based on CampId
 app.get("/regcampusers/:campId", async (req,res) => {
   try{
