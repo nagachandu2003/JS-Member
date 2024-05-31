@@ -95,7 +95,6 @@ app.get("/regcampusers/:campId", async (req,res) => {
 
 
 
-
 //CAMP APP APIs
 app.post("/campusers", async (req,res) => {
   console.log(req.body)
