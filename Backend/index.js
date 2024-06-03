@@ -74,9 +74,9 @@ app.delete("/deletecampadmin", async (req,res) => {
 app.get("/regcampusers/:campId", async (req,res) => {
   try{
     await connectToDatabaseCamp()
-    const result = await campCollection.find({campid:req.params.campId}).toArray()
+    const result = await campCollection.find({campCluster:req.params.campId}).toArray()
     console.log(result)
-    res.send({success : `Registered Users for camp id ${req.params.campId} sent successfully`,result})
+    res.send({success : `Registered Users for camp Cluster ${req.params.campId} sent successfully`,result})
   }
   catch(Err)
   {
