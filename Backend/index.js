@@ -139,9 +139,9 @@ app.get("/campusers/:email", async (req, res) => {
     else
     {
     if(result.regstatus==="approved")
-    res.send({success:true})
+    res.send({success:true,result})
     else if(result.regstatus==="pending")
-    res.send({success:"pending"})
+    res.send({success:"pending",result})
     else
     res.send({success:false})
     }
