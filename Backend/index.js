@@ -154,6 +154,20 @@ app.get("/campusers/:email", async (req, res) => {
   }
 });
 
+app.delete("/deletecampusers/:email", async (req,res) => {
+  try{
+    await connectToDatabaseCamp()
+    const result = await campCollection.deleteOne({email:req.params.email});
+    res.send({success : 'Member Deleted Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`}) 
+  }
+  finally {
+    await client.close()
+  }
+})
+
 // Getting admin users from jsdashboard
 app.get("/admincampusers/:email", async (req, res) => {
   const {email} = req.params
