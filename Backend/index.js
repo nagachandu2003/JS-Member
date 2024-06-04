@@ -85,7 +85,20 @@ app.get("/regcampusers/:campId", async (req,res) => {
 })
 
 
-
+// Updating role of a member in campusers
+app.put("/updatemembertosubadmin", async (req,res) => {
+  try{
+   await connectToDatabaseCamp()
+   const result = await campCollection.updateOne({email:req.body.email},{$set : {person:req.body.person}})
+   res.send({success : `Role Updated Successfully`})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
 
 
