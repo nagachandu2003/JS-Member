@@ -558,7 +558,7 @@ app.put("/campusers", async (req,res) => {
     await connectToDatabaseCamp()
     const result = await campCollection.updateOne(
       {email:newemail}, // Match the document with the given userId
-      { $set: { regstatus: newregstatus } }
+      { $set: { regstatus: newregstatus,category:req.body.category } }
     );
     // const result = await accountsCollection.updateOne({_id: new ObjectId(userId)},{$set : {regstatus:newregstatus}})
     res.send({ success: "Registration Status Updated Successfully" });
@@ -1090,6 +1090,7 @@ app.put("/users", async (req,res) => {
     await client.close()
   }
 })
+
 
 app.listen(3001,() => {
     console.log("Server is running on http://localhost:3001")
