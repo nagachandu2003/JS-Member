@@ -100,6 +100,24 @@ app.put("/updatemembertosubadmin", async (req,res) => {
   }
 })
 
+app.put("/updatemembertoteamlead", async (req,res) => {
+  try{
+   await connectToDatabaseCamp()
+   const result = await campCollection.updateOne({email:req.body.email},{$set : {addedToTeam:req.body.addedToTeam}})
+   if (result.modifiedCount === 1) {
+    res.send({ success: `Member status Updated Successfully` });
+} else {
+    res.send({ failure: `Member not found or status not updated` });
+}
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
 
 
 
