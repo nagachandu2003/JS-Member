@@ -370,6 +370,20 @@ app.get("/getattendanceadmin", async (req,res) => {
   }
 })
 
+app.delete("/deleteattendance", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $pull: { attendancelist: { id: req.body.id } } });
+    res.send({success : "Attendance Deleted Successfully"})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
 // YTCM AND JSDASHBOARD APIs
 app.get("/getcontentdetails", async (req,res) => {
   try {
