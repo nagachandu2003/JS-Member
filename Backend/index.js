@@ -118,7 +118,38 @@ app.put("/updatemembertoteamlead", async (req,res) => {
   }
 })
 
+//Household (Selfie) API
+app.post("/addselfiedata", async(req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { householdlist: req.body } })
+    res.send({success : 'Selfie Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
+app.get("/getselfiedata/:campCluster", async (req,res) => {
+    const {campCluster} = req.params
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { householdlist: 1, _id: 0 } }
+  ];
+  const result = await dashboardCollection.aggregate(pipeline).toArray()
+  const {householdlist} = result[0]
+  console.log(householdlist)
+  const filteredList = householdlist.filter((ele) => ele.campCluster===campCluster)
+  res.send({success : 'Selfie data Sent Successfully',result:filteredList})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+})
 
 
 
