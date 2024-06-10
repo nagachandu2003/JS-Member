@@ -151,22 +151,234 @@ app.get("/getselfiedata/:campCluster", async (req,res) => {
   }
 })
 
+// CAMP APP REPORT PAGE APIS
+// D2D REPORT API
+app.post("/addreportd2dlist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportd2dlist: req.body } })
+    res.send({success : 'D2D Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getd2dreportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportd2dlist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportd2dlist} = result[0]
+const filteredList = reportd2dlist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'D2D data Sent Successfully',result:filteredList})
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
+
+//SANSTHAPAK SADASYA API
+app.post("/addreportsslist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportsslist: req.body } })
+    res.send({success : 'SS Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getssreportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportsslist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportsslist} = result[0]
+const filteredList = reportsslist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'SS data Sent Successfully',result:filteredList})
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
+
+// SS Vitran List
+app.post("/addreportssvitranlist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportssvitranlist: req.body } })
+    res.send({success : 'SS Vitran Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getssvitranreportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportssvitranlist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportssvitranlist} = result[0]
+const filteredList = reportssvitranlist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'SS Vitran data Sent Successfully',result:filteredList})
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
+
+// Digital Influencer List APIs
+app.post("/addreportdigitalinfluencerlist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportdigitalinfluencerlist: req.body } })
+    res.send({success : 'Digital Influencer Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getdigitalinfluencerreportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportdigitalinfluencerlist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportdigitalinfluencerlist} = result[0]
+const filteredList = reportdigitalinfluencerlist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'Digital Influencer data Sent Successfully',result:filteredList})
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
+
+// Coaching APIs
 
 
+// ADMIN TABS APIs
+//Collateral APIs
+app.post("/addreportcollaterallist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportcollaterallist: req.body } })
+    res.send({success : 'Collateral Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
+app.get("/getcollateralreportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportcollaterallist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportcollaterallist} = result[0]
+const filteredList = reportcollaterallist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'Collateral data Sent Successfully',result:filteredList})
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
 
+// Activity APIs
+app.post("/addreportactivitylist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportactivitylist: req.body } })
+    res.send({success : 'Activity Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
+app.get("/getactivityreportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportactivitylist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportactivitylist} = result[0]
+const filteredList = reportactivitylist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'Activity data Sent Successfully',result:filteredList})
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
 
+//D2D Incharge List
+app.post("/addreportd2dinchargelist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportd2dinchargelist: req.body } })
+    res.send({success : 'D2D Incharge Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
-
-
-
-
-
-
-
-
-
+app.get("/getd2dinchargereportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportd2dinchargelist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportd2dinchargelist} = result[0]
+const filteredList = reportd2dinchargelist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'D2D Incharge data Sent Successfully',result:filteredList})
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
 
 
 
