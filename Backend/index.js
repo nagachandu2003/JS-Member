@@ -289,8 +289,12 @@ try {
 ];
 const result = await dashboardCollection.aggregate(pipeline).toArray()
 const {reportdigitalinfluencerlist} = result[0]
-const filteredList = reportdigitalinfluencerlist.filter((ele) => ele.campCluster===campCluster)
-res.send({success : 'Digital Influencer data Sent Successfully',result:filteredList})
+if(campCluster==="ALL")
+  res.send({success : 'Digital Influencer data Sent Successfully',result:reportdigitalinfluencerlist})
+else{
+  const filteredList = reportdigitalinfluencerlist.filter((ele) => ele.campCluster===campCluster)
+  res.send({success : 'Digital Influencer data Sent Successfully',result:filteredList})
+  }
 }
 catch(Err){
   res.send({failure : `Error Occurred : ${Err}`})
