@@ -142,9 +142,12 @@ app.get("/getselfiedata/:campCluster", async (req,res) => {
   ];
   const result = await dashboardCollection.aggregate(pipeline).toArray()
   const {householdlist} = result[0]
-  console.log(householdlist)
+  if(campCluster==="ALL")
+    res.send({success : 'Selfie data sent successfully', result:householdlist})
+  else{
   const filteredList = householdlist.filter((ele) => ele.campCluster===campCluster)
   res.send({success : 'Selfie data Sent Successfully',result:filteredList})
+  }
   }
   catch(Err){
     res.send({failure : `Error Occurred : ${Err}`})
@@ -213,8 +216,13 @@ try {
 ];
 const result = await dashboardCollection.aggregate(pipeline).toArray()
 const {reportsslist} = result[0]
+if(campCluster==="ALL")
+  res.send({success : "SS data Sent Successfully",result:reportsslist})
+else
+{
 const filteredList = reportsslist.filter((ele) => ele.campCluster===campCluster)
 res.send({success : 'SS data Sent Successfully',result:filteredList})
+}
 }
 catch(Err){
   res.send({failure : `Error Occurred : ${Err}`})
