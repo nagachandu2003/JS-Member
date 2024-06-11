@@ -253,8 +253,12 @@ try {
 ];
 const result = await dashboardCollection.aggregate(pipeline).toArray()
 const {reportssvitranlist} = result[0]
-const filteredList = reportssvitranlist.filter((ele) => ele.campCluster===campCluster)
+if(campCluster==="ALL")
+  res.send({success: "SS Vitran data Sent Successfully", result : reportssvitranlist})
+else{
+  const filteredList = reportssvitranlist.filter((ele) => ele.campCluster===campCluster)
 res.send({success : 'SS Vitran data Sent Successfully',result:filteredList})
+}
 }
 catch(Err){
   res.send({failure : `Error Occurred : ${Err}`})
