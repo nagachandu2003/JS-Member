@@ -176,8 +176,13 @@ try {
 ];
 const result = await dashboardCollection.aggregate(pipeline).toArray()
 const {reportd2dlist} = result[0]
-const filteredList = reportd2dlist.filter((ele) => ele.campCluster===campCluster)
-res.send({success : 'D2D data Sent Successfully',result:filteredList})
+if(campCluster==="ALL")
+  res.send({success : "D2D data Sent Successfully",result:reportd2dlist})
+else
+{
+  const filteredList = reportd2dlist.filter((ele) => ele.campCluster===campCluster)
+  res.send({success : 'D2D data Sent Successfully',result:filteredList})
+}
 }
 catch(Err){
   res.send({failure : `Error Occurred : ${Err}`})
@@ -281,7 +286,36 @@ catch(Err){
 })
 
 // Coaching APIs
+app.post("/addreportdigitalinfluencerlist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportdigitalinfluencerlist: req.body } })
+    res.send({success : 'Digital Influencer Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
+app.get("/getdigitalinfluencerreportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportdigitalinfluencerlist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportdigitalinfluencerlist} = result[0]
+const filteredList = reportdigitalinfluencerlist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'Digital Influencer data Sent Successfully',result:filteredList})
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
 
 // ADMIN TABS APIs
 //Collateral APIs
