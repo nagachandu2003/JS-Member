@@ -302,11 +302,11 @@ catch(Err){
 })
 
 // Coaching APIs
-app.post("/addreportdigitalinfluencerlist", async (req,res) => {
+app.post("/addreportcoachinglist", async (req,res) => {
   try{
     await connectToDatabaseDashboard()
-    const result = await dashboardCollection.updateOne({},{ $push: { reportdigitalinfluencerlist: req.body } })
-    res.send({success : 'Digital Influencer Added Successfully'})
+    const result = await dashboardCollection.updateOne({},{ $push: { reportcoachinglist: req.body } })
+    res.send({success : 'Coaching Added Successfully'})
   }
   catch(Err){
     res.send({failure : `Error Occurred : ${Err}`})
@@ -316,17 +316,21 @@ app.post("/addreportdigitalinfluencerlist", async (req,res) => {
   }
 })
 
-app.get("/getdigitalinfluencerreportdata/:campCluster", async (req,res) => {
+app.get("/getcoachingreportdata/:campCluster", async (req,res) => {
   const {campCluster} = req.params
 try {
   await connectToDatabaseDashboard()
   const pipeline = [
-    { $project: { reportdigitalinfluencerlist: 1, _id: 0 } }
+    { $project: { reportcoachinglist: 1, _id: 0 } }
 ];
 const result = await dashboardCollection.aggregate(pipeline).toArray()
-const {reportdigitalinfluencerlist} = result[0]
-const filteredList = reportdigitalinfluencerlist.filter((ele) => ele.campCluster===campCluster)
-res.send({success : 'Digital Influencer data Sent Successfully',result:filteredList})
+const {reportcoachinglist} = result[0]
+if(campCluster==="ALL")
+  res.send({success : 'Coaching data Sent Successfully',result:reportcoachinglist})
+else{
+const filteredList = reportcoachinglist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'Coaching data Sent Successfully',result:filteredList})
+}
 }
 catch(Err){
   res.send({failure : `Error Occurred : ${Err}`})
@@ -422,9 +426,15 @@ try {
 ];
 const result = await dashboardCollection.aggregate(pipeline).toArray()
 const {reportd2dinchargelist} = result[0]
-const filteredList = reportd2dinchargelist.filter((ele) => ele.campCluster===campCluster)
-res.send({success : 'D2D Incharge data Sent Successfully',result:filteredList})
+if(campCluster==="ALL")
+  res.send({success : 'D2D Incharge data sent successfully',result:reportd2dinchargelist})
+else
+{
+  const filteredList = reportd2dinchargelist.filter((ele) => ele.campCluster===campCluster)
+  res.send({success : 'D2D Incharge data Sent Successfully',result:filteredList})
+  }
 }
+
 catch(Err){
   res.send({failure : `Error Occurred : ${Err}`})
 }
