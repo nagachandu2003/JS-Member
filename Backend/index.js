@@ -375,6 +375,44 @@ catch(Err){
 }
 })
 
+//Expenses APIs
+app.post("/addreportexpenseslist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportexpenseslist: req.body } })
+    res.send({success : 'Expenses Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getexpensesreportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportexpenseslist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportexpenseslist} = result[0]
+if(campCluster==="ALL")
+  res.send({success : 'Expenses data Sent Successfully',result:reportexpenseslist})
+else
+{
+const filteredList = reportexpenseslist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'Expenses data Sent Successfully',result:filteredList})
+}
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
+
+
 // Activity APIs
 app.post("/addreportactivitylist", async (req,res) => {
   try{
