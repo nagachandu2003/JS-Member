@@ -362,8 +362,13 @@ try {
 ];
 const result = await dashboardCollection.aggregate(pipeline).toArray()
 const {reportcollaterallist} = result[0]
+if(campCluster==="ALL")
+  res.send({success : 'Collateral data Sent Successfully',result:reportcollaterallist})
+else
+{
 const filteredList = reportcollaterallist.filter((ele) => ele.campCluster===campCluster)
 res.send({success : 'Collateral data Sent Successfully',result:filteredList})
+}
 }
 catch(Err){
   res.send({failure : `Error Occurred : ${Err}`})
@@ -394,8 +399,13 @@ try {
 ];
 const result = await dashboardCollection.aggregate(pipeline).toArray()
 const {reportactivitylist} = result[0]
+if(campCluster==="ALL")
+  res.send({success:'Activity data sent successfully',result:reportactivitylist})
+else
+{
 const filteredList = reportactivitylist.filter((ele) => ele.campCluster===campCluster)
 res.send({success : 'Activity data Sent Successfully',result:filteredList})
+}
 }
 catch(Err){
   res.send({failure : `Error Occurred : ${Err}`})
