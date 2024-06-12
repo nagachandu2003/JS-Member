@@ -192,6 +192,43 @@ catch(Err){
 }
 })
 
+// WHATSAPP APIs
+app.post("/addreportwhatsapplist", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { reportwhatsapplist: req.body } })
+    res.send({success : 'WhatsApp Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getwhatsappreportdata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { reportwhatsapplist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {reportwhatsapplist} = result[0]
+if(campCluster==="ALL")
+  res.send({success : "WhatsApp data Sent Successfully",result:reportwhatsapplist})
+else
+{
+  const filteredList = reportwhatsapplist.filter((ele) => ele.campCluster===campCluster)
+  res.send({success : 'WhatsApp data Sent Successfully',result:filteredList})
+}
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
+
 //SANSTHAPAK SADASYA API
 app.post("/addreportsslist", async (req,res) => {
   try{
