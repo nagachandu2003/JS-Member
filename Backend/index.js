@@ -258,6 +258,7 @@ try {
     { $project: { reportwhatsapplist: 1, _id: 0 } }
 ];
 const result = await dashboardCollection.aggregate(pipeline).toArray()
+
 const {reportwhatsapplist} = result[0]
 if(campCluster==="ALL")
   res.send({success : "WhatsApp data Sent Successfully",result:reportwhatsapplist})
