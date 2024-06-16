@@ -196,6 +196,22 @@ app.get("/getselfiedata/:campCluster", async (req,res) => {
     res.send({failure : `Error Occurred : ${Err}`})
   }
 })
+app.delete("/deleteselfie", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne(
+      {}, // Filter to match the document containing the campteams array
+      { $pull: { householdlist: { id: req.body.id } } } // Pull the object with the matching id from the array
+    );
+    res.send({success : 'Selfie Deleted Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
 
 // CAMP APP REPORT PAGE APIS
 // D2D REPORT API
