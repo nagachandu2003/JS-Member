@@ -741,7 +741,9 @@ app.get("/getsubadmindetails", async (req,res) => {
 app.post("/addteaminadmin", async(req,res) => {
     try{
       await connectToDatabaseDashboard()
+      await connectToDatabaseCamp()
       const result = await dashboardCollection.updateOne({},{ $push: { campteams: req.body } })
+      const result2 = await campCollection.updateOne({email:req.body.teamLeadEmail},{$set : {addedToTeam:true}})
       res.send({success : 'Team Added Successfully'})
     }
     catch(Err){
@@ -752,12 +754,49 @@ app.post("/addteaminadmin", async(req,res) => {
     }
 })
 
+app.put("/addmembers", async (req, res) => {
+  try {
+    await connectToDatabaseDashboard();
+    await connectToDatabaseCamp()
+    const result = await dashboardCollection.updateOne(
+      { "campteams.id": req.body.id }, // Filter to match the document containing the campteams array and the specific id within it
+      { $set: { "campteams.$.teammembers": req.body.selectedMembers } } // Set the teammembers array for the matched array element
+    );
+
+    if (result.matchedCount > 0) {
+      const emails = req.body.selectedMembers.map(member => member.email);
+
+      // Update the addedToTeam field to true for the members based on their emails
+      const updateResult = await campCollection.updateMany(
+        { email: { $in: emails } }, // Filter to match the members by their emails
+        { $set: { addedToTeam: true, teamName:req.body.teamName } } // Set the addedToTeam field to true
+      );
+      res.send({ success: 'Team members updated successfully' });
+    } else {
+      res.send({ failure: 'Team not found' });
+    }
+  } catch (Err) {
+    res.send({ failure: `Error occurred: ${Err}` });
+  } finally {
+    await client.close();
+  }
+});
+
+
+
 app.delete("/deleteteaminadmin", async (req,res) => {
   try{
     await connectToDatabaseDashboard()
+    await connectToDatabaseCamp()
     const result = await dashboardCollection.updateOne(
       {}, // Filter to match the document containing the campteams array
       { $pull: { campteams: { id: req.body.id } } } // Pull the object with the matching id from the array
+    );
+    let emails = (req.body.teammembers).map((ele) => ele.email)
+    emails = [...emails,req.body.email]
+    const updateResult = await campCollection.updateMany(
+      { email: { $in: emails } }, // Filter to match the members by their emails
+      { $set: { addedToTeam: false, teamName:'' } } // Set the addedToTeam field to true
     );
     res.send({success : 'Team Deleted Successfully'})
   }
