@@ -875,6 +875,26 @@ app.get("/getattendanceadmin", async (req,res) => {
   }
 })
 
+app.get("/getattendanceadmin/:campCluster", async (req,res) => {
+  try {
+    await connectToDatabaseDashboard()
+    const pipeline = [
+      { $project: { attendancelist: 1, _id: 0 } }
+  ];
+  
+    const result = await dashboardCollection.aggregate(pipeline).toArray()
+    const {attendancelist} = result[0]
+    const filteredList = attendancelist.filter((ele) => ele.campCluster===req.body.campCluster)
+    res.send({success:'Attendance Data Sent Successfully',AttendanceList:filteredList})
+  }
+  catch(Err) {
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
 app.delete("/deleteattendance", async (req,res) => {
   try{
     await connectToDatabaseDashboard()
