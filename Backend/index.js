@@ -884,7 +884,8 @@ app.get("/getattendanceadmin/:campCluster", async (req,res) => {
   
     const result = await dashboardCollection.aggregate(pipeline).toArray()
     const {attendancelist} = result[0]
-    const filteredList = attendancelist.filter((ele) => ele.campCluster===req.body.campCluster)
+    const filteredList = attendancelist.filter((ele) => ele.campCluster===req.params.campCluster)
+    console.log(filteredList)
     res.send({success:'Attendance Data Sent Successfully',AttendanceList:filteredList})
   }
   catch(Err) {
