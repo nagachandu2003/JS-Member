@@ -213,6 +213,60 @@ app.delete("/deleteselfie", async (req,res) => {
   }
 })
 
+//Attendance Selfie
+app.post("/addattendanceselfiedata", async(req,res) => {
+  console.log(req.body)
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne({},{ $push: { attendanceselfielist: req.body } })
+    res.send({success : 'Attendance Selfie Added Successfully'})
+  }
+  catch(Err){
+    res.send({failure:`Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.get("/getattendanceselfiedata/:campCluster", async (req,res) => {
+  const {campCluster} = req.params
+try {
+  await connectToDatabaseDashboard()
+  const pipeline = [
+    { $project: { attendanceselfielist: 1, _id: 0 } }
+];
+const result = await dashboardCollection.aggregate(pipeline).toArray()
+const {attendanceselfielist} = result[0]
+if(campCluster==="ALL")
+  res.send({success : 'Selfie data sent successfully', result:attendanceselfielist})
+else{
+const filteredList = attendanceselfielist.filter((ele) => ele.campCluster===campCluster)
+res.send({success : 'Selfie data Sent Successfully',result:filteredList})
+}
+}
+catch(Err){
+  res.send({failure : `Error Occurred : ${Err}`})
+}
+})
+
+app.delete("/deleteattendanceselfie", async (req,res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.updateOne(
+      {}, // Filter to match the document containing the campteams array
+      { $pull: { attendanceselfielist : { id: req.body.id } } } // Pull the object with the matching id from the array
+    );
+    res.send({success : 'Attendance Selfie Deleted Successfully'})
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
 // CAMP APP REPORT PAGE APIS
 // D2D REPORT API
 app.post("/addreportd2dlist", async (req,res) => {
