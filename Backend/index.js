@@ -98,6 +98,87 @@ app.get("/", (req, res) => {
 });
 
 
+// Stats Tab Today's API
+app.post("/gettodaystats", async (req, res) => {
+  try {
+    await connectToDatabaseDashboard();
+    const result = await dashboardCollection.findOne({});
+    const {
+      attendancelist,
+      attendanceselfielist,
+      householdlist,
+      reportsslist,
+      reportdigitalinfluencerlist,
+      reportcoachinglist,
+      reportssvitranlist
+    } = result;
+
+    // Filter attendance details
+    const getAttendanceDetails = attendancelist.filter((ele) => (
+      ele.attendanceDate === req.body.date && ele.campCluster === req.body.campCluster
+    ));
+
+    const finRes = getAttendanceDetails.length > 0 
+  ? getAttendanceDetails[0].attendance.filter((ele) => ele.email === req.body.email)[0]?.status === "Present" 
+    ? "Present" 
+    : "Absent" 
+  : "Absent";
+
+    // Filter attendance selfie details
+    const getAttendanceSelfieDetails = attendanceselfielist.filter((ele) => (
+      ele.campCluster === req.body.campCluster && ele.email === req.body.email && ele.date === req.body.date
+    ));
+    console.log(getAttendanceSelfieDetails)
+    const finRes2 = getAttendanceSelfieDetails.filter((ele) => ele.period === "Morning");
+    const finRes3 = getAttendanceSelfieDetails.filter((ele) => ele.period === "Evening");
+
+    // Filter household selfie details
+    const getHouseholdSelfieDetails = householdlist.filter((ele) => (
+      ele.campCluster === req.body.campCluster && ele.date === req.body.date
+    ));
+    const finRes4 = getHouseholdSelfieDetails.length;
+
+    // Filter other report details
+    const getSSDetails = reportsslist.filter((ele) => (
+      ele.campCluster === req.body.campCluster && ele.date === req.body.date
+    ));
+    const finRes5 = getSSDetails.length;
+
+    const getDIDetails = reportdigitalinfluencerlist.filter((ele) => (
+      ele.campCluster === req.body.campCluster && ele.date === req.body.date
+    ));
+    const finRes6 = getDIDetails.length;
+
+    const getCoaching = reportcoachinglist.filter((ele) => (
+      ele.campCluster === req.body.campCluster && ele.date === req.body.date
+    ));
+    const finRes7 = getCoaching.length;
+
+    const getSSVitran = reportssvitranlist.filter((ele) => (
+      ele.campCluster === req.body.campCluster && ele.date === req.body.date
+    ));
+    const finRes8 = getSSVitran.length;
+
+    res.send({
+      success: 'Stats Sent Successfully',
+      detailedstats: {
+        attendancedetails: finRes,
+        morningattendanceselfiedetails: finRes2.length===0?'Absent':'Present',
+        eveningattendanceselfiedetails: finRes3.length===0?'Absent':'Present',
+        householdselfiedetails: finRes4,
+        ssdetails: finRes5,
+        didetails: finRes6,
+        coachingdetails: finRes7,
+        ssvitrandetails: finRes8
+      }
+    });
+  } catch (Err) {
+    res.send({ Error: `Error Occurred: ${Err}` });
+  }
+});
+
+
+
 app.delete("/deletecampadmin", async (req,res) => {
     try {
       await connectToDatabaseDashboard()
