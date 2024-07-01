@@ -782,6 +782,78 @@ app.delete("/deletecampusers/:email", async (req,res) => {
   }
 })
 
+//CAMP APP KYC APIs
+app.get("/getcampkyclist", async (req,res) => {
+  try{
+    await connectToDatabaseCamp()
+    const query = { kyc: { $exists: true, $not: { $size: 0 } } };
+    // Fetch the documents
+    const result = await campCollection.find(query).toArray();
+    const finalResult = result.map((ele) => ({...ele.kyc,email:ele.email,kycstatus:ele.kycstatus}))
+    res.send({success : "KYC sent successfully", details:finalResult})
+  }
+  catch(Err){
+    res.send({failure : Err})
+  }
+  finally {
+    await client.close()
+  }
+})
+
+app.post("/addcampKYC", async (req,res) => {
+  try{
+    await connectToDatabaseCamp()
+    const result = await campCollection.updateOne({email:req.body.email},{
+      $set : {kyc : req.body.obj}
+    })
+    res.send({success : 'KYC Sent Successfully'})
+  }
+  catch(Err)
+  {
+    res.send({failure : `Error Occurred ${Err}`})
+  }
+  finally{
+    await client.close()
+  }
+})
+
+app.put("/updatecampkycstatus", async (req,res) => {
+  const {newemail,newkycstatus} = req.body 
+  try {
+    await connectToDatabaseCamp()
+    const result = await campCollection.updateOne(
+      {email:newemail}, // Match the document with the given userId
+      { $set: { kycstatus: newkycstatus } }
+    );
+    // const result = await accountsCollection.updateOne({_id: new ObjectId(userId)},{$set : {regstatus:newregstatus}})
+    res.send({ success: "KYC Status Updated Successfully" });
+  }
+  catch(Err){
+    res.send({failure : `Error Occurred : ${Err}`})
+  }
+  finally {
+    await client.close()
+  }
+})
+
+app.delete("/deletecampkyc", async (req,res) => {
+  console.log(req.body);
+  try{
+    await connectToDatabaseCamp()
+    const result = await campCollection.updateOne({email:req.body.email},{
+      $unset: { kyc: "" },
+      $set: { kycstatus: "pending" }
+  })
+    res.send({success : 'KYC Deleted Successfully'})
+  }
+  catch(Err){
+    res.send({failure : Err})
+  }
+  finally{
+    await client.close()
+  }
+})
+
 // Getting admin users from jsdashboard
 app.get("/admincampusers/:email", async (req, res) => {
   const {email} = req.params
