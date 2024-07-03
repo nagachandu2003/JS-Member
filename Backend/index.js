@@ -177,6 +177,128 @@ app.post("/gettodaystats", async (req, res) => {
   }
 });
 
+// Stats Tab Overall API
+app.post("/getoverallstats", async (req, res) => {
+  console.log(req.body)
+  try {
+    await connectToDatabaseDashboard();
+    const result = await dashboardCollection.findOne({});
+    const {
+      attendancelist,
+      attendanceselfielist,
+      householdlist,
+      reportsslist,
+      reportdigitalinfluencerlist,
+      reportcoachinglist,
+      reportssvitranlist
+    } = result;
+
+    const sd = new Date(req.body.startDate);
+    sd.setHours(0, 0, 0, 0);
+    const ed = new Date(req.body.endDate);
+    ed.setHours(23, 59, 59, 999);
+
+    // Filter attendance details
+    const getAttendanceDetails = attendancelist.filter((ele) => {
+      const [day, month, year] = ele.attendanceDate.split('/');
+      const dateObject = new Date(year, month - 1, day);
+      dateObject.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+      return dateObject >= sd && dateObject <= ed && ele.campCluster===req.body.campCluster;
+  });
+  console.log(getAttendanceDetails)
+  //   const getAttendanceDetails = attendancelist.filter((ele) => (
+  //     ele.attendanceDate === req.body.date && ele.campCluster === req.body.campCluster
+  //   ));
+
+  const finRes = getAttendanceDetails.length > 0 
+  ? getAttendanceDetails[0].attendance.filter((ele) => ele.email === req.body.email && ele.status === "present").length 
+  : 0;
+  console.log(finRes)
+
+  // console.log(finRes);
+
+    // Filter attendance selfie details
+    const getAttendanceSelfieDetails = attendanceselfielist.filter((ele) => {
+      const [day, month, year] = ele.date.split('/');
+      const dateObject = new Date(year, month - 1, day);
+      dateObject.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+      return dateObject >= sd && dateObject <= ed && ele.campCluster===req.body.campCluster && ele.email===req.body.email;
+  });
+    // const getAttendanceSelfieDetails = attendanceselfielist.filter((ele) => (
+    //   ele.campCluster === req.body.campCluster && ele.email === req.body.email && ele.date === req.body.date
+    // ));
+    // console.log(getAttendanceSelfieDetails)
+    const finRes2 = getAttendanceSelfieDetails.filter((ele) => ele.period === "Morning");
+    const finRes3 = getAttendanceSelfieDetails.filter((ele) => ele.period === "Evening");
+
+    // Filter household selfie details
+    const getHouseholdSelfieDetails = householdlist.filter((ele) => {
+      const [day, month, year] = ele.date.split('/');
+      const dateObject = new Date(year, month - 1, day);
+      dateObject.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+      return dateObject >= sd && dateObject <= ed && ele.campCluster===req.body.campCluster && ele.email===req.body.email;
+  });
+    const finRes4 = getHouseholdSelfieDetails.length;
+    // console.log(finRes4)
+
+    // Filter other report details
+    const getSSDetails = reportsslist.filter((ele) => {
+      const [day, month, year] = ele.date.split('/');
+      const dateObject = new Date(year, month - 1, day);
+      dateObject.setHours(0, 0, 0, 0);
+      return dateObject >= sd && dateObject <= ed && ele.addedByemail===req.body.email && ele.campCluster===req.body.campCluster
+  });
+    const finRes5 = getSSDetails.length;
+    // console.log(finRes5)
+
+
+    const getDIDetails = reportdigitalinfluencerlist.filter((ele) => {
+      const [day, month, year] = ele.date.split('/');
+      const dateObject = new Date(year, month - 1, day);
+      dateObject.setHours(0, 0, 0, 0);
+      return dateObject >= sd && dateObject <= ed && ele.addedByemail===req.body.email && ele.campCluster===req.body.campCluster
+  });
+      const finRes6 = getDIDetails.length;
+
+      const getCoaching = reportcoachinglist.filter((ele) => {
+        const [day, month, year] = ele.date.split('/');
+        const dateObject = new Date(year, month - 1, day);
+        dateObject.setHours(0, 0, 0, 0);
+        return dateObject >= sd && dateObject <= ed && ele.addedByemail===req.body.email && ele.campCluster===req.body.campCluster
+    });
+    const finRes7 = getCoaching.length;
+
+    const getSSVitran = reportssvitranlist.filter((ele) => {
+      const [day, month, year] = ele.date.split('/');
+      const dateObject = new Date(year, month - 1, day);
+      dateObject.setHours(0, 0, 0, 0);
+      return dateObject >= sd && dateObject <= ed && ele.addedByemail===req.body.email && ele.campCluster===req.body.campCluster
+  });
+
+    // const getSSVitran = reportssvitranlist.filter((ele) => (
+    //   ele.campCluster === req.body.campCluster && ele.date === req.body.date
+    // ));
+    const finRes8 = getSSVitran.length;
+    // console.log(finRes8)
+
+    res.send({
+      success: 'Stats Sent Successfully',
+      detailedstats: {
+        attendancedetails: finRes,
+        morningattendanceselfiedetails: finRes2.length,
+        eveningattendanceselfiedetails: finRes3.length,
+        householdselfiedetails: finRes4,
+        ssdetails: finRes5,
+        didetails: finRes6,
+        coachingdetails: finRes7,
+        ssvitrandetails: finRes8
+      }
+    });
+  } catch (Err) {
+    res.send({ Error: `Error Occurred: ${Err}` });
+  }
+});
+
 
 
 app.delete("/deletecampadmin", async (req,res) => {
