@@ -97,6 +97,22 @@ app.get("/", (req, res) => {
   res.send("Hello, I am connected Now");
 });
 
+app.post("/gettodayd2dstats", async (req, res) => {
+  try{
+    await connectToDatabaseDashboard()
+    const result = await dashboardCollection.findOne({});
+    const {
+      reportd2dinchargelist
+    } = result
+    const filteredList = reportd2dinchargelist.filter((ele) => ele.campCluster===req.body.campCluster && (new Date(ele.d2ddate)).toLocaleDateString('en-GB')===req.body.date)
+    console.log(filteredList)
+    res.send({success : "D2D Incharge details Sent Successfully",details:filteredList})
+  }
+  catch(Err){
+    res.send({Error : `Error Occurred : ${Err} `})
+  }
+})
+
 
 // Stats Tab Today's API
 app.post("/gettodaystats", async (req, res) => {
