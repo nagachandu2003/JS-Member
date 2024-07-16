@@ -1,17 +1,15 @@
 const { google } = require('googleapis');
-const { Readable } = require('stream');
 const multer = require("multer");
-const dotenv = require("dotenv");
-dotenv.config();
+const { Readable } = require('stream');
 
-// Memory storage for multer
+// Multer setup for memory storage
 const storage = multer.memoryStorage();
 const uploadVideoFile = multer({ storage }).single("videoFile");
 
 const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
-  "https://js-member-backend.vercel.app/oauth2callback"  // Updated to use the deployed backend URL
+  "https://js-member-backend.vercel.app/oauth2callback"
 );
 
 const youtube = google.youtube({
@@ -19,19 +17,8 @@ const youtube = google.youtube({
   auth: oauth2Client
 });
 
-// Middleware to handle CORS
-function handleCors(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://js-smp.vercel.app'); // Update with your frontend URL
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  next();
-}
-
 function initiateUpload(req, res) {
-  uploadVideoFile(req, res, function (err) {
+  uploadVideoFile(req, res, function(err) {
     if (err) {
       console.error('Upload error:', err);
       return res.status(500).send({ Error: err.message });
@@ -81,29 +68,19 @@ async function completeUpload(req, res) {
       },
     }, {
       onUploadProgress: evt => {
-        const progress = (evt.bytesRead / Buffer.byteLength(fileBuffer)) * 100;
+        const progress = (evt.bytesRead / fileStream.readableLength) * 100;
         console.log(`${Math.round(progress)}% complete`);
       },
     });
 
-    res.redirect(`https://js-smp.vercel.app/success/${response.data.id}`);  // Updated to use the deployed frontend URL
+    res.redirect(`https://js-smp.vercel.app/success/${response.data.id}`);
   } catch (error) {
     console.error('Error uploading video:', error);
     res.status(500).send(`Error uploading video: ${error.message}`);
   }
 }
 
-module.exports = (req, res) => {
-  handleCors(req, res, () => {
-    if (req.method === 'POST' && req.url === '/initiateUpload') {
-      return initiateUpload(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/completeUpload')) {
-      return completeUpload(req, res);
-    } else {
-      res.status(404).send('Not Found');
-    }
-  });
-};
+module.exports = { initiateUpload, completeUpload };
 
 
 // const { google } = require('googleapis');
