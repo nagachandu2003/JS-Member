@@ -17,6 +17,13 @@ app.use(express.json());
 app.use(cors());
 dotenv.config();
 
+app.use(session({
+  secret: 'mysecretkey',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true } // Set secure to true if using HTTPS
+}));
+
 //Video Upload to Youtube Snippet Starts
 // const uploadsDir = path.join(__dirname, 'uploads');
 // if (!fs.existsSync(uploadsDir)){

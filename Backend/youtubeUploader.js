@@ -1,8 +1,5 @@
-const { google } = require('googleapis');
-const multer = require("multer");
-const { Readable } = require('stream');
 
-// Multer setup for memory storage
+const {google} = require("googleapis");
 const storage = multer.memoryStorage();
 const uploadVideoFile = multer({ storage }).single("videoFile");
 
@@ -18,7 +15,7 @@ const youtube = google.youtube({
 });
 
 function initiateUpload(req, res) {
-  uploadVideoFile(req, res, function(err) {
+  uploadVideoFile(req, res, function (err) {
     if (err) {
       console.error('Upload error:', err);
       return res.status(500).send({ Error: err.message });
@@ -26,15 +23,18 @@ function initiateUpload(req, res) {
 
     if (req.file) {
       const { title, description } = req.body;
+      const state = JSON.stringify({
+        fileBuffer: req.file.buffer.toString('base64'),
+        mimeType: req.file.mimetype,
+        title,
+        description
+      });
+
+      req.session.oauthState = state; // Store state in session
+
       const authUrl = oauth2Client.generateAuthUrl({
         access_type: 'offline',
-        scope: ['https://www.googleapis.com/auth/youtube.upload'],
-        state: JSON.stringify({
-          fileBuffer: req.file.buffer.toString('base64'),
-          mimeType: req.file.mimetype,
-          title,
-          description
-        })
+        scope: ['https://www.googleapis.com/auth/youtube.upload']
       });
       console.log('Generated auth URL:', authUrl); // Debugging step
       res.json({ authUrl });
@@ -47,7 +47,13 @@ function initiateUpload(req, res) {
 
 async function completeUpload(req, res) {
   const { code } = req.query;
-  const { fileBuffer, mimeType, title, description } = JSON.parse(req.query.state);
+  const state = req.session.oauthState; // Retrieve state from session
+
+  if (!state) {
+    return res.status(400).send("Invalid state parameter");
+  }
+
+  const { fileBuffer, mimeType, title, description } = JSON.parse(state);
 
   try {
     const { tokens } = await oauth2Client.getToken(code);
@@ -81,8 +87,15 @@ async function completeUpload(req, res) {
   }
 }
 
-module.exports = { initiateUpload, completeUpload };
+app.post('/upload', initiateUpload);
+app.get('/oauth2callback', completeUpload);
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+module.exports = { initiateUpload, completeUpload };
 
 // const { google } = require('googleapis');
 // const multer = require("multer");
