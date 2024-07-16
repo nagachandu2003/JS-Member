@@ -1,11 +1,15 @@
 const express = require("express");
 const cors = require("cors");
+const { google } = require('googleapis');
 const { MongoClient, ObjectId } = require("mongodb");
 const dotenv = require("dotenv");
 const multer = require("multer");
 const AWS = require("aws-sdk");
 const {v4:uuidv4} = require("uuid");
-
+const path = require("path");
+const fs = require("fs");
+const { uploadToS3 } = require('./s3Uploader');
+const { initiateUpload, completeUpload } = require('./youtubeUploader');
 
 
 const app = express();
@@ -13,44 +17,157 @@ app.use(express.json());
 app.use(cors());
 dotenv.config();
 
+//Video Upload to Youtube Snippet Starts
+// const uploadsDir = path.join(__dirname, 'uploads');
+// if (!fs.existsSync(uploadsDir)){
+//     fs.mkdirSync(uploadsDir);
+// }
+
+// const storage1 = multer.diskStorage({
+//     destination: uploadsDir,
+//     filename(req, file, cb) {
+//         const newFileName = `${uuidv4()}-${file.originalname}`
+//         cb(null, newFileName);
+//     }
+// });
+
+// const uploadVideoFile = multer({
+//     storage: storage1
+// }).single("videoFile");
+
+// const oauth2Client = new google.auth.OAuth2(
+//     "911721135973-kigmnep4rtnio28bjgg6arg1t9itiftj.apps.googleusercontent.com",
+//     "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",
+//     "http://localhost:3000/oauth2callback"
+// );
+
+// const youtube = google.youtube({
+//     version: 'v3',
+//     auth: oauth2Client
+// });
+
+// app.post("/uploadvideo", uploadVideoFile, (req, res) => {
+//     if (req.file) {
+//         const filename = req.file.filename;
+//         const { title, description } = req.body;
+//         const authUrl = oauth2Client.generateAuthUrl({
+//             access_type: 'offline',
+//             scope: ['https://www.googleapis.com/auth/youtube.upload'],
+//             state: JSON.stringify({
+//                 filename,
+//                 title,
+//                 description
+//             })
+//         });
+//         res.json({ authUrl });
+//     } else {
+//         res.status(400).send("No file uploaded");
+//     }
+// });
+
+// app.get("/oauth2callback", async (req, res) => {
+//     const { code } = req.query;
+//     const { filename, title, description } = JSON.parse(req.query.state);
+
+//     try {
+//         const { tokens } = await oauth2Client.getToken(code);
+//         oauth2Client.setCredentials(tokens);
+
+//         const fileSize = fs.statSync(path.join(uploadsDir, filename)).size;
+
+//         const response = await youtube.videos.insert({
+//             part: 'snippet,status',
+//             requestBody: {
+//                 snippet: {
+//                     title,
+//                     description,
+//                 },
+//                 status: {
+//                     privacyStatus: 'private'
+//                 },
+//             },
+//             media: {
+//                 body: fs.createReadStream(path.join(uploadsDir, filename)),
+//             },
+//         }, {
+//             onUploadProgress: evt => {
+//                 const progress = (evt.bytesRead / fileSize) * 100;
+//                 console.log(`${Math.round(progress)}% complete`);
+//             },
+//         });
+
+//         console.log('Video uploaded. ID:', response.data.id);
+
+//         // Remove the uploaded file
+//         fs.unlinkSync(path.join(uploadsDir, filename));
+//         console.log('Uploaded file removed from server');
+
+//         // Redirect to success page
+//         res.redirect('/success?videoId=' + response.data.id);
+//     } catch (error) {
+//         console.error('Error uploading video:', error.message);
+//         res.status(500).send(`Error uploading video: ${error.message}`);
+//     }
+// });
+
+// // Success route
+// app.get('/success', (req, res) => {
+//     const videoId = req.query.videoId;
+//     res.send(`
+//         <h1>Video Upload Successful!</h1>
+//         <p>Your video has been uploaded successfully.</p>
+//         <p>Video ID: ${videoId}</p>
+//         <script>
+//             if (window.opener) {
+//                 window.opener.postMessage('uploadComplete', '*');
+//                 window.close();
+//             }
+//         </script>
+//     `);
+// });
+//Video Upload to Youtube Snippet Ends
+
 // AWS S3 File Upload Code Snippet Starts
-const s3 = new AWS.S3({
-  accessKeyId:process.env.AWS_ID,
-  secretAccessKey:process.env.AWS_SECRET
-})
+// const s3 = new AWS.S3({
+//   accessKeyId:process.env.AWS_ID,
+//   secretAccessKey:process.env.AWS_SECRET
+// })
 
-const storage = multer.memoryStorage({
-    destination: function(req,file,callback){
-      callback(null,'')
-    }
-})
+// const storage = multer.memoryStorage({
+//     destination: function(req,file,callback){
+//       callback(null,'')
+//     }
+// })
 
-const upload = multer({storage}).single('file')
+// const upload = multer({storage}).single('file')
 
-app.post("/upload",upload,(req,res) => {
-  let myFile = req.file.originalname.split(".")
-  const fileType = myFile[myFile.length-1]
+// app.post("/upload",upload,(req,res) => {
+//   let myFile = req.file.originalname.split(".")
+//   const fileType = myFile[myFile.length-1]
 
-  const params = {
-    Bucket : process.env.AWS_BUCKET_NAME,
-    Key : `${uuidv4()}.${fileType}`,
-    Body : req.file.buffer
-  }
+//   const params = {
+//     Bucket : process.env.AWS_BUCKET_NAME,
+//     Key : `${uuidv4()}.${fileType}`,
+//     Body : req.file.buffer
+//   }
   
-  s3.upload(params, (error,data) => {
-    if(error){
-      res.status(500).send({Error : error})
-    }
-    res.status(200).send(data)
-  })
-})
+//   s3.upload(params, (error,data) => {
+//     if(error){
+//       res.status(500).send({Error : error})
+//     }
+//     res.status(200).send(data)
+//   })
+// })
 
 // AWS S3 File Upload Code Snippet Ends
 
 
 
+app.post("/upload", uploadToS3);
 
+app.post("/uploadvideo", initiateUpload);
 
+app.get("/oauth2callback", completeUpload);
 
 
 const uri = process.env.mongo_uri;
