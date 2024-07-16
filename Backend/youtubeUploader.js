@@ -1,26 +1,12 @@
 const { google } = require('googleapis');
-const fs = require('fs');
-const path = require('path');
+const { Readable } = require('stream');
 const multer = require("multer");
-const { v4: uuidv4 } = require("uuid");
 const dotenv = require("dotenv");
 dotenv.config();
+
 // Check for required environment variables
 
-
-const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir);
-}
-
-const storage = multer.diskStorage({
-  destination: uploadsDir,
-  filename(req, file, cb) {
-    const newFileName = `${uuidv4()}-${file.originalname}`;
-    cb(null, newFileName);
-  }
-});
-
+const storage = multer.memoryStorage(); // Changed to memory storage
 const uploadVideoFile = multer({ storage }).single("videoFile");
 
 const oauth2Client = new google.auth.OAuth2(
@@ -35,20 +21,20 @@ const youtube = google.youtube({
 });
 
 function initiateUpload(req, res) {
-  uploadVideoFile(req, res, function(err) {
+  uploadVideoFile(req, res, function (err) {
     if (err) {
       console.error('Upload error:', err);
       return res.status(500).send({ Error: err.message });
     }
 
     if (req.file) {
-      const filename = req.file.filename;
       const { title, description } = req.body;
       const authUrl = oauth2Client.generateAuthUrl({
         access_type: 'offline',
         scope: ['https://www.googleapis.com/auth/youtube.upload'],
         state: JSON.stringify({
-          filename,
+          fileBuffer: req.file.buffer.toString('base64'),
+          mimeType: req.file.mimetype,
           title,
           description
         })
@@ -63,13 +49,15 @@ function initiateUpload(req, res) {
 
 async function completeUpload(req, res) {
   const { code } = req.query;
-  const { filename, title, description } = JSON.parse(req.query.state);
+  const { fileBuffer, mimeType, title, description } = JSON.parse(req.query.state);
 
   try {
     const { tokens } = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
 
-    const fileSize = fs.statSync(path.join(uploadsDir, filename)).size;
+    const fileStream = new Readable();
+    fileStream.push(Buffer.from(fileBuffer, 'base64'));
+    fileStream.push(null);
 
     const response = await youtube.videos.insert({
       part: 'snippet,status',
@@ -78,16 +66,16 @@ async function completeUpload(req, res) {
         status: { privacyStatus: 'private' }
       },
       media: {
-        body: fs.createReadStream(path.join(uploadsDir, filename)),
+        body: fileStream,
+        mimeType: mimeType
       },
     }, {
       onUploadProgress: evt => {
-        const progress = (evt.bytesRead / fileSize) * 100;
+        const progress = (evt.bytesRead / fileStream.readableLength) * 100;
         console.log(`${Math.round(progress)}% complete`);
       },
     });
 
-    fs.unlinkSync(path.join(uploadsDir, filename));
     res.redirect(`https://js-smp.vercel.app/success/${response.data.id}`);  // Updated to use the deployed frontend URL
   } catch (error) {
     console.error('Error uploading video:', error);
@@ -96,6 +84,105 @@ async function completeUpload(req, res) {
 }
 
 module.exports = { initiateUpload, completeUpload };
+
+// const { google } = require('googleapis');
+// const fs = require('fs');
+// const path = require('path');
+// const multer = require("multer");
+// const { v4: uuidv4 } = require("uuid");
+// const dotenv = require("dotenv");
+// dotenv.config();
+// // Check for required environment variables
+
+
+// const uploadsDir = path.join(__dirname, 'uploads');
+// if (!fs.existsSync(uploadsDir)) {
+//   fs.mkdirSync(uploadsDir);
+// }
+
+// const storage = multer.diskStorage({
+//   destination: uploadsDir,
+//   filename(req, file, cb) {
+//     const newFileName = `${uuidv4()}-${file.originalname}`;
+//     cb(null, newFileName);
+//   }
+// });
+
+// const uploadVideoFile = multer({ storage }).single("videoFile");
+
+// const oauth2Client = new google.auth.OAuth2(
+//   process.env.CLIENT_ID,
+//   process.env.CLIENT_SECRET,
+//   "https://js-member-backend.vercel.app/oauth2callback"  // Updated to use the deployed backend URL
+// );
+
+// const youtube = google.youtube({
+//   version: 'v3',
+//   auth: oauth2Client
+// });
+
+// function initiateUpload(req, res) {
+//   uploadVideoFile(req, res, function(err) {
+//     if (err) {
+//       console.error('Upload error:', err);
+//       return res.status(500).send({ Error: err.message });
+//     }
+
+//     if (req.file) {
+//       const filename = req.file.filename;
+//       const { title, description } = req.body;
+//       const authUrl = oauth2Client.generateAuthUrl({
+//         access_type: 'offline',
+//         scope: ['https://www.googleapis.com/auth/youtube.upload'],
+//         state: JSON.stringify({
+//           filename,
+//           title,
+//           description
+//         })
+//       });
+//       res.json({ authUrl });
+//     } else {
+//       console.error('No file uploaded');
+//       res.status(400).send("No file uploaded");
+//     }
+//   });
+// }
+
+// async function completeUpload(req, res) {
+//   const { code } = req.query;
+//   const { filename, title, description } = JSON.parse(req.query.state);
+
+//   try {
+//     const { tokens } = await oauth2Client.getToken(code);
+//     oauth2Client.setCredentials(tokens);
+
+//     const fileSize = fs.statSync(path.join(uploadsDir, filename)).size;
+
+//     const response = await youtube.videos.insert({
+//       part: 'snippet,status',
+//       requestBody: {
+//         snippet: { title, description },
+//         status: { privacyStatus: 'private' }
+//       },
+//       media: {
+//         body: fs.createReadStream(path.join(uploadsDir, filename)),
+//       },
+//     }, {
+//       onUploadProgress: evt => {
+//         const progress = (evt.bytesRead / fileSize) * 100;
+//         console.log(`${Math.round(progress)}% complete`);
+//       },
+//     });
+
+//     fs.unlinkSync(path.join(uploadsDir, filename));
+//     res.redirect(`https://js-smp.vercel.app/success/${response.data.id}`);  // Updated to use the deployed frontend URL
+//   } catch (error) {
+//     console.error('Error uploading video:', error);
+//     res.status(500).send(`Error uploading video: ${error.message}`);
+//   }
+// }
+
+// module.exports = { initiateUpload, completeUpload };
 
 
 
