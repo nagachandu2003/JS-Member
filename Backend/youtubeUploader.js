@@ -20,8 +20,8 @@ const storage = multer.diskStorage({
 const uploadVideoFile = multer({ storage }).single("videoFile");
 
 const oauth2Client = new google.auth.OAuth2(
-  "911721135973-kigmnep4rtnio28bjgg6arg1t9itiftj.apps.googleusercontent.com",
-  "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",
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
   "http://localhost:3001/oauth2callback"
 );
 

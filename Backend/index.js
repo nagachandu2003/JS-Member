@@ -161,8 +161,6 @@ dotenv.config();
 
 // AWS S3 File Upload Code Snippet Ends
 
-
-
 app.post("/upload", uploadToS3);
 
 app.post("/uploadvideo", initiateUpload);
