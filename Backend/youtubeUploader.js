@@ -1,12 +1,15 @@
+const { google } = require('googleapis');
+const multer = require("multer");
+const { Readable } = require('stream');
 
-const {google} = require("googleapis");
+// Multer setup for memory storage
 const storage = multer.memoryStorage();
 const uploadVideoFile = multer({ storage }).single("videoFile");
 
 const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
-  "https://js-member-backend.vercel.app/oauth2callback"
+  "http://localhost:3001/oauth2callback"
 );
 
 const youtube = google.youtube({
@@ -15,7 +18,7 @@ const youtube = google.youtube({
 });
 
 function initiateUpload(req, res) {
-  uploadVideoFile(req, res, function (err) {
+  uploadVideoFile(req, res, function(err) {
     if (err) {
       console.error('Upload error:', err);
       return res.status(500).send({ Error: err.message });
@@ -23,20 +26,16 @@ function initiateUpload(req, res) {
 
     if (req.file) {
       const { title, description } = req.body;
-      const state = JSON.stringify({
-        fileBuffer: req.file.buffer.toString('base64'),
-        mimeType: req.file.mimetype,
-        title,
-        description
-      });
-
-      req.session.oauthState = state; // Store state in session
-
       const authUrl = oauth2Client.generateAuthUrl({
         access_type: 'offline',
-        scope: ['https://www.googleapis.com/auth/youtube.upload']
+        scope: ['https://www.googleapis.com/auth/youtube.upload'],
+        state: JSON.stringify({
+          fileBuffer: req.file.buffer.toString('base64'),
+          mimeType: req.file.mimetype,
+          title,
+          description
+        })
       });
-      console.log('Generated auth URL:', authUrl); // Debugging step
       res.json({ authUrl });
     } else {
       console.error('No file uploaded');
@@ -47,13 +46,7 @@ function initiateUpload(req, res) {
 
 async function completeUpload(req, res) {
   const { code } = req.query;
-  const state = req.session.oauthState; // Retrieve state from session
-
-  if (!state) {
-    return res.status(400).send("Invalid state parameter");
-  }
-
-  const { fileBuffer, mimeType, title, description } = JSON.parse(state);
+  const { fileBuffer, mimeType, title, description } = JSON.parse(req.query.state);
 
   try {
     const { tokens } = await oauth2Client.getToken(code);
@@ -80,106 +73,14 @@ async function completeUpload(req, res) {
       },
     });
 
-    res.redirect(`https://js-smp.vercel.app/success/${response.data.id}`);
+    res.redirect(`http://localhost:3001/success/${response.data.id}`);
   } catch (error) {
     console.error('Error uploading video:', error);
     res.status(500).send(`Error uploading video: ${error.message}`);
   }
 }
 
-app.post('/upload', initiateUpload);
-app.get('/oauth2callback', completeUpload);
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
 module.exports = { initiateUpload, completeUpload };
-
-// const { google } = require('googleapis');
-// const multer = require("multer");
-// const { Readable } = require('stream');
-
-// // Multer setup for memory storage
-// const storage = multer.memoryStorage();
-// const uploadVideoFile = multer({ storage }).single("videoFile");
-
-// const oauth2Client = new google.auth.OAuth2(
-//   process.env.CLIENT_ID,
-//   process.env.CLIENT_SECRET,
-//   "https://js-member-backend.vercel.app/oauth2callback"
-// );
-
-// const youtube = google.youtube({
-//   version: 'v3',
-//   auth: oauth2Client
-// });
-
-// function initiateUpload(req, res) {
-//   uploadVideoFile(req, res, function(err) {
-//     if (err) {
-//       console.error('Upload error:', err);
-//       return res.status(500).send({ Error: err.message });
-//     }
-
-//     if (req.file) {
-//       const { title, description } = req.body;
-//       const authUrl = oauth2Client.generateAuthUrl({
-//         access_type: 'offline',
-//         scope: ['https://www.googleapis.com/auth/youtube.upload'],
-//         state: JSON.stringify({
-//           fileBuffer: req.file.buffer.toString('base64'),
-//           mimeType: req.file.mimetype,
-//           title,
-//           description
-//         })
-//       });
-//       res.json({ authUrl });
-//     } else {
-//       console.error('No file uploaded');
-//       res.status(400).send("No file uploaded");
-//     }
-//   });
-// }
-
-// async function completeUpload(req, res) {
-//   const { code } = req.query;
-//   const { fileBuffer, mimeType, title, description } = JSON.parse(req.query.state);
-
-//   try {
-//     const { tokens } = await oauth2Client.getToken(code);
-//     oauth2Client.setCredentials(tokens);
-
-//     const fileStream = new Readable();
-//     fileStream.push(Buffer.from(fileBuffer, 'base64'));
-//     fileStream.push(null);
-
-//     const response = await youtube.videos.insert({
-//       part: 'snippet,status',
-//       requestBody: {
-//         snippet: { title, description },
-//         status: { privacyStatus: 'private' }
-//       },
-//       media: {
-//         body: fileStream,
-//         mimeType: mimeType
-//       },
-//     }, {
-//       onUploadProgress: evt => {
-//         const progress = (evt.bytesRead / fileStream.readableLength) * 100;
-//         console.log(`${Math.round(progress)}% complete`);
-//       },
-//     });
-
-//     res.redirect(`https://js-smp.vercel.app/success/${response.data.id}`);
-//   } catch (error) {
-//     console.error('Error uploading video:', error);
-//     res.status(500).send(`Error uploading video: ${error.message}`);
-//   }
-// }
-
-// module.exports = { initiateUpload, completeUpload };
 
 // const { google } = require('googleapis');
 // const fs = require('fs');
