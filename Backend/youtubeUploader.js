@@ -4,9 +4,8 @@ const multer = require("multer");
 const dotenv = require("dotenv");
 dotenv.config();
 
-// Check for required environment variables
-
-const storage = multer.memoryStorage(); // Changed to memory storage
+// Memory storage for multer
+const storage = multer.memoryStorage();
 const uploadVideoFile = multer({ storage }).single("videoFile");
 
 const oauth2Client = new google.auth.OAuth2(
@@ -19,6 +18,17 @@ const youtube = google.youtube({
   version: 'v3',
   auth: oauth2Client
 });
+
+// Middleware to handle CORS
+function handleCors(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://js-smp.vercel.app'); // Update with your frontend URL
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+}
 
 function initiateUpload(req, res) {
   uploadVideoFile(req, res, function (err) {
@@ -71,7 +81,7 @@ async function completeUpload(req, res) {
       },
     }, {
       onUploadProgress: evt => {
-        const progress = (evt.bytesRead / fileStream.readableLength) * 100;
+        const progress = (evt.bytesRead / Buffer.byteLength(fileBuffer)) * 100;
         console.log(`${Math.round(progress)}% complete`);
       },
     });
@@ -83,16 +93,27 @@ async function completeUpload(req, res) {
   }
 }
 
-module.exports = { initiateUpload, completeUpload };
+module.exports = (req, res) => {
+  handleCors(req, res, () => {
+    if (req.method === 'POST' && req.url === '/initiateUpload') {
+      return initiateUpload(req, res);
+    } else if (req.method === 'GET' && req.url.startsWith('/completeUpload')) {
+      return completeUpload(req, res);
+    } else {
+      res.status(404).send('Not Found');
+    }
+  });
+};
+
 
 // const { google } = require('googleapis');
 // const fs = require('fs');
 // const path = require('path');
 // const multer = require("multer");
 // const { v4: uuidv4 } = require("uuid");
+
 // const dotenv = require("dotenv");
 // dotenv.config();
-// // Check for required environment variables
 
 
 // const uploadsDir = path.join(__dirname, 'uploads');
