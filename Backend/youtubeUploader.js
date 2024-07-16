@@ -22,7 +22,7 @@ const uploadVideoFile = multer({ storage }).single("videoFile");
 const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
-  "http://localhost:3001/oauth2callback"
+  "https://js-member-backend.vercel.app/oauth2callback"
 );
 
 const youtube = google.youtube({
@@ -83,7 +83,7 @@ async function completeUpload(req, res) {
 
     fs.unlinkSync(path.join(uploadsDir, filename));
     // res.json({ success: true, videoId: response.data.id });
-    res.redirect(`http://localhost:3000/success/${response.data.id}`);
+    res.redirect(`https://ytcm-app.vercel.app/success/${response.data.id}`);
   } catch (error) {
     console.error('Error uploading video:', error.message);
     res.status(500).send(`Error uploading video: ${error.message}`);
